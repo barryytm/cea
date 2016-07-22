@@ -1,0 +1,32 @@
+{
+  "name": "cea",
+  "version": "1.0.0",
+  "description": "a course recommendation site",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njia95/cea.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "pg": "^6.0.3"
+  },
+  "jshintConfig": {
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "undef": true,
+    "unused": true,
+    "globals": {
+      "jQuery": true
+    },
+    "esversion": 6,
+    "node": true,
+    "mocha": true,
+    "expr": true
+  }
+}
