@@ -24,8 +24,9 @@
         "undef": true,
         "unused": true,
         "globals": {
-        "jQuery": false,
-        "$": false
+            "jQuery": false,
+            "$": false,
+            "document": false
         },
         "esversion": 6,
         "node": true,
