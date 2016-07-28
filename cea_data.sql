@@ -642,7 +642,7 @@ INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ra
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (32,'Dong','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (49,'Dong','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (33,'Dong','A+',5,5);
-INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (34,'ECE1782','A-',3,2);
+-- INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (34,'ECE1782','A-',3,2);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (29,'fw','F',5,4);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (35,'fw','F',5,4);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (53,'fw','F',5,4);
@@ -715,7 +715,7 @@ INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ra
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (40,'student335','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (59,'student335','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (60,'student335','B+',5,5);
-INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (61,'w''','F',4,3);
+-- INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (61,'w''','F',4,3);
 END;
 
 BEGIN;

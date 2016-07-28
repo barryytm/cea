@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0",
-    "pg": "^6.0.3"
+    "pg": "^6.0.3",
+    "pug": "^2.0.0-beta4",
+    "forever": "^0.15.2"
   },
   "jshintConfig": {
     "bitwise": true,
@@ -22,7 +24,8 @@
     "undef": true,
     "unused": true,
     "globals": {
-      "jQuery": true
+      "jQuery": false,
+      "$": false
     },
     "esversion": 6,
     "node": true,

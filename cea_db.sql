@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS students;
 CREATE TABLE students (
-    username PRIMARY KEY,
+    username TEXT PRIMARY KEY,
     permission INTEGER,
     age INTEGER CHECK ((age>15 AND age<100) OR age=NULL),
     gender TEXT CHECK (gender='m' OR gender='f' OR gender=NULL),
