@@ -642,7 +642,6 @@ INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ra
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (32,'Dong','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (49,'Dong','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (33,'Dong','A+',5,5);
--- INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (34,'ECE1782','A-',3,2);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (29,'fw','F',5,4);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (35,'fw','F',5,4);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (53,'fw','F',5,4);
@@ -715,7 +714,7 @@ INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ra
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (40,'student335','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (59,'student335','A+',5,5);
 INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (60,'student335','B+',5,5);
--- INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (61,'w''','F',4,3);
+INSERT INTO enrollments(edition_id,username,letter_grade,course_ranking,instr_ranking) VALUES (61,'ww','F',4,3);
 END;
 
 BEGIN;
@@ -856,7 +855,6 @@ INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,ra
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (15,49,'nielie',13,2,4);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (15,49,'nielie',48,2,4);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (15,49,'nielie',55,2,NULL);
-INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (16,34,'ECE1782',14,4,2);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (17,6,'JiH',13,1,5);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (17,6,'JiH',22,1,NULL);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (17,6,'JiH',64,1,3);
@@ -968,9 +966,9 @@ INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,ra
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (35,54,'raz24',8,3,4);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (35,54,'raz24',9,3,4);
 INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (36,60,'student335',66,2,3);
-INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (37,61,'w''',28,2,3);
-INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (37,61,'w''',62,4,NULL);
-INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (37,61,'w''',71,2,3);
+INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (37,61,'ww',28,2,3);
+INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (37,61,'ww',62,4,NULL);
+INSERT INTO skill_rankings(course_id,edition_id,username,skill_id,rank_before,rank_after) VALUES (37,61,'ww',71,2,3);
 END;
 
 BEGIN;
@@ -1118,7 +1116,6 @@ INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_befo
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (15,49,'nielie',13,2,3);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (15,49,'nielie',41,2,3);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (15,49,'nielie',57,2,4);
-INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (16,34,'ECE1782',38,3,2);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (17,6,'JiH',13,5,5);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (17,6,'JiH',82,5,5);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (17,6,'JiH',84,2,2);
@@ -1254,9 +1251,9 @@ INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_befo
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (35,54,'raz24',52,4,4);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (35,54,'raz24',91,4,5);
 INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (36,60,'student335',49,2,4);
-INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (37,61,'w''',14,1,1);
-INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (37,61,'w''',27,5,5);
-INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (37,61,'w''',64,5,4);
+INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (37,61,'ww',14,1,1);
+INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (37,61,'ww',27,5,5);
+INSERT INTO topic_interests(course_id,edition_id,username,topic_id,interest_before,interest_after) VALUES (37,61,'ww',64,5,4);
 END;
 
 

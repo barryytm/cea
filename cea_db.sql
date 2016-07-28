@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS students cascade;
 CREATE TABLE students (
     username TEXT PRIMARY KEY,
     permission INTEGER,
@@ -7,13 +7,13 @@ CREATE TABLE students (
     native_country TEXT
 );
 
-DROP TABLE IF EXISTS departments;
+DROP TABLE IF EXISTS departments cascade;
 CREATE TABLE departments (
     dept_code TEXT PRIMARY KEY,
     dept_name TEXT
 );
 
-DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS courses cascade;
 CREATE TABLE courses (
     course_id INTEGER PRIMARY KEY,
     dept_code TEXT,
@@ -21,7 +21,7 @@ CREATE TABLE courses (
     course_name TEXT
 );
 
-DROP TABLE IF EXISTS course_editions;
+DROP TABLE IF EXISTS course_editions cascade;
 CREATE TABLE course_editions (
     edition_id INTEGER PRIMARY KEY,
     course_id INTEGER REFERENCES courses (course_id),
@@ -31,33 +31,33 @@ CREATE TABLE course_editions (
     time_day TEXT CHECK (time_day IN ('m','a','e'))    
 );
 
-DROP TABLE IF EXISTS topics;
+DROP TABLE IF EXISTS topics cascade;
 CREATE TABLE topics (
     topic_id INTEGER PRIMARY KEY,
     topic TEXT UNIQUE NOT NULL
 );
 
-DROP TABLE IF EXISTS skills;
+DROP TABLE IF EXISTS skills cascade;
 CREATE TABLE skills (
     skill_id INTEGER PRIMARY KEY,
     skill TEXT UNIQUE NOT NULL
 );
 
-DROP TABLE IF EXISTS course_topics;
+DROP TABLE IF EXISTS course_topics cascade;
 CREATE TABLE course_topics (
     topic_id INTEGER REFERENCES topics(topic_id),
     course_id INTEGER REFERENCES courses (course_id),
     PRIMARY KEY (topic_id, course_id)
 );
 
-DROP TABLE IF EXISTS course_skills;
+DROP TABLE IF EXISTS course_skills cascade;
 CREATE TABLE course_skills (
     skill_id INTEGER REFERENCES skills(skill_id),
     course_id INTEGER REFERENCES courses (course_id),
     PRIMARY KEY (skill_id, course_id)
 );
 
-DROP TABLE IF EXISTS letter_grades;
+DROP TABLE IF EXISTS letter_grades cascade;
 CREATE TABLE letter_grades (
     letter_grade TEXT PRIMARY KEY,
     min_grade INTEGER,
@@ -65,7 +65,7 @@ CREATE TABLE letter_grades (
     gpv REAL
 );
 
-DROP TABLE IF EXISTS enrollments;
+DROP TABLE IF EXISTS enrollments cascade;
 CREATE TABLE enrollments (
     edition_id INTEGER REFERENCES course_editions (edition_id),
     username TEXT REFERENCES students (username),
@@ -75,7 +75,7 @@ CREATE TABLE enrollments (
     PRIMARY KEY (username, edition_id)
 );
 
-DROP TABLE IF EXISTS skill_rankings;
+DROP TABLE IF EXISTS skill_rankings cascade;
 CREATE TABLE skill_rankings (
     course_id INTEGER,
     edition_id INTEGER,
@@ -88,7 +88,7 @@ CREATE TABLE skill_rankings (
     FOREIGN KEY (course_id, skill_id) REFERENCES course_skills(course_id, skill_id)
 );
 
-DROP TABLE IF EXISTS topic_interests;
+DROP TABLE IF EXISTS topic_interests cascade;
 CREATE TABLE topic_interests (
     course_id INTEGER,
     edition_id INTEGER,
