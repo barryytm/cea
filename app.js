@@ -22,7 +22,9 @@ server.listen(port, () => {
 	console.log('listen on port ' + port);
 });
 
-
+app.get('/', (req, res) => {
+    res.render('index');
+})
 // connect to db
 require('./db');
 
