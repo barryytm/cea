@@ -1,15 +1,15 @@
 $(document).ready(() => {
     $('#errors').hide(); 
-    $('#name').focus();
+    $('#username').focus();
     $('#join').attr("disabled", "disabled");
 
     $('form').submit((event) => {
         event.preventDefault();
     });
 
-    $('#name').keypress(() => {
-        var name = $('#name').val();
-        if(name === '' || name.length < 3) {
+    $('#username').keypress(() => {
+        var username = $('#username').val();
+        if(username === '' || username.length < 3) {
             $('#join').attr("disabled", "disabled");
         } else {
             $('#errors').empty();
@@ -18,15 +18,19 @@ $(document).ready(() => {
         }
     });
 
-    $('#nameForm').submit(() => {
-        var name = $('#name').val();
+    $('#usernameForm').submit(() => {
+        var username = $('#username').val();
 
-        if (name === '' || name.length < 3) {
+        if (username === '' || username.length < 3) {
             $('#errors').empty();
-            $('#errors').append('Please enter a name longer than 3 characters');
+            $('#errors').append('Please enter a username longer than 3 characters');
             $('#errors').show();
         } else {
             $('.overlay').css('height', '0%');
+
+            $.post("/login", {username: username}, () => {
+                console.log(username);
+            });
         }
     });
 });

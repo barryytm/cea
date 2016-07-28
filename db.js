@@ -1,5 +1,6 @@
 'use strict';
 
+// require modules
 const pg = require('pg');
 const url = require('url');
 
@@ -19,11 +20,15 @@ const config = {
 // connect to heroku pg
 const pool = new pg.Pool(config);
 
-pool
-    .query('select * from students')
-    .then(res => {
-        console.log('hello from', res.rows[1].username);
-    })
-    .catch(e => {
-        console.error('query error', e.message, e.stack);
-    });
+module.exports = {
+    checkUsername: function(username, cb) {
+        pool
+            .query('select count(1) from students where username=$1', [username])
+            .then(res => {
+                cb(res.rows[0].count);
+            })
+            .catch(e => {
+                console.error('query error', e.message, e.stack);
+            });
+    }
+};

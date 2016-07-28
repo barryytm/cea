@@ -1,40 +1,41 @@
 {
-    "name": "cea",
-    "version": "1.0.0",
-    "description": "a course recommendation site",
-    "main": "app.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "cea",
+  "version": "1.0.0",
+  "description": "a course recommendation site",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njia95/cea.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "forever": "^0.15.2",
+    "pg": "^6.0.3",
+    "pug": "^2.0.0-beta4"
+  },
+  "jshintConfig": {
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "undef": true,
+    "unused": true,
+    "globals": {
+      "jQuery": false,
+      "$": false,
+      "document": false
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/njia95/cea.git"
-    },
-    "license": "ISC",
-    "dependencies": {
-        "express": "^4.14.0",
-        "pg": "^6.0.3",
-        "pug": "^2.0.0-beta4",
-        "forever": "^0.15.2"
-    },
-    "jshintConfig": {
-        "bitwise": true,
-        "curly": true,
-        "eqeqeq": true,
-        "undef": true,
-        "unused": true,
-        "globals": {
-            "jQuery": false,
-            "$": false,
-            "document": false
-        },
-        "esversion": 6,
-        "node": true,
-        "mocha": true,
-        "expr": true
-    },
-    "engines" : { 
-        "npm" : "~3.10.x",
-        "node": "~6.2.x" 
-    }
+    "esversion": 6,
+    "node": true,
+    "mocha": true,
+    "expr": true
+  },
+  "engines": {
+    "npm": "~3.10.x",
+    "node": "~6.2.x"
+  }
 }
