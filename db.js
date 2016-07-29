@@ -14,7 +14,8 @@ const config = {
     host: params.hostname,
     port: params.port,
     database: params.pathname.split('/')[1],
-    ssl: true
+    ssl: true,
+    idleTimeoutMillis: 1000
 };
 
 // connect to heroku pg
@@ -22,13 +23,8 @@ const pool = new pg.Pool(config);
 
 module.exports = {
     checkUsername: function(username, cb) {
-        pool
-            .query('select count(1) from students where username=$1', [username])
-            .then(res => {
-                cb(res.rows[0].count);
-            })
-            .catch(e => {
-                console.error('query error', e.message, e.stack);
-            });
+        pool.query('select count(1) from students where username=$1', [username], (err, res) => {
+            cb(res.rows[0].count);
+        });
     }
 };

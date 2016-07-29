@@ -2,6 +2,10 @@
     font-size: 20px;
 }
 
+#infoForm {
+    margin-left: 30%;
+}
+
 .overlay {   
     height: 100%;
     width: 100%;
@@ -24,7 +28,8 @@
     color: #FFFFFF;
 }
 
-#join {
-    margin-left: 10px;
+#username {
+    width: 30%;
+    margin: 0 auto;
 }
 

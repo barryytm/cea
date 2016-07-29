@@ -15,8 +15,44 @@ html(lang="en")
             section(class="overlay-content")
                 section(class="alert alert-danger", id="errors")
                 section(id="login-screen")
-                    p Please enter your username
-                    form(class="form-inline", id="usernameForm")
+                    form(id="usernameForm")
                         section(class="form-group")
+                            label Please enter your username
                             input(type="text", class="form-control input-lg", placeholder="Your username", id="username")
                         input(type="submit", name="join", id="join", value="Join", class="btn btn-success btn-lg")
+                    form(id="infoForm")
+                        <section class="form-group row">
+                            <label class="col-md-2 col-form-label">Username</label>
+                            <section class="col-md-4">
+                                <p class="form-control-static">email@example.com</p>
+                            </section>
+                        </section>
+                        <section class="form-group row">
+                            <label class="col-md-2 col-form-label">Username</label>
+                            <section class="col-md-4">
+                                <input type="number" class="form-control" placeholder="Age">
+                            </section>
+                        </section>
+                        <section class="form-group row">
+                            <label class="col-md-2 col-form-label">Country</label>
+                            <section class="col-md-4">
+                                <input type="text" class="form-control" placeholder="Country of birth">
+                            </section>
+                        </section>
+                        <section class="form-group row">
+                            <label class="col-form-label col-md-2">Gender</label>
+                            <section class="col-md-4">
+                                <label class="form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1"> Male
+                                </label>
+                                <label class="form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2"> Female
+                                </label>
+                            </section>
+                        </section>
+                        <section class="form-group row">
+                            <section class="col-md-7">
+                                <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
+                            </section>
+                        </section>
+                    </form>

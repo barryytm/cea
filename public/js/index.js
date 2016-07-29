@@ -1,5 +1,6 @@
 $(document).ready(() => {
     $('#errors').hide(); 
+    $('#infoForm').hide();
     $('#username').focus();
     $('#join').attr("disabled", "disabled");
 
@@ -26,10 +27,13 @@ $(document).ready(() => {
             $('#errors').append('Please enter a username longer than 3 characters');
             $('#errors').show();
         } else {
-            $('.overlay').css('height', '0%');
-
-            $.post("/login", {username: username}, () => {
-                console.log(username);
+            $('#usernameForm').hide();
+            
+            $.post("/login", {username: username}, found => {
+                console.log(found);
+                if (found) {
+                    $('#infoForm').show();
+                }
             });
         }
     });

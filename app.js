@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const server = require('http').createServer(app);
 const db = require('./db');
 
-
 // configure environemnt
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -32,9 +31,7 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
     var username = req.body.username;
-    db.checkUsername(username, (found) => {
-        if (!found) {
-            res.send('Not found');
-        }
+    db.checkUsername(username, found => {
+        res.send(found);
     });
 });
