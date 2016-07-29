@@ -11,48 +11,37 @@ html(lang="en")
         script(src="js/index.js", defer)
 
     body
-        section(class="overlay" id="first")
-            section(class="overlay-content")
-                section(class="alert alert-danger", id="errors")
-                section(id="login-screen")
-                    form(id="usernameForm")
-                        section(class="form-group")
+        .overlay
+            .overlay-content
+                #errors.alert.alert-danger
+                #login-screen
+                    form#usernameForm
+                        .form-group
                             label Please enter your username
-                            input(type="text", class="form-control input-lg", placeholder="Your username", id="username")
-                        input(type="submit", name="join", id="join", value="Join", class="btn btn-success btn-lg")
-                    form(id="infoForm")
-                        <section class="form-group row">
-                            <label class="col-md-2 col-form-label">Username</label>
-                            <section class="col-md-4">
-                                <p class="form-control-static">email@example.com</p>
-                            </section>
-                        </section>
-                        <section class="form-group row">
-                            <label class="col-md-2 col-form-label">Username</label>
-                            <section class="col-md-4">
-                                <input type="number" class="form-control" placeholder="Age">
-                            </section>
-                        </section>
-                        <section class="form-group row">
-                            <label class="col-md-2 col-form-label">Country</label>
-                            <section class="col-md-4">
-                                <input type="text" class="form-control" placeholder="Country of birth">
-                            </section>
-                        </section>
-                        <section class="form-group row">
-                            <label class="col-form-label col-md-2">Gender</label>
-                            <section class="col-md-4">
-                                <label class="form-check-inline">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1"> Male
-                                </label>
-                                <label class="form-check-inline">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2"> Female
-                                </label>
-                            </section>
-                        </section>
-                        <section class="form-group row">
-                            <section class="col-md-7">
-                                <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
-                            </section>
-                        </section>
-                    </form>
+                            input#username.form-control.input-lg(type="text", placeholder="Your username")
+                        input#join.btn.btn-success.btn-lg(type="submit", value="Join")
+                    form#infoForm
+                        .form-group.row
+                            label.col-md-2.col-form-label Username
+                            .col-md-4
+                                p.form-control-static email@example.com
+                        .form-group.row
+                            label.col-md-2.col-form-label Age
+                            .col-md-4
+                                input.form-control(type="number", name="age", placeholder="Age")
+                        .form-group.row
+                            label.col-md-2.col-form-label Country
+                            .col-md-4
+                                input.form-control(type="text", name="country", placeholder="Country of birth")
+                        .form-group.row
+                            label.col-md-2.col-form-label Gender
+                            .col-md-4
+                                label.form-check-inline
+                                    input.form-check-input(type="radio", name="male")
+                                    p Male
+                                label.form-check-inline
+                                    input.form-check-input(type="radio", name="female")
+                                    p Female
+                        .form-group.row
+                            .col-md-7
+                                button.btn.btn-lg.btn-primary(type="submit") Sign in
