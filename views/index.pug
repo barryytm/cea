@@ -3,12 +3,12 @@ html(lang="en")
         meta(charset="utf-8")
         title CEA
         meta(name="viewport", content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", 
+        link(rel="stylesheet", href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
             integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
         link(rel="stylesheet", href="css/index.css")
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js", defer)
-        script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", 
+        script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous", defer)
         script(src="js/index.js", defer)
 
@@ -58,5 +58,19 @@ html(lang="en")
                             pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required)
                     button#addCourse.btn.btn-lg.btn-info(type="submit") Add
                 ul#courses
-
+            form#interestsForm
+                .form-group.row
+                    label.col-md-2.col-form-label Enter your Interests
+                    .col-md-4
+                        input#interest.form-control(type="text",
+                            placeholder="Interests", title="interests", required)
+                .form-group.row
+                    label.col-md-2.col-form-label Ranking
+                    .col-md-4
+                        input#interestRanking.form-control(type="number", placeholder="Ranking",
+                            pattern="\d+", min="1" max="5", required)
+                .form-group.row
+                    .col-md-7.col-md-offset-2
+                        button.btn.btn-lg.btn-primary(type="submit") Submit
             #snackbar
+

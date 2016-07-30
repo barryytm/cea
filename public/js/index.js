@@ -1,8 +1,8 @@
 function snack(msg) {
     $('#snackbar').text(msg).addClass('show');
 
-    setTimeout(() => { 
-        $('#snackbar').removeClass('show'); 
+    setTimeout(() => {
+        $('#snackbar').removeClass('show');
     }, 1500);
 }
 
@@ -16,6 +16,8 @@ $(document).ready(() => {
 
     $('#infoForm').hide();
     $('#courseForm').hide();
+    $('#interestsForm').hide();
+
 
     $('#loginForm').submit(() => {
         username = $('#username').val();
@@ -33,19 +35,23 @@ $(document).ready(() => {
         });
     });
 
-    $('#infoForm').submit(() => {        
+    $('#infoForm').submit(() => {
         var $age = $('#age').val();
         var $country = $('#country').val();
         var $gender = $('#male').is(':checked') ? 'm' : 'f';
 
         var $info = {
-            username: username, 
-            age: $age, 
-            country: $country, 
+            username: username,
+            age: $age,
+            country: $country,
             gender: $gender
         };
 
         snack('Submitted');
+        $('#infoForm').hide();
+        $('#interestsForm').show();
+
+
 
         $('#infoForm').hide();
 
@@ -65,6 +71,9 @@ $(document).ready(() => {
     });
 
     $('#courses').children().click(() => {
+
+    });
+    $('#interestsForm').submit(() => {
 
     });
 });

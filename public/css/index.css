@@ -2,7 +2,12 @@
     font-size: 20px;
 }
 
-.overlay {   
+#infoForm {
+    margin-left: 30%;
+}
+
+.overlay {
+
     height: 100%;
     width: 100%;
     position: fixed;
@@ -16,7 +21,7 @@
 
 .overlay-content {
     position: relative;
-    top: 35%; 
+    top: 35%;
     width: 100%;
     margin-top: 30px;
     color: #FFFFFF;
@@ -97,6 +102,14 @@ input:invalid {
     background: #6E6E6E;
 }
 
+
+/* intetrest form styles */ 
+#interestsForm {
+    margin-left: 30%;
+}
+
+/* end interest */
+
 /* snackbar styles */
 #snackbar {
     visibility: hidden;
@@ -129,3 +142,4 @@ input:invalid {
     to {bottom: 0; opacity: 0;}
 }
 /* end snackbar styles */
+
