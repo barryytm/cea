@@ -1,3 +1,11 @@
+function snack(msg) {
+    $('#snackbar').text(msg).addClass('show');
+
+    setTimeout(() => { 
+        $('#snackbar').removeClass('show'); 
+    }, 1500);
+}
+
 $(document).ready(() => {
     var $username;
 
@@ -10,6 +18,8 @@ $(document).ready(() => {
     $('#loginForm').submit(() => {
         $username = $('#username').val();
         $('#loginForm').hide();
+
+        snack('Logged in');
         
         $.post('/login', {username: $username}, result => {
             $('#name').text($username);
@@ -30,6 +40,8 @@ $(document).ready(() => {
             country: $country, 
             gender: $gender
         };
+
+        snack('Submitted');
 
         $.post('/info', $info, result => {
 
