@@ -6,7 +6,11 @@
     margin-left: 30%;
 }
 
-.overlay {   
+#interestsForm {
+    margin-left: 30%;
+}
+
+.overlay {
     height: 100%;
     width: 100%;
     position: fixed;
@@ -20,7 +24,7 @@
 
 .overlay-content {
     position: relative;
-    top: 35%; 
+    top: 35%;
     width: 100%;
     margin-top: 30px;
     color: #FFFFFF;
@@ -78,4 +82,3 @@ input:invalid {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
-
