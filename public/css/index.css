@@ -2,10 +2,6 @@
     font-size: 20px;
 }
 
-#infoForm {
-    margin-left: 30%;
-}
-
 .overlay {   
     height: 100%;
     width: 100%;
@@ -30,6 +26,12 @@
     text-align: center;
 }
 
+/* info form styles */
+
+#infoForm {
+    margin-left: 30%;
+}
+
 #username {
     width: 30%;
     margin: 0 auto;
@@ -47,7 +49,55 @@ input:invalid {
     box-shadow: 0 0 5px 1px red;
 }
 
-/* snackbar styles*/
+/* end infoForm stlyes */
+
+/* courseForm styles */
+#courseForm {
+    text-align: center;
+}
+
+#addCourse {
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+#course {
+    width: 30%;
+    margin: 0 auto;
+}
+
+#courses {
+    width: 50%;
+    margin-left: 23%;
+    overflow-y: scroll;
+    height: 30%;
+    list-style: none;
+}
+
+#courses li {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: #4F4F4F;
+    font-size: 18px;
+    transition: 0.2s;
+    
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#courses li:nth-child(odd) {
+    background: #242424;
+}
+
+#courses li:hover {
+    background: #6E6E6E;
+}
+
+/* snackbar styles */
 #snackbar {
     visibility: hidden;
     min-width: 250px;
@@ -78,4 +128,4 @@ input:invalid {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
-
+/* end snackbar styles */

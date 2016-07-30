@@ -12,43 +12,51 @@ html(lang="en")
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous", defer)
         script(src="js/index.js", defer)
 
-    body
-        .overlay
-            .overlay-content
-                form#loginForm
+    body.overlay   
+        main.overlay-content
+            form#loginForm
+                .form-group
+                    label Please enter your username
+                    input#username.form-control.input-lg(type="text",
+                        placeholder="Username", pattern="^[a-zA-Z0-9-_\.]{2,20}$",
+                        title="2-20 alphanumeric characters", required, autofocus)
+                input#login.btn.btn-success.btn-lg(type="submit", value="Login")
+            form#infoForm
+                .form-group.row
+                    label.col-md-2.col-form-label Username
+                    .col-md-4
+                        p#name.form-control-static
+                .form-group.row
+                    label.col-md-2.col-form-label Age
+                    .col-md-4
+                        // pattern is only a fallback, and default step is 1
+                        input#age.form-control(type="number", placeholder="Age",
+                            pattern="\d+", min="12" max="100", required, autofocus)
+                .form-group.row
+                    label.col-md-2.col-form-label Country
+                    .col-md-4
+                        input#country.form-control(type="text", placeholder="Country of birth",
+                            pattern="^[a-zA-Z][a-zA-Z ]{1,20}$",
+                            title="2-20 alphabetic characters", required)
+                .form-group.row
+                    label.col-md-2.col-form-label Gender
+                    .col-md-4
+                        label.form-check-inline
+                            input#male.form-check-input(type="radio", name="gender", checked)
+                            label Male
+                        label.form-check-inline
+                            input#female.form-check-input(type="radio", name="gender")
+                            label Female
+                .form-group.row
+                    .col-md-7.col-md-offset-2
+                        button.btn.btn-lg.btn-primary(type="submit") Submit
+            form#courseForm
+                .header
                     .form-group
-                        label Please enter your username
-                        input#username.form-control.input-lg(type="text",
-                            placeholder="Username", pattern="^[a-zA-Z0-9-_\.]{2,20}$",
-                            title="2-20 alphanumeric characters", required, autofocus)
-                    input#login.btn.btn-success.btn-lg(type="submit", value="Login")
-                form#infoForm
-                    .form-group.row
-                        label.col-md-2.col-form-label Username
-                        .col-md-4
-                            p#name.form-control-static
-                    .form-group.row
-                        label.col-md-2.col-form-label Age
-                        .col-md-4
-                            // pattern is only a fallback, and default step is 1
-                            input#age.form-control(type="number", placeholder="Age",
-                                pattern="\d+", min="12" max="100", required, autofocus)
-                    .form-group.row
-                        label.col-md-2.col-form-label Country
-                        .col-md-4
-                            input#country.form-control(type="text", placeholder="Country of birth",
-                                pattern="^[a-zA-Z][a-zA-Z ]{1,20}$",
-                                title="2-20 alphabetic characters", required)
-                    .form-group.row
-                        label.col-md-2.col-form-label Gender
-                        .col-md-4
-                            label.form-check-inline
-                                input#male.form-check-input(type="radio", name="gender", checked)
-                                label Male
-                            label.form-check-inline
-                                input#female.form-check-input(type="radio", name="gender",)
-                                label Female
-                    .form-group.row
-                        .col-md-7.col-md-offset-2
-                            button.btn.btn-lg.btn-primary(type="submit") Submit
-                article#snackbar
+                        label Enter courses you have taken so far
+                        input#course.form-control.input-lg(type="text", placeholder="CSC108", 
+                            pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required)
+                    button#addCourse.btn.btn-lg.btn-info(type="submit") Add
+                ul#courses
+
+            #snackbar
