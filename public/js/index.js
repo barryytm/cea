@@ -84,6 +84,7 @@ $(document).ready(() => {
     });
 
     $('#interestForm').submit(() => {
-
+        $('#interestForm').hide();
+        $('#dataForm').show();
     });
 });
