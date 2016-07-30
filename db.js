@@ -23,8 +23,14 @@ const pool = new pg.Pool(config);
 
 module.exports = {
     checkUsername: (username, cb) => {
-        pool.query('select count(1) from students where username=$1', [username], (err, res) => {
-            cb(res.rows[0].count);
+        pool.query('select username from students where username=$1', 
+            [username], (err, res) => {
+            cb(res.rows[0]);
         });
+    },
+
+    addInfo: (username, country, age, gender) => {
+        pool.query('insert into students values ($1, 0, $2, $3, $4)', 
+            [username, age, gender, country]);
     }
 };

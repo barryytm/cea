@@ -31,7 +31,17 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
     var username = req.body.username;
-    db.checkUsername(username, found => {
-        res.send(found);
+    db.checkUsername(username, result => {
+        res.send(result);
     });
+});
+
+app.post('/info', (req, res) => {
+    var username = req.body.username;
+    var country = req.body.country;
+    var age = req.body.age;
+    var gender = req.body.gender;
+
+    db.addInfo(username, country, age, gender);
+    res.send('1');
 });
