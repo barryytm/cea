@@ -23,13 +23,27 @@
     position: relative;
     top: 35%; 
     width: 100%;
-    text-align: center;
     margin-top: 30px;
     color: #FFFFFF;
+}
+
+#usernameForm {
+    text-align: center;
 }
 
 #username {
     width: 30%;
     margin: 0 auto;
+}
+
+#male, #female {
+    margin-right: 5px;
+}
+
+#female {
+    margin-left: 20px;
+}
+input:invalid {
+    box-shadow: 0 0 5px 1px red;
 }
 

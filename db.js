@@ -22,7 +22,7 @@ const config = {
 const pool = new pg.Pool(config);
 
 module.exports = {
-    checkUsername: function(username, cb) {
+    checkUsername: (username, cb) => {
         pool.query('select count(1) from students where username=$1', [username], (err, res) => {
             cb(res.rows[0].count);
         });
