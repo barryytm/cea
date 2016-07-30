@@ -16,8 +16,8 @@ html(lang="en")
                 form#loginForm
                     .form-group
                         label Please enter your username
-                        input#username.form-control.input-lg(type="text", 
-                            placeholder="Username", pattern="^[a-zA-Z0-9-_\.]{2,20}$", 
+                        input#username.form-control.input-lg(type="text",
+                            placeholder="Username", pattern="^[a-zA-Z0-9-_\.]{2,20}$",
                             title="2-20 alphanumeric characters", required, autofocus)
                     input#login.btn.btn-success.btn-lg(type="submit", value="Login")
                 form#infoForm
@@ -28,23 +28,23 @@ html(lang="en")
                     .form-group.row
                         label.col-md-2.col-form-label Age
                         .col-md-4
-                            // pattern is only a fallback, and default step is 1 
-                            input#age.form-control(type="number", placeholder="Age", 
+                            // pattern is only a fallback, and default step is 1
+                            input#age.form-control(type="number", placeholder="Age",
                                 pattern="\d+", min="12" max="100", required, autofocus)
                     .form-group.row
                         label.col-md-2.col-form-label Country
                         .col-md-4
-                            input#country.form-control(type="text", placeholder="Country of birth", 
-                                pattern="^[a-zA-Z][a-zA-Z ]{1,20}$", 
+                            input#country.form-control(type="text", placeholder="Country of birth",
+                                pattern="^[a-zA-Z][a-zA-Z ]{1,20}$",
                                 title="2-20 alphabetic characters", required)
                     .form-group.row
                         label.col-md-2.col-form-label Gender
                         .col-md-4
                             label.form-check-inline
-                                input#male.form-check-input(type="radio", checked) 
-                                label Male 
+                                input#male.form-check-input(type="radio", name="gender", checked)
+                                label Male
                             label.form-check-inline
-                                input#female.form-check-input(type="radio")
+                                input#female.form-check-input(type="radio", name="gender",)
                                 label Female
                     .form-group.row
                         .col-md-7.col-md-offset-2
