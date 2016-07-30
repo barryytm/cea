@@ -53,12 +53,12 @@ html(lang="en")
             form#courseForm
                 .header
                     .form-group
-                        label Enter courses you have taken so far
+                        label Enter courses you took (click to remove)
                         input#course.form-control.input-lg(type="text", placeholder="CSC108", 
                             pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required)
                     button#addCourse.btn.btn-lg.btn-info(type="submit") Add
                 ul#courses
-            form#interestsForm
+            form#interestForm
                 .form-group.row
                     label.col-md-2.col-form-label Enter your Interests
                     .col-md-4

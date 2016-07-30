@@ -3,7 +3,7 @@ function snack(msg) {
 
     setTimeout(() => {
         $('#snackbar').removeClass('show');
-    }, 1500);
+    }, 2000);
 }
 
 $(document).ready(() => {
@@ -16,7 +16,7 @@ $(document).ready(() => {
 
     $('#infoForm').hide();
     $('#courseForm').hide();
-    $('#interestsForm').hide();
+    $('#interestForm').hide();
 
 
     $('#loginForm').submit(() => {
@@ -36,24 +36,20 @@ $(document).ready(() => {
     });
 
     $('#infoForm').submit(() => {
-        var $age = $('#age').val();
-        var $country = $('#country').val();
-        var $gender = $('#male').is(':checked') ? 'm' : 'f';
+        var age = $('#age').val();
+        var country = $('#country').val();
+        var gender = $('#male').is(':checked') ? 'm' : 'f';
 
         var $info = {
             username: username,
-            age: $age,
-            country: $country,
-            gender: $gender
+            age: age,
+            country: country,
+            gender: gender
         };
 
         snack('Submitted');
         $('#infoForm').hide();
-        $('#interestsForm').show();
-
-
-
-        $('#infoForm').hide();
+        $('#interestForm').show();
 
         $.post('/info', $info, result => {
             $('#courseForm').show();
@@ -65,15 +61,23 @@ $(document).ready(() => {
         if (courses.includes($course)) {
             snack('No duplicate');
         } else {
-            $('<li/>').text($course).appendTo('#courses');
+            $('<li/>').text($course).attr('id', $course).appendTo('#courses');
             courses.push($course);
+            snack('Added ' + $course);
         }
     });
 
-    $('#courses').children().click(() => {
+    $('#courses').click((event) => {
+        var id = event.target.id;
+        $('#' + id).hide();
 
+        var idx = courses.indexOf(event.target.id);
+        courses.splice(idx, 1);
+
+        snack('Removed ' + id);
     });
-    $('#interestsForm').submit(() => {
+
+    $('#interestForm').submit(() => {
 
     });
 });

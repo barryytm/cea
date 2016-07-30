@@ -43,5 +43,5 @@ app.post('/info', (req, res) => {
     var gender = req.body.gender;
 
     db.addInfo(username, country, age, gender);
-    res.send('1');
+    res.end();
 });
