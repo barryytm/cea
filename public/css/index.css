@@ -2,10 +2,6 @@
     font-size: 20px;
 }
 
-#infoForm {
-    margin-left: 30%;
-}
-
 .overlay {
 
     height: 100%;
@@ -27,19 +23,20 @@
     color: #FFFFFF;
 }
 
+/* loginForm styles */
 #loginForm {
     text-align: center;
-}
-
-/* info form styles */
-
-#infoForm {
-    margin-left: 30%;
 }
 
 #username {
     width: 30%;
     margin: 0 auto;
+}
+/* end loginFrom styles */
+
+/* infoForm styles */
+#infoForm {
+    margin-left: 30%;
 }
 
 #male, #female {
@@ -54,6 +51,13 @@ input:invalid {
     box-shadow: 0 0 5px 1px red;
 }
 
+input[type="text"]:valid {
+    box-shadow: 0 0 5px 1px green;
+}
+
+input {
+    box-shadow: 0 0 2px 1px #4F4F4F;
+}
 /* end infoForm stlyes */
 
 /* courseForm styles */
@@ -61,8 +65,10 @@ input:invalid {
     text-align: center;
 }
 
-#addCourse {
-    margin-left: 10px;
+#addCourse, #startInterest {
+    width: 14%;
+    margin-left: 5px;
+    margin-right: 5px;
     margin-bottom: 20px;
 }
 
@@ -101,21 +107,20 @@ input:invalid {
 #courses li:hover {
     background: #6E6E6E;
 }
+/* end courseForm styles */
 
-
-/* intetrest form styles */ 
+/* intetrestForm styles */ 
 #interestForm {
     margin-left: 30%;
 }
-
-/* end interest */
+/* end interestForm styles */
 
 /* snackbar styles */
 #snackbar {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
-    background-color: green;
+    background-color: #69b4ff;
     color: #fff;
     text-align: center;
     border-radius: 2px;

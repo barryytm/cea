@@ -18,13 +18,13 @@ $(document).ready(() => {
     $('#courseForm').hide();
     $('#interestForm').hide();
 
-
     $('#loginForm').submit(() => {
         username = $('#username').val();
-        $('#loginForm').hide();
 
         snack('Logged in');
-        
+
+        $('#loginForm').hide();
+
         $.post('/login', {username: username}, result => {
             $('#name').text(username);
             if (!result) {
@@ -49,7 +49,6 @@ $(document).ready(() => {
 
         snack('Submitted');
         $('#infoForm').hide();
-        $('#interestForm').show();
 
         $.post('/info', $info, result => {
             $('#courseForm').show();
@@ -75,6 +74,13 @@ $(document).ready(() => {
         courses.splice(idx, 1);
 
         snack('Removed ' + id);
+    });
+
+    $('#startInterest').click(() => {
+        snack('Saved');
+
+        $('#courseForm').hide();
+        $('#interestForm').show();
     });
 
     $('#interestForm').submit(() => {

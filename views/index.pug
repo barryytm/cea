@@ -49,14 +49,15 @@ html(lang="en")
                             label Female
                 .form-group.row
                     .col-md-7.col-md-offset-2
-                        button.btn.btn-lg.btn-primary(type="submit") Submit
+                        input.btn.btn-lg.btn-primary(type="submit", value="Submit")
             form#courseForm
                 .header
                     .form-group
                         label Enter courses you took (click to remove)
                         input#course.form-control.input-lg(type="text", placeholder="CSC108", 
-                            pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required)
-                    button#addCourse.btn.btn-lg.btn-info(type="submit") Add
+                            pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required, autofocus)
+                    input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
+                    input#startInterest.btn.btn-lg.btn-success(value="Next")
                 ul#courses
             form#interestForm
                 .form-group.row
@@ -71,6 +72,6 @@ html(lang="en")
                             pattern="\d+", min="1" max="5", required)
                 .form-group.row
                     .col-md-7.col-md-offset-2
-                        button.btn.btn-lg.btn-primary(type="submit") Submit
+                        input.btn.btn-lg.btn-primary(type="submit", value="Submit")
             #snackbar
 
