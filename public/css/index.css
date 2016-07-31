@@ -16,7 +16,7 @@
 
 .overlay-content {
     position: relative;
-    top: 20%;
+    top: 10%;
     width: 100%;
     margin-top: 30px;
     color: #FFFFFF;
@@ -71,9 +71,11 @@ input {
     margin-bottom: 20px;
 }
 
-#course {
+#code, #semester, #year,#timeOfDay {
     width: 30%;
-    margin: 0 auto;
+    margin-left: 35%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 #courses {

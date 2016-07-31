@@ -1,10 +1,10 @@
 // class containing helper methods
 class Helper {
     snack(msg) {
-        $('#helper.snackbar').text(msg).addClass('show');
+        $('#snackbar').text(msg).addClass('show');
 
         setTimeout(() => {
-            $('#helper.snackbar').removeClass('show');
+            $('#snackbar').removeClass('show');
         }, 2000);
     }
 
@@ -146,13 +146,31 @@ $(document).ready(() => {
     });
 
     $('#courseForm').submit(() => {
-        var $course = $('#course').val();
-        if (courses.includes($course)) {
-            helper.snack('No duplicate');
-        } else {
-            $('<li/>').text($course).attr('id', $course).appendTo('#courses');
-            courses.push($course);
-            helper.snack('Added ' + $course);
+        var found = false;
+        var edition = {
+            code: $('#code').val(),
+            semester: $('#semester').val(),
+            year: $('#year').val(),
+            timeOfDay: $('#timeOfDay').val()
+        };
+
+        $.each(courses, (idx, val) => {
+            if (_.isEqual(val, edition)) {
+                found = true;
+                helper.snack('Already added');
+            }
+        });
+
+       
+        if (!found) {
+            helper.snack('Added ' + edition.code);
+
+            $('<li/>')
+            .text(edition.code + ', ' + edition.semester + ', ' + edition.year + ', ' + edition.timeOfDay)
+            .attr('id', edition.code)
+            .appendTo('#courses');
+
+            courses.push(edition);
         }
     });
 

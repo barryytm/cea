@@ -8,6 +8,7 @@ html(lang="en")
         link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
         link(rel="stylesheet", href="css/index.css")
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js", defer)
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js", defer)
         script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous", defer)
         script(src="js/index.js", defer)
@@ -54,8 +55,14 @@ html(lang="en")
                 .header
                     .form-group
                         label Enter courses you took (click to remove)
-                        input#course.form-control.input-lg(type="text", placeholder="CSC108",
+                        input#code.form-control.input-lg(type="text", placeholder="CSC108",
                             pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required, autofocus)
+                        input#semester.form-control.input-lg(type="text", placeholder="f|w|s",
+                            pattern="f|w|s", title="should only be f, w or s", required)
+                        input#year.form-control.input-lg(type="number", placeholder="2016"
+                            pattern="\d+", required)
+                        input#timeOfDay.form-control.input-lg(type="text", placeholder="m|a|e"
+                            pattern="m|a|e", required)
                     input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
                     input#startInterest.btn.btn-lg.btn-success(value="Next")
                 ul#courses
