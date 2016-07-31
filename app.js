@@ -45,3 +45,9 @@ app.post('/info', (req, res) => {
     db.addInfo(username, country, age, gender);
     res.end();
 });
+
+app.get('/allDept', (req, res) => {
+	db.getAllDept(result => {
+		res.write(result);
+	});
+});

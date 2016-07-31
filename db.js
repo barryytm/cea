@@ -23,14 +23,25 @@ const pool = new pg.Pool(config);
 
 module.exports = {
     checkUsername: (username, cb) => {
-        pool.query('select username from students where username=$1', 
+        pool.query('select username from students where username=$1',
             [username], (err, res) => {
             cb(res.rows[0]);
         });
     },
 
     addInfo: (username, country, age, gender) => {
-        pool.query('insert into students values ($1, 0, $2, $3, $4)', 
+        pool.query('insert into students values ($1, 0, $2, $3, $4)',
             [username, age, gender, country]);
+    },
+
+    getAllDept: (result) => {
+        pool.query('select dept_name from departments', (err, res) => {
+            var deptList = [];
+            for (var i = 0; i < res.rows.length; i++) {
+                deptList.push(res.rows[i].dept_name);
+            }
+            // console.log(JSON.stringify(deptList));
+            result(JSON.stringify(deptList));
+        });
     }
 };

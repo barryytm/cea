@@ -30,7 +30,7 @@ class Helper {
                     'id': 'grade' + val,
                     'type': 'number',
                     'placeholder': '0-100',
-                    'pattern': '\d+', 
+                    'pattern': '\d+',
                     'min': '0',
                     'max': '100'
                 });
@@ -42,7 +42,7 @@ class Helper {
                     'id': 'courseRank' + val,
                     'type': 'number',
                     'placeholder': '1-5',
-                    'pattern': '\d+', 
+                    'pattern': '\d+',
                     'min': '1',
                     'max': '5'
                 });
@@ -54,7 +54,7 @@ class Helper {
                     'id': 'instructorRank' + val,
                     'type': 'number',
                     'placeholder': '1-5',
-                    'pattern': '\d+', 
+                    'pattern': '\d+',
                     'min': '1',
                     'max': '5'
                 });
@@ -164,8 +164,24 @@ $(document).ready(() => {
         courses.splice(idx, 1);
 
         helper.snack('Removed ' + id);
+
     });
 
+    $.ajax({
+        url: "/allDept",
+        type: "GET",
+        dataType: "text",
+        success: function(res) {
+            console.log(res);
+            for (var i = 0; i < data.length; i++) {
+                $("departments").append(res);
+            }
+        },
+        error: function(jqXHR, textStatus, jqXHR) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+    
     $('#startInterest').click(() => {
         helper.snack('Saved');
 
