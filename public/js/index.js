@@ -31,8 +31,8 @@ class Helper {
                     'type': 'number',
                     'placeholder': '0-100',
                     'pattern': '\d+', 
-                    'min': '0',
-                    'max': '100'
+                    'min': 0,
+                    'max': 100
                 });
 
             var $courseRankLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Course Rank');
@@ -43,8 +43,8 @@ class Helper {
                     'type': 'number',
                     'placeholder': '1-5',
                     'pattern': '\d+', 
-                    'min': '1',
-                    'max': '5'
+                    'min': 1,
+                    'max': 5
                 });
 
             var $instructorRankLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Instructor Rank');
@@ -55,8 +55,8 @@ class Helper {
                     'type': 'number',
                     'placeholder': '1-5',
                     'pattern': '\d+', 
-                    'min': '1',
-                    'max': '5'
+                    'min': 1,
+                    'max': 5
                 });
 
             var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
@@ -185,6 +185,22 @@ $(document).ready(() => {
     });
 
     $('#dataForm').submit(() => {
+        helper.snack('Submitted');
+        
         $('#dataForm').hide();
+
+        var jsonObj = {'username': username};
+        jsonObj.courses = [];
+        $.each(courses, (idx, code) => {
+            var course = {};
+            course.code = code;
+            course.grade = $('#grade' + code).val();
+            course.courseRank = $('#courseRank' + code).val();
+            course.instructorRank = $('#instructorRank' + code).val();
+            jsonObj.courses.push(course);
+        });
+
+        $.post('/data', jsonObj);
+
     });
 });

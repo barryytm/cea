@@ -45,3 +45,9 @@ app.post('/info', (req, res) => {
     db.addInfo(username, country, age, gender);
     res.end();
 });
+
+app.post('/data', (req, res) => {
+    var username = req.body.username;
+    var courses = req.body.courses;
+    console.log(username, courses);
+});
