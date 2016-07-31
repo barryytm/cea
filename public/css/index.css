@@ -78,7 +78,7 @@ input {
     margin-bottom: 1%;
 }
 
-#courses {
+#editions {
     width: 50%;
     margin-left: 23%;
     overflow-y: scroll;
@@ -86,7 +86,7 @@ input {
     list-style: none;
 }
 
-#courses li {
+#editions li {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 40px;
@@ -100,11 +100,11 @@ input {
     -ms-user-select: none;
 }
 
-#courses li:nth-child(odd) {
+#editions li:nth-child(odd) {
     background: #242424;
 }
 
-#courses li:hover {
+#editions li:hover {
     background: #6E6E6E;
 }
 /* end courseForm styles */
