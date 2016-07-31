@@ -96,7 +96,6 @@ input {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
 }
 
 #courses li:nth-child(odd) {
@@ -113,6 +112,36 @@ input {
     margin-left: 30%;
 }
 /* end interestForm styles */
+
+/* dataForm styles */
+#dataForm {
+    width: 50%;
+    margin-left: 25%;
+}
+
+#dataForm a {
+    text-decoration: none;
+    display: block;
+}
+
+.center {
+    margin-left: 30%;
+    margin-bottom: 2%;
+}
+
+.content {
+    color: #4F4F4F;
+    margin-left: 20%;
+    margin-top: 3%;
+}
+
+#skipData, #startNew {
+    width: 30%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 3%;
+}
+/* end dataForm styles */
 
 /* snackbar styles */
 #snackbar {
