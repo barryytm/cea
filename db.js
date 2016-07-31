@@ -36,16 +36,15 @@ module.exports = {
 
     getAllDept: (result) => {
         pool.query('select dept_name from departments', (err, res) => {
-            // var deptList = [];
-            // for (var i = 0; i < res.rows.length; i++) {
-            //     deptList.push(res.rows[i].dept_name);
-            // }
-            // console.log(res.rows);
             result(res.rows);
         });
     },
 
-    getDeptTopics: (dept, result) => {
-        // pool.query('select course_id from ')
+    getDeptTopics: (deptName, result) => {
+        pool.query('select distinct topic from departments natural join courses' +
+            'natural join course_topics natural join topics where dept_name=$1',
+            [deptName], (err, res) => {
+                result(res.rows);
+        });
     }
 };
