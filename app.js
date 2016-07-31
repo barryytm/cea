@@ -51,3 +51,9 @@ app.post('/data', (req, res) => {
     var courses = req.body.courses;
     console.log(username, courses);
 });
+
+app.get('/allDept', (req, res) => {
+	db.getAllDept(result => {
+		res.write(result);
+	});
+});

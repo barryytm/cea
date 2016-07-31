@@ -164,8 +164,24 @@ $(document).ready(() => {
         courses.splice(idx, 1);
 
         helper.snack('Removed ' + id);
+
     });
 
+    $.ajax({
+        url: "/allDept",
+        type: "GET",
+        dataType: "text",
+        success: function(res) {
+            console.log(res);
+            for (var i = 0; i < data.length; i++) {
+                $("departments").append(res);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+        }
+    });
+    
     $('#startInterest').click(() => {
         helper.snack('Saved');
 

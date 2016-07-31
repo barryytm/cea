@@ -12,7 +12,7 @@ html(lang="en")
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous", defer)
         script(src="js/index.js", defer)
 
-    body.overlay   
+    body.overlay
         main.overlay-content
             form#loginForm
                 .form-group
@@ -54,17 +54,16 @@ html(lang="en")
                 .header
                     .form-group
                         label Enter courses you took (click to remove)
-                        input#course.form-control.input-lg(type="text", placeholder="CSC108", 
+                        input#course.form-control.input-lg(type="text", placeholder="CSC108",
                             pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required, autofocus)
                     input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
                     input#startInterest.btn.btn-lg.btn-success(value="Next")
                 ul#courses
             form#interestForm
                 .form-group.row
-                    label.col-md-2.col-form-label Enter your Interests
+                    label.col-md-2.col-form-label departments
                     .col-md-4
-                        input#interest.form-control(type="text",
-                            placeholder="Interest", title="interest", required)
+                        select#departments
                 .form-group.row
                     label.col-md-2.col-form-label Ranking
                     .col-md-4
@@ -83,4 +82,3 @@ html(lang="en")
                 //-             a.collapsed(data-toggle="collapse" data-parent="#dataForm" href="#collapseOne") Collapsible Group Item #1
                 //-     #collapseOne.panel-collapse.collapse Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             #snackbar
-
