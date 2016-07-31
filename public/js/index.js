@@ -196,13 +196,19 @@ $(document).ready(() => {
         $.get('/allDept', result => {
             for (var i = 0; i < result.length; i++){
                 var $option = $('<option/>').attr('value', result[i].dept_name);
+                if (i == 0) {
+                    $option.attr("selected", "selected");
+                }
                 $option.text(result[i].dept_name);
                 $('#departments').append($option);
             }
         });
+        var topic = $('#departments option:selected').text();
+        $.post('/deptTopics', topic);
     });
 
     $('#interestForm').submit(() => {
+
         $('#interestForm').hide();
         $('#dataForm').show();
     });

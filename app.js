@@ -57,3 +57,8 @@ app.get('/allDept', (req, res) => {
 		res.send(result);
 	});
 });
+
+app.post('/deptTopics', (req, res) => {
+	var dept = req.body.
+	db.getDeptTopics()
+});
