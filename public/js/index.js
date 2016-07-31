@@ -30,7 +30,7 @@ class Helper {
                     'id': 'grade' + val,
                     'type': 'number',
                     'placeholder': '0-100',
-                    'pattern': '\d+', 
+                    'pattern': '\d+',
                     'min': 0,
                     'max': 100
                 });
@@ -42,7 +42,7 @@ class Helper {
                     'id': 'courseRank' + val,
                     'type': 'number',
                     'placeholder': '1-5',
-                    'pattern': '\d+', 
+                    'pattern': '\d+',
                     'min': 1,
                     'max': 5
                 });
@@ -54,7 +54,7 @@ class Helper {
                     'id': 'instructorRank' + val,
                     'type': 'number',
                     'placeholder': '1-5',
-                    'pattern': '\d+', 
+                    'pattern': '\d+',
                     'min': 1,
                     'max': 5
                 });
@@ -167,21 +167,6 @@ $(document).ready(() => {
 
     });
 
-    $.ajax({
-        url: "/allDept",
-        type: "GET",
-        dataType: "text",
-        success: function(res) {
-            console.log(res);
-            for (var i = 0; i < data.length; i++) {
-                $("departments").append(res);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-    
     $('#startInterest').click(() => {
         helper.snack('Saved');
 
@@ -189,6 +174,14 @@ $(document).ready(() => {
         $('#interestForm').show();
 
         helper.addCoursesToDataForm(courses);
+
+        $.get('/allDept', result => {
+            for (var i = 0; i < result.length; i++){
+                var $option = $('<option/>').attr('value', result[i].dept_name);
+                $option.text(result[i].dept_name);
+                $('#departments').append($option);
+            }
+        });
     });
 
     $('#interestForm').submit(() => {
@@ -202,7 +195,7 @@ $(document).ready(() => {
 
     $('#dataForm').submit(() => {
         helper.snack('Submitted');
-        
+
         $('#dataForm').hide();
 
         var jsonObj = {'username': username};

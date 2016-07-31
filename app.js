@@ -54,6 +54,6 @@ app.post('/data', (req, res) => {
 
 app.get('/allDept', (req, res) => {
 	db.getAllDept(result => {
-		res.write(result);
+		res.send(result);
 	});
 });

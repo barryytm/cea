@@ -36,12 +36,16 @@ module.exports = {
 
     getAllDept: (result) => {
         pool.query('select dept_name from departments', (err, res) => {
-            var deptList = [];
-            for (var i = 0; i < res.rows.length; i++) {
-                deptList.push(res.rows[i].dept_name);
-            }
-            // console.log(JSON.stringify(deptList));
-            result(JSON.stringify(deptList));
+            // var deptList = [];
+            // for (var i = 0; i < res.rows.length; i++) {
+            //     deptList.push(res.rows[i].dept_name);
+            // }
+            // console.log(res.rows);
+            result(res.rows);
         });
+    },
+
+    getDeptTopics: (dept, result) => {
+        // pool.query('select course_id from ')
     }
 };
