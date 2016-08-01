@@ -48,8 +48,8 @@ app.post('/info', (req, res) => {
 
 app.post('/data', (req, res) => {
     var username = req.body.username;
-    var courses = req.body.courses;
-    console.log(username, courses);
+    var editions = req.body.editions;
+    console.log(username, editions);
 });
 
 app.get('/deptTopics', (req, res) => {

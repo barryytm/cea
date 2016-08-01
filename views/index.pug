@@ -54,7 +54,7 @@ html(lang="en")
             form#courseForm
                 .header
                     .form-group
-                        label Enter courses you took (click to remove)
+                        label Enter editions you took (click to remove)
                         input#code.form-control.input-lg(type="text", placeholder="CSC108",
                             pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required, autofocus)
                         input#semester.form-control.input-lg(type="text", placeholder="f|w|s",
@@ -65,7 +65,7 @@ html(lang="en")
                             pattern="m|a|e", required)
                     input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
                     input#startInterest.btn.btn-lg.btn-success(value="Next")
-                ul#courses
+                ul#editions
             form#interestForm
                 .form-group.row
                     label.col-md-2.col-form-label Departments

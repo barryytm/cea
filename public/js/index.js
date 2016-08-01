@@ -8,15 +8,16 @@ class Helper {
         }, 2000);
     }
 
-    addCoursesToDataForm(courses) {
-        $.each(courses, (idx, val) => {
-            var id = 'collapse' + val;
+    addEditionsToDataForm(editions) {
+        $.each(editions, (idx, edition) => {
+            var code = edition.code;
+            var id = 'collapse' + code;
             var $first = $('<section/>').addClass('panel panel-default');
             var $second = $('<section/>').addClass('panel-heading');
             var $third = $('<section/>').addClass('panel-title');
             var $title = $('<a/>')
                 .addClass('collapsed')
-                .text(val)
+                .text(code)
                 .attr({
                     'data-toggle': 'collapse',
                     'data-parent': '#dataForm',
@@ -27,7 +28,7 @@ class Helper {
             var $grade = $('<input/>')
                 .addClass('form-control')
                 .attr({
-                    'id': 'grade' + val,
+                    'id': 'grade' + code,
                     'type': 'number',
                     'placeholder': '0-100',
                     'pattern': '\d+',
@@ -39,7 +40,7 @@ class Helper {
             var $courseRank= $('<input/>')
                 .addClass('form-control')
                 .attr({
-                    'id': 'courseRank' + val,
+                    'id': 'courseRank' + code,
                     'type': 'number',
                     'placeholder': '1-5',
                     'pattern': '\d+',
@@ -51,7 +52,7 @@ class Helper {
             var $instructorRank= $('<input/>')
                 .addClass('form-control')
                 .attr({
-                    'id': 'instructorRank' + val,
+                    'id': 'instructorRank' + code,
                     'type': 'number',
                     'placeholder': '1-5',
                     'pattern': '\d+',
@@ -95,9 +96,11 @@ class Helper {
 }
 
 $(document).ready(() => {
-    var username = '';
-    var courses = [];
     var helper = new Helper();
+    var collected = {
+        username: '',
+        editions: []
+    };
 
     $('form').submit((event) => {
         event.preventDefault();
@@ -109,14 +112,14 @@ $(document).ready(() => {
     $('#dataForm').hide();
 
     $('#loginForm').submit(() => {
-        username = $('#username').val();
+        collected.username = $('#username').val();
 
         helper.snack('Logged in');
 
         $('#loginForm').hide();
 
-        $.post('/login', {username: username}, result => {
-            $('#name').text(username);
+        $.post('/login', {username: collected.username}, result => {
+            $('#name').text(collected.username);
             if (!result) {
                 $('#infoForm').show();
             } else {
@@ -126,23 +129,19 @@ $(document).ready(() => {
     });
 
     $('#infoForm').submit(() => {
-        var age = $('#age').val();
-        var country = $('#country').val();
-        var gender = $('#male').is(':checked') ? 'm' : 'f';
-
         var info = {
-            username: username,
-            age: age,
-            country: country,
-            gender: gender
+            username: collected.username,
+            age: $('#age').val(),
+            country: $('#country').val(),
+            gender: $('#male').is(':checked') ? 'm' : 'f'
         };
 
         helper.snack('Submitted');
+
         $('#infoForm').hide();
+        $('#courseForm').show();
 
         $.post('/info', info);
-
-        $('#courseForm').show();
     });
 
     $('#courseForm').submit(() => {
@@ -154,32 +153,31 @@ $(document).ready(() => {
             timeOfDay: $('#timeOfDay').val()
         };
 
-        $.each(courses, (idx, val) => {
+        $.each(collected.editions, (idx, val) => {
             if (_.isEqual(val, edition)) {
                 found = true;
                 helper.snack('Already added');
             }
         });
-
-
+        
         if (!found) {
             helper.snack('Added ' + edition.code);
 
             $('<li/>')
             .text(edition.code + ', ' + edition.semester + ', ' + edition.year + ', ' + edition.timeOfDay)
             .attr('id', edition.code)
-            .appendTo('#courses');
+            .appendTo('#editions');
 
-            courses.push(edition);
+            collected.editions.push(edition);
         }
     });
 
-    $('#courses').click((event) => {
+    $('#editions').click((event) => {
         var id = event.target.id;
         $('#' + id).hide();
 
-        var idx = courses.indexOf(event.target.id);
-        courses.splice(idx, 1);
+        var idx = collected.editions.indexOf(event.target.id);
+        collected.editions.splice(idx, 1);
 
         helper.snack('Removed ' + id);
 
@@ -191,7 +189,7 @@ $(document).ready(() => {
         $('#courseForm').hide();
         $('#interestForm').show();
 
-        helper.addCoursesToDataForm(courses);
+        helper.addEditionsToDataForm(collected.editions);
 
         // get all the depts and topics
         $.get('/deptTopics', result => {
@@ -238,18 +236,12 @@ $(document).ready(() => {
 
         $('#dataForm').hide();
 
-        var jsonObj = {'username': username};
-        jsonObj.courses = [];
-        $.each(courses, (idx, code) => {
-            var course = {};
-            course.code = code;
-            course.grade = $('#grade' + code).val();
-            course.courseRank = $('#courseRank' + code).val();
-            course.instructorRank = $('#instructorRank' + code).val();
-            jsonObj.courses.push(course);
+        $.each(collected.editions, (idx, edition) => {
+            var code = edition.code;
+            edition.grade =  $('#grade' + code).val();
+            edition.courseRank = $('#courseRank' + code).val();
+            edition.instructorRank = $('#instructorRank' + code).val();
         });
-
-        $.post('/data', jsonObj);
-
+        $.post('/data', collected);
     });
 });

@@ -30,7 +30,10 @@
     "expr": true,
     "browser": true,
     "devel": true,
-    "jquery": true
+    "jquery": true,
+    "globals": {
+      "_": false
+    }
   },
   "engines": {
     "npm": "~3.10.x",
