@@ -49,7 +49,10 @@ app.post('/info', (req, res) => {
 app.post('/data', (req, res) => {
     var username = req.body.username;
     var editions = req.body.editions;
-    console.log(username, editions);
+
+    editions.forEach((edition) => {
+        db.addExperience(username, edition);
+    });
 });
 
 app.get('/allDept', (req, res) => {
