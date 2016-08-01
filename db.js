@@ -70,7 +70,7 @@ module.exports = {
         }
 
         console.log('fouth',courseId);
-    }
+    },
 
     getUserCoursesEdition: (username, result) => {
         pool.query('select topic_id, course_id from enrollments where username=$1',
