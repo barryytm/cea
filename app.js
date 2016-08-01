@@ -55,13 +55,15 @@ app.post('/data', (req, res) => {
     });
 });
 
-app.get('/allDept', (req, res) => {
-	db.getAllDept(result => {
-		res.send(result);
+app.get('/deptTopics', (req, res) => {
+	db.getDeptTopics(result => {
+		var data = {};
+		for (var i = 0; i < result.length; i ++) {
+			if (! data.hasOwnProperty(result[i].dept_name)) {
+				data[result[i].dept_name] = [];
+			}
+			data[result[i].dept_name].push(result[i].topic);
+		}
+		res.send(data);
 	});
-});
-
-app.post('/deptTopics', (req, res) => {
-	var dept = req.body.
-	db.getDeptTopics()
 });

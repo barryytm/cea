@@ -101,7 +101,7 @@ $(document).ready(() => {
         username: '',
         editions: []
     };
-    
+
     $('form').submit((event) => {
         event.preventDefault();
     });
@@ -159,7 +159,7 @@ $(document).ready(() => {
                 helper.snack('Already added');
             }
         });
-       
+        
         if (!found) {
             helper.snack('Added ' + edition.code);
 
@@ -191,18 +191,34 @@ $(document).ready(() => {
 
         helper.addEditionsToDataForm(collected.editions);
 
-        $.get('/allDept', result => {
-            for (var i = 0; i < result.length; i++){
-                var $option = $('<option/>').attr('value', result[i].dept_name);
-                if (i == 0) {
-                    $option.attr("selected", "selected");
-                }
-                $option.text(result[i].dept_name);
-                $('#departments').append($option);
+        // get all the depts and topics
+        $.get('/deptTopics', result => {
+            for (var key in result) {
+                var $dept = $('<option/>').attr('value', key);
+                $dept.text(key);
+                $('#departments').append($dept);
             }
+            $('#departments').find('option:first').attr('selected', true);
+
+            // first time
+            var dept = $('#departments').find('option:first').val();
+            for (var value in result[dept]) {
+                var $topic = $('<option/>').attr('value', result[dept][value]);
+                $topic.text(result[dept][value]);
+                $('#topics').append($topic);
+            }
+
+            // otherwise
+            $('#departments').change(function() {
+                var dept = $('#departments').find(":selected").text();
+                $('#topics').empty();
+                for (var value in result[dept]) {
+                    var $topic = $('<option/>').attr('value', result[dept][value]);
+                    $topic.text(result[dept][value]);
+                    $('#topics').append($topic);
+                }
+            });
         });
-        var topic = $('#departments option:selected').text();
-        $.post('/deptTopics', topic);
     });
 
     $('#interestForm').submit(() => {
