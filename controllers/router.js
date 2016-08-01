@@ -72,8 +72,8 @@ router.post('/topicInterest', (req, res) => {
     } else {
         var change = false;
         for (var i = 0; i < userInterests[currUsername].length; i ++) {
-            if (userInterests[currUsername][i]['topic'] == currTopic) {
-                userInterests[currUsername][i]['interestRating'] = currInterestRating;
+            if (userInterests[currUsername][i].topic === currTopic) {
+                userInterests[currUsername][i].interestRating = currInterestRating;
                 change = true;
             }
         }
@@ -84,8 +84,7 @@ router.post('/topicInterest', (req, res) => {
 
     console.log(userInterests);
 
-
+    res.end();
 });
-router.post('/rankedTopic')
 
 module.exports = router;
