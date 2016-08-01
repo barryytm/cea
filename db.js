@@ -42,6 +42,36 @@ module.exports = {
         });
     },
 
+    addExperience: (username, edition) => {
+        var code = edition.code;
+        var deptCode = code.substr(0, 3);
+        var courseNumber = code.substr(3, 3);
+        var foundCourse;
+        var courseId;
+
+        pool.query('select count(1) from courses where dept_code=$1 and course_number=$2',
+        [deptCode, courseNumber], (err, res) => {
+            foundCourse = res.rows[0] === 1 ? true : false;
+            console.log('first');
+        });
+
+        if (foundCourse) {
+            pool.query('select course_id from courses where dept_code=$1 and course_number=$2',
+            [deptCode, courseNumber], (err, res) => {
+                courseId = res.rows[0].course_id;
+                console.log('second');
+            });
+        } else {
+            pool.query('insert into courses values ((select max(course_id) from courses) + 1, $1, $2) returning course_id',
+            [deptCode, courseNumber], (err, res) => {
+                courseId = res.rows[0].course_id;
+                console.log('third');
+            });
+        }
+
+        console.log('fouth',courseId);
+    }
+
     getUserCoursesEdition: (username, result) => {
         pool.query('select topic_id, course_id from enrollments where username=$1',
             [username], (err, res) => {
