@@ -53,6 +53,14 @@ module.exports = {
         });
     },
 
+    getDeptSkills:(result) => {
+        pool.query('select distinct dept_name, skill from departments ' +
+            'natural join courses natural join course_skills natural join skills',
+            (err, res) => {
+            result(res.rows);
+        });
+    },
+
     addExperience: (username, edition) => {
         var deptCode = edition.code.substr(0, 3);
         var courseNumber = edition.code.substr(3);
@@ -74,7 +82,7 @@ module.exports = {
         var editionId = parseInt(foundEdition, 10) ?
             client.querySync('select edition_id from course_editions where course_id=$1 and semester=$2 and year=$3 and time_day=$4',
             [courseId, edition.semester, edition.year, edition.timeOfDay])[0].edition_id :
-            client.querySync('insert into course_editions values ((select max(edition_id) from course_editions) + 1,' + 
+            client.querySync('insert into course_editions values ((select max(edition_id) from course_editions) + 1,' +
             '$1, $2, $3, null, $4) returning edition_id',
             [courseId, edition.semester, edition.year, edition.timeOfDay])[0].edition_id;
 
@@ -83,14 +91,14 @@ module.exports = {
         [edition.grade])[0].letter_grade;
 
         // search for enrollment
-        var already = client.querySync('select count(1) from enrollments where edition_id=$1 and username=$2', 
+        var already = client.querySync('select count(1) from enrollments where edition_id=$1 and username=$2',
         [editionId, username])[0].count;
 
-        already ? 
-            client.querySync('update enrollments set letter_grade=$1, course_ranking=$2,' + 
+        already ?
+            client.querySync('update enrollments set letter_grade=$1, course_ranking=$2,' +
             'instr_ranking=$3 where edition_id=$4 and username=$5',
             [letterGrade, edition.courseRank, edition.instructorRank, editionId, username]) :
-            client.querySync('insert into enrollments values ($1, $2, $3, $4, $5)', 
+            client.querySync('insert into enrollments values ($1, $2, $3, $4, $5)',
             [editionId, username, letterGrade, edition.courseRank, edition.instructorRank]);
     },
 

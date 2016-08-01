@@ -60,7 +60,7 @@ html(lang="en")
                     //- input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
                     input#startInterest.btn.btn-lg.btn-success(type="submit", value="Submit")
                 ul#editions
-            form#interestForm
+            form#interestForm.dataCollection
                 .form-group.row
                     label.col-md-2.col-form-label Departments
                     .col-md-4
@@ -78,6 +78,24 @@ html(lang="en")
                     .col-md-7.col-md-offset-2
                         input#addTopicInt.btn.btn-lg.btn-primary(type="submit", value="Submit")
                         input#startSkill.btn.btn-lg.btn-success(value="Next")
+            form#skillForm.dataCollection
+                .form-group.row
+                    label.col-md-2.col-form-label Departments
+                    .col-md-4
+                        select#departmentsSkill
+                .form-group.row
+                    label.col-md-2.col-form-label Skills
+                    .col-md-4
+                        select#skills
+                .form-group.row
+                    label.col-md-2.col-form-label Rating
+                    .col-md-4
+                        input#skillRating.form-control(type="number", placeholder="Rating",
+                            pattern="\d+", min="1" max="5", required)
+                .form-group.row
+                    .col-md-7.col-md-offset-2
+                        input#addSkill.btn.btn-lg.btn-primary(type="submit", value="Submit")
+                        input#startdata.btn.btn-lg.btn-success(value="Next")
             form#dataForm.new
                 label.center Enter your course inforamtion
                 input#skipData.bu.btn.btn-lg.btn-info(value="Skip")

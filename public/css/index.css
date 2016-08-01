@@ -93,7 +93,7 @@ input {
     background: #6E6E6E;
     font-size: 18px;
     transition: 0.2s;
-    
+
     /* make the list items unselectable */
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -127,10 +127,11 @@ input {
 
 /* end courseForm styles */
 
-/* intetrestForm styles */ 
-#interestForm {
+/* intetrestForm styles */
+.dataCollection {
     margin-left: 30%;
 }
+
 /* end interestForm styles */
 
 /* dataForm styles */
@@ -195,4 +196,3 @@ input {
     to {bottom: 0; opacity: 0;}
 }
 /* end snackbar styles */
-

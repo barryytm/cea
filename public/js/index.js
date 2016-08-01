@@ -247,6 +247,7 @@ $(document).ready(() => {
     $('#infoForm').hide();
     $('#courseForm').hide();
     $('#interestForm').hide();
+    $('#skillForm').hide();
     $('#dataForm').hide();
     $('#topicSkillForm').hide();
 
@@ -371,8 +372,59 @@ $(document).ready(() => {
     });
 
     $('#startSkill').click(() => {
+        // get all the depts and topics
+        $.get('/deptSkills', result => {
+
+            for (var key in result) {
+                var $dept = $('<option/>').attr('value', key);
+                $dept.text(key);
+                $('#departmentsSkill').append($dept);
+            }
+            $('#departmentsSkill').find('option:first').attr('selected', true);
+
+            // first time
+            var dept = $('#departmentsSkill').find('option:first').val();
+            for (var value in result[dept]) {
+                var $skill = $('<option/>').attr('value', result[dept][value]);
+                $skill.text(result[dept][value]);
+                $('#skills').append($skill);
+            }
+
+            // otherwise
+            $('#departmentsSkill').change(function() {
+                var dept = $('#departmentsSkill').find(":selected").text();
+                $('#skills').empty();
+                for (var value in result[dept]) {
+                    var $skill = $('<option/>').attr('value', result[dept][value]);
+                    $skill.text(result[dept][value]);
+                    $('#skills').append($skill);
+                }
+            });
+        });
 
         $('#interestForm').hide();
+        $('#skillForm').show();
+    });
+
+    $('#skillForm').submit(() => {
+        var username = $('#username').val();
+        var dept = $('#departmentsSkill').find(':selected').text();
+        var skill = $('#skills').find(':selected').text();
+        var skillRating = $('#skillRating').val();
+
+        var data = {
+            username: username,
+            dept: dept,
+            skill: skill,
+            skillRating: skillRating
+        };
+
+        $.post('/skills', data);
+
+    });
+
+    $('#startdata').click(() => {
+        $('#skillForm').hide();
         $('#dataForm').show();
     });
 
