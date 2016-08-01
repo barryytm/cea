@@ -92,5 +92,9 @@ module.exports = {
             [letterGrade, edition.courseRank, edition.instructorRank, editionId, username]) :
             client.querySync('insert into enrollments values ($1, $2, $3, $4, $5)', 
             [editionId, username, letterGrade, edition.courseRank, edition.instructorRank]);
+    },
+
+    addTopicSkill: (username, topicSkill) => {
+
     }
 };

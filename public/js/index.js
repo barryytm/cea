@@ -20,7 +20,7 @@ class Helper {
         }, 2000);
     }
 
-    populate(courses) {
+    populateEditions(courses) {
         $.each(courses, (idx, code) => {
             var id = 'collapse' + code;
             var $first = $('<section/>').addClass('panel panel-default');
@@ -76,12 +76,12 @@ class Helper {
                 .addClass('form-control')
                 .prop('required', true)
                 .attr({
-                    'id': 'grade' + code,
-                    'type': 'number',
-                    'placeholder': '0-100',
-                    'pattern': '\d+',
-                    'min': 0,
-                    'max': 100
+                    id: 'grade' + code,
+                    type: 'number',
+                    placeholder: '0-100',
+                    pattern: '\d+',
+                    min: 0,
+                    max: 100
                 });
 
             var $courseRankLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Course Rank');
@@ -89,12 +89,12 @@ class Helper {
                 .addClass('form-control')
                 .prop('required', true)
                 .attr({
-                    'id': 'courseRank' + code,
-                    'type': 'number',
-                    'placeholder': '1-5',
-                    'pattern': '\d+',
-                    'min': 1,
-                    'max': 5
+                    id: 'courseRank' + code,
+                    type: 'number',
+                    placeholder: '1-5',
+                    pattern: '\d+',
+                    min: 1,
+                    max: 5
                 });
 
             var $instructorRankLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Instructor Rank');
@@ -102,12 +102,12 @@ class Helper {
                 .addClass('form-control')
                 .prop('required', true)
                 .attr({
-                    'id': 'instructorRank' + code,
-                    'type': 'number',
-                    'placeholder': '1-5',
-                    'pattern': '\d+',
-                    'min': 1,
-                    'max': 5
+                    id: 'instructorRank' + code,
+                    type: 'number',
+                    placeholder: '1-5',
+                    pattern: '\d+',
+                    min: 1,
+                    max: 5
                 });
 
             var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
@@ -164,6 +164,71 @@ class Helper {
             .appendTo($('#dataForm'));
         });
     }
+
+    populateTopicSkill(courses) {
+        $.each(courses, (idx, code) => {
+            var id = 'collapseTS' + code;
+            var $first = $('<section/>').addClass('panel panel-default');
+            var $second = $('<section/>').addClass('panel-heading');
+            var $third = $('<section/>').addClass('panel-title');
+            var $title = $('<a/>')
+                .addClass('collapsed')
+                .text(code)
+                .attr({
+                    'data-toggle': 'collapse',
+                    'data-parent': '#dataForm',
+                    'href': '#' + id
+                });
+
+            var $topicLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Topic');
+            var $topic = $('<input/>')
+                .addClass('form-control')
+                .prop('required', true)
+                .attr({
+                    id: 'topic' + code,
+                    type: 'text',
+                    placeholder: 'new topic',
+                    pattern: '^[a-zA-Z][a-zA-Z ]{1,20}$',
+                    title: '2 to 20 alphabetic characters'
+                });
+
+            var $skillLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Skill');
+            var $skill = $('<input/>')
+                .addClass('form-control')
+                .prop('required', true)
+                .attr({
+                    id: 'skill' + code,
+                    type: 'text',
+                    placeholder: 'new skill',
+                    pattern: '^[a-zA-Z][a-zA-Z ]{1,20}$',
+                    title: '2 to 20 alphabetic characters'
+                });
+
+            var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
+
+            // add topic
+            $('<section/>').addClass('form-group row')
+            .append($topicLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($topic))
+            .appendTo($content);
+
+            // add skill
+            $('<section/>').addClass('form-group row')
+            .append($skillLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($skill))
+            .appendTo($content);
+
+            $first
+            .append($second
+                .append($third
+                    .append($title)))
+            .append($content)
+            .appendTo($('#topicSkillForm'));
+
+        });
+    }
 }
 
 $(document).ready(() => {
@@ -171,7 +236,8 @@ $(document).ready(() => {
     var courses = [];
     var collected = {
         username: '',
-        editions: []
+        editions: [],
+        topicSkills: []
     };
 
     $('form').submit((event) => {
@@ -182,6 +248,7 @@ $(document).ready(() => {
     $('#courseForm').hide();
     $('#interestForm').hide();
     $('#dataForm').hide();
+    $('#topicSkillForm').hide();
 
     $('#loginForm').submit(() => {
         collected.username = $('#username').val();
@@ -252,7 +319,8 @@ $(document).ready(() => {
         $('#courseForm').hide();
         $('#interestForm').show();
 
-        helper.populate(courses);
+        helper.populateEditions(courses);
+        helper.populateTopicSkill(courses);
 
         // get all the depts and topics
         $.get('/deptTopics', result => {
@@ -310,12 +378,14 @@ $(document).ready(() => {
 
     $('#skipData').click(() => {
         $('#dataForm').hide();
+        $('#topicSkillForm').show();
     });
 
     $('#dataForm').submit(() => {
-        helper.snack('Submitted');
+        helper.snack('Information Submitted');
 
         $('#dataForm').hide();
+        $('#topicSkillForm').show();
 
         $.each(courses, (idx, code) => {
             collected.editions.push({
@@ -330,5 +400,25 @@ $(document).ready(() => {
         });
 
         $.post('/data', collected);
+    });
+
+    $('#skipTS').click(() => {
+        $('#topicSkillForm').hide();
+    });
+
+    $('#topicSkillForm').submit(() => {
+        helper.snack('New topics, skills submitted');
+
+        $('#topicSkillForm').hide();
+
+        $.each(courses, (idx, code) => {
+            collected.topicSkills.push({
+                code: code,
+                skill: $('#skill' + code).val(),
+                topic: $('#topic' + code).val()
+            });
+        });
+
+        $.post('/topicSkill', collected);
     });
 });

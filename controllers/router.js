@@ -47,6 +47,17 @@ router.post('/data', (req, res) => {
     res.end();
 });
 
+router.post('/topicSkill', (req, res) => {
+    var username = req.body.username;
+    var topicSkills = req.body.ts;
+
+    topicSkills.forEach((topicSkill) => {
+        db.addTopicSkill(username, topicSkill);
+    });
+
+    res.end();
+});
+
 router.get('/deptTopics', (req, res) => {
 	db.getDeptTopics(result => {
 		var data = {};

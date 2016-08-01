@@ -134,12 +134,12 @@ input {
 /* end interestForm styles */
 
 /* dataForm styles */
-#dataForm {
+.new {
     width: 50%;
     margin-left: 25%;
 }
 
-#dataForm a {
+.new a {
     text-decoration: none;
     display: block;
 }
@@ -155,7 +155,7 @@ input {
     margin-top: 3%;
 }
 
-#skipData, #startNew {
+.bu {
     width: 30%;
     margin-left: 10%;
     margin-right: 10%;
