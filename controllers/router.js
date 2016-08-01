@@ -4,6 +4,9 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
 
+// global variables
+var userInterests = [];
+
 // start routers
 router.get('/', (req, res) => {
     res.render('index');
@@ -58,12 +61,12 @@ router.get('/deptTopics', (req, res) => {
 });
 
 router.post('/topicInterest', (req, res) => {
-	var username = req.body.username;
-	var topic = req.body.topic;
-	var interestBefore;
-	var interestAfter;
-	db.addTopicRating(course_id, topic, ratingBefore, ratingAfter);
+	var data = req.body;
+
+    userInterests.push(data);
+
+    
 });
-// router.post('/rankedTopic')
+router.post('/rankedTopic')
 
 module.exports = router;

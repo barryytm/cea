@@ -239,15 +239,15 @@ $(document).ready(() => {
         } else {
             helper.snack('Selected ' + id);
             $('#' + id).addClass('checked');
-            
+
             courses.push(id);
         }
     });
 
     $('#courseForm').submit(() => {
         helper.snack('Submitted');
-        
-        $.post('/takenCourses');
+
+        // $.post('/takenCourses');
 
         $('#courseForm').hide();
         $('#interestForm').show();
@@ -286,9 +286,20 @@ $(document).ready(() => {
     });
 
     $('#interestForm').submit(() => {
+        var username = $('#username').val();
         var dept = $('#departments').find(':selected').text();
         var topic = $('#topics').find(':selected').text();
-        console.log(topic);
+        var interestRating = $('#interestRating').val();
+
+        var data = {
+            username: username,
+            dept: dept,
+            topic: topic,
+            interestRating: interestRating
+        };
+
+        $.post('/topicInterest', data);
+
     });
 
     $('#startSkill').click(() => {
@@ -316,7 +327,7 @@ $(document).ready(() => {
                 courseRank: $('#courseRank' + code).val(),
                 instructorRank: $('#instructorRank' + code).val()
             });
-        });    
+        });
 
         $.post('/data', collected);
     });
