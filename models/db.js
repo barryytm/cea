@@ -22,16 +22,22 @@ const config = {
 const pool = new pg.Pool(config);
 
 module.exports = {
-    checkUsername: (username, cb) => {
+    checkUsername: (username, callback) => {
         pool.query('select username from students where username=$1',
             [username], (err, res) => {
-            cb(res.rows[0]);
+            callback(res.rows[0]);
         });
     },
 
     addInfo: (username, country, age, gender) => {
         pool.query('insert into students values ($1, 0, $2, $3, $4)',
             [username, age, gender, country]);
+    },
+
+    getCourses: (callback) => {
+        pool.query('select dept_code, course_number from courses', (err, res) => {
+            callback(res.rows);
+        });
     },
 
     getDeptTopics: (result) => {
@@ -78,7 +84,6 @@ module.exports = {
             result(res.rows);
         });
     },
-
 
     addTopicRating: (courseId, editionId, username, topic, interestBefore, interestAfter) => {
         var topicId;

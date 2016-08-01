@@ -1,3 +1,15 @@
+// custom event trigger for show/hide
+// http://viralpatel.net/blogs/jquery-trigger-custom-event-show-hide-element/
+(function($) {
+	  $.each(['show', 'hide'], function(i, ev) {
+	    var el = $.fn[ev];
+	    $.fn[ev] = function () {
+	        this.trigger(ev);
+	        return el.apply(this, arguments);
+	    };
+    });
+})(jQuery);
+
 // class containing helper methods
 class Helper {
     snack(msg) {
@@ -8,9 +20,8 @@ class Helper {
         }, 2000);
     }
 
-    addEditionsToDataForm(editions) {
-        $.each(editions, (idx, edition) => {
-            var code = edition.code;
+    populate(courses) {
+        $.each(courses, (idx, code) => {
             var id = 'collapse' + code;
             var $first = $('<section/>').addClass('panel panel-default');
             var $second = $('<section/>').addClass('panel-heading');
@@ -24,9 +35,46 @@ class Helper {
                     'href': '#' + id
                 });
 
+            var $semesterLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Semester');
+            var $semester = $('<input/>')
+                .addClass('form-control')
+                .prop('required', true)
+                .attr({
+                    id: 'semester' + code,
+                    type: 'text',
+                    placeholder: 'f|w|s',
+                    pattern: 'f|w|s',
+                    title: 'should only be f, w or s'
+                });
+
+            var $yearLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Year');
+            var $year = $('<input/>')
+                .addClass('form-control')
+                .prop('required', true)
+                .attr({
+                    id: 'year' + code,
+                    type: 'number',
+                    placeholder: '2016',
+                    pattern: '\d+'
+                });
+
+
+            var $timeOfDayLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Time Of Day');
+            var $timeOfDay = $('<input/>')
+                .addClass('form-control')
+                .prop('required', true)
+                .attr({
+                    id: 'timeOfDay' + code,
+                    type: 'text',
+                    placeholder: 'm|a|e',
+                    pattern: 'm|a|e',
+                    title: 'should only be m, a or e'
+                });
+
             var $gradeLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Grade');
             var $grade = $('<input/>')
                 .addClass('form-control')
+                .prop('required', true)
                 .attr({
                     'id': 'grade' + code,
                     'type': 'number',
@@ -39,6 +87,7 @@ class Helper {
             var $courseRankLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Course Rank');
             var $courseRank= $('<input/>')
                 .addClass('form-control')
+                .prop('required', true)
                 .attr({
                     'id': 'courseRank' + code,
                     'type': 'number',
@@ -51,6 +100,7 @@ class Helper {
             var $instructorRankLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Instructor Rank');
             var $instructorRank= $('<input/>')
                 .addClass('form-control')
+                .prop('required', true)
                 .attr({
                     'id': 'instructorRank' + code,
                     'type': 'number',
@@ -61,6 +111,27 @@ class Helper {
                 });
 
             var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
+
+            // add semester
+            $('<section/>').addClass('form-group row')
+            .append($semesterLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($semester))
+            .appendTo($content);
+
+            // add year
+            $('<section/>').addClass('form-group row')
+            .append($yearLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($year))
+            .appendTo($content);
+
+            // add time of day
+            $('<section/>').addClass('form-group row')
+            .append($timeOfDayLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($timeOfDay))
+            .appendTo($content);
 
             // add grade
             $('<section/>').addClass('form-group row')
@@ -97,6 +168,7 @@ class Helper {
 
 $(document).ready(() => {
     var helper = new Helper();
+    var courses = [];
     var collected = {
         username: '',
         editions: []
@@ -144,52 +216,43 @@ $(document).ready(() => {
         $.post('/info', info);
     });
 
-    $('#courseForm').submit(() => {
-        var found = false;
-        var edition = {
-            code: $('#code').val(),
-            semester: $('#semester').val(),
-            year: $('#year').val(),
-            timeOfDay: $('#timeOfDay').val()
-        };
-
-        $.each(collected.editions, (idx, val) => {
-            if (_.isEqual(val, edition)) {
-                found = true;
-                helper.snack('Already added');
-            }
+    $('#courseForm').on('show', () => {
+        $.get('/courses', data => {
+            $.each(data.courses, (idx, code) => {
+                $('<li/>')
+                .text(code)
+                .attr('id', code)
+                .appendTo('#editions');
+            });
         });
-
-        if (!found) {
-            helper.snack('Added ' + edition.code);
-
-            $('<li/>')
-            .text(edition.code + ', ' + edition.semester + ', ' + edition.year + ', ' + edition.timeOfDay)
-            .attr('id', edition.code)
-            .appendTo('#editions');
-
-            collected.editions.push(edition);
-        }
     });
 
     $('#editions').click((event) => {
         var id = event.target.id;
-        $('#' + id).hide();
 
-        var idx = collected.editions.indexOf(event.target.id);
-        collected.editions.splice(idx, 1);
+        if ($('#' + id).hasClass('checked')) {
+            helper.snack('Removed ' + id);
+            $('#' + id).removeClass('checked');
 
-        helper.snack('Removed ' + id);
-
+            var idx = courses.indexOf(event.target.id);
+            courses.splice(idx, 1);
+        } else {
+            helper.snack('Selected ' + id);
+            $('#' + id).addClass('checked');
+            
+            courses.push(id);
+        }
     });
 
-    $('#startInterest').click(() => {
-        helper.snack('Saved');
+    $('#courseForm').submit(() => {
+        helper.snack('Submitted');
+        
+        $.post('/takenCourses');
 
         $('#courseForm').hide();
         $('#interestForm').show();
 
-        helper.addEditionsToDataForm(collected.editions);
+        helper.populate(courses);
 
         // get all the depts and topics
         $.get('/deptTopics', result => {
@@ -219,6 +282,7 @@ $(document).ready(() => {
                 }
             });
         });
+
     });
 
     $('#interestForm').submit(() => {
@@ -242,12 +306,18 @@ $(document).ready(() => {
 
         $('#dataForm').hide();
 
-        $.each(collected.editions, (idx, edition) => {
-            var code = edition.code;
-            edition.grade =  $('#grade' + code).val();
-            edition.courseRank = $('#courseRank' + code).val();
-            edition.instructorRank = $('#instructorRank' + code).val();
-        });
+        $.each(courses, (idx, code) => {
+            collected.editions.push({
+                code: code,
+                semester: $('#semester' + code).val(),
+                year: $('#year' + code).val(),
+                timeOfDay: $('#timeOfDay' + code).val(),
+                grade: $('#grade' + code).val(),
+                courseRank: $('#courseRank' + code).val(),
+                instructorRank: $('#instructorRank' + code).val()
+            });
+        });    
+
         $.post('/data', collected);
     });
 });
