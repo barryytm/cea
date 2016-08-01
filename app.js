@@ -64,3 +64,12 @@ app.get('/deptTopics', (req, res) => {
 		res.send(data);
 	});
 });
+
+app.post('/topicInterest', (req, res) => {
+	var username = req.body.username;
+	var topic = req.body.topic;
+	var interestBefore;
+	var interestAfter;
+	db.addTopicRating(course_id, topic, ratingBefore, ratingAfter);
+});
+// app.post('/rankedTopic')

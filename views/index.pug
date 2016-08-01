@@ -76,13 +76,19 @@ html(lang="en")
                     .col-md-4
                         select#topics
                 .form-group.row
-                    label.col-md-2.col-form-label Ranking
+                    label.col-md-2.col-form-label Rating Before
                     .col-md-4
-                        input#interestRanking.form-control(type="number", placeholder="Ranking",
+                        input#interestRankingBefore.form-control(type="number", placeholder="Rating",
+                            pattern="\d+", min="1" max="5", required)
+                .form-group.row
+                    label.col-md-2.col-form-label Rating After
+                    .col-md-4
+                        input#interestRankingAfter.form-control(type="number", placeholder="Rating",
                             pattern="\d+", min="1" max="5", required)
                 .form-group.row
                     .col-md-7.col-md-offset-2
-                        input.btn.btn-lg.btn-primary(type="submit", value="Submit")
+                        input#addTopicInt.btn.btn-lg.btn-primary(type="submit", value="Submit")
+                        input#startSkill.btn.btn-lg.btn-success(value="Next")
             form#dataForm
                 label.center Enter your course inforamtion
                 input#skipData.btn.btn-lg.btn-info(value="Skip")

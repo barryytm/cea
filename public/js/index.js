@@ -159,7 +159,7 @@ $(document).ready(() => {
                 helper.snack('Already added');
             }
         });
-        
+
         if (!found) {
             helper.snack('Added ' + edition.code);
 
@@ -222,6 +222,12 @@ $(document).ready(() => {
     });
 
     $('#interestForm').submit(() => {
+        var dept = $('#departments').find(':selected').text();
+        var topic = $('#topics').find(':selected').text();
+        console.log(topic);
+    });
+
+    $('#startSkill').click(() => {
 
         $('#interestForm').hide();
         $('#dataForm').show();
