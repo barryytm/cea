@@ -127,12 +127,26 @@ input {
 
 /* end courseForm styles */
 
-/* intetrestForm styles */
+/* dataCollection styles */
 .dataCollection {
     margin-left: 30%;
 }
 
-/* end interestForm styles */
+.next {
+    width: 100px;
+    margin: 10px;
+}
+
+.rating {
+    width: 300px;
+}
+
+.select {
+    width: 300px;
+    line-height: 300px;
+}
+
+/* end dataCollection styles */
 
 /* dataForm styles */
 #dataForm {
