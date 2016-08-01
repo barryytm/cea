@@ -5,7 +5,7 @@ const router = express.Router();
 const db = require('../models/db');
 
 // global variables
-var userInterests = [];
+var userInterests = {};
 
 // start routers
 router.get('/', (req, res) => {
@@ -62,10 +62,29 @@ router.get('/deptTopics', (req, res) => {
 
 router.post('/topicInterest', (req, res) => {
 	var data = req.body;
+    var currUsername = data.username;
+    var currTopic = data.topic;
+    var currInterestRating = data.interestRating;
 
-    userInterests.push(data);
+    if (! userInterests.hasOwnProperty(currUsername)) {
+        userInterests[currUsername] = [];
+        userInterests[currUsername].push(data);
+    } else {
+        var change = false;
+        for (var i = 0; i < userInterests[currUsername].length; i ++) {
+            if (userInterests[currUsername][i]['topic'] == currTopic) {
+                userInterests[currUsername][i]['interestRating'] = currInterestRating;
+                change = true;
+            }
+        }
+        if (! change) {
+            userInterests[currUsername].push(data);
+        }
+    }
 
-    
+    console.log(userInterests);
+
+
 });
 router.post('/rankedTopic')
 
