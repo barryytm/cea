@@ -34,17 +34,13 @@ module.exports = {
             [username, age, gender, country]);
     },
 
-    getAllDept: (result) => {
-        pool.query('select dept_name from departments', (err, res) => {
+
+    getDeptTopics: (result) => {
+        pool.query('select distinct dept_name, topic from departments ' +
+            'natural join courses natural join course_topics natural join topics',
+            (err, res) => {
             result(res.rows);
         });
-    },
-
-    getDeptTopics: (deptName, result) => {
-        pool.query('select distinct topic from departments natural join courses' +
-            'natural join course_topics natural join topics where dept_name=$1',
-            [deptName], (err, res) => {
-                result(res.rows);
-        });
     }
+
 };
