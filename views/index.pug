@@ -54,17 +54,11 @@ html(lang="en")
             form#courseForm
                 .header
                     .form-group
-                        label Enter editions you took (click to remove)
-                        input#code.form-control.input-lg(type="text", placeholder="CSC108",
+                        label Choose courses you have taken
+                        //- input#code.form-control.input-lg(type="text", placeholder="CSC108",
                             pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required, autofocus)
-                        input#semester.form-control.input-lg(type="text", placeholder="f|w|s",
-                            pattern="f|w|s", title="should only be f, w or s", required)
-                        input#year.form-control.input-lg(type="number", placeholder="2016"
-                            pattern="\d+", required)
-                        input#timeOfDay.form-control.input-lg(type="text", placeholder="m|a|e"
-                            pattern="m|a|e", required)
-                    input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
-                    input#startInterest.btn.btn-lg.btn-success(value="Next")
+                    //- input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
+                    input#startInterest.btn.btn-lg.btn-success(type="submit", value="Submit")
                 ul#editions
             form#interestForm
                 .form-group.row
@@ -93,9 +87,4 @@ html(lang="en")
                 label.center Enter your course inforamtion
                 input#skipData.btn.btn-lg.btn-info(value="Skip")
                 input#startNew.btn.btn-lg.btn-success(type="submit", value="Submit")
-                //- .panel.panel-default
-                //-     .panel-heading
-                //-         .panel-title
-                //-             a.collapsed(data-toggle="collapse" data-parent="#dataForm" href="#collapseOne") Collapsible Group Item #1
-                //-     #collapseOne.panel-collapse.collapse Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
             #snackbar

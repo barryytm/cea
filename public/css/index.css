@@ -71,7 +71,7 @@ input {
     margin-bottom: 20px;
 }
 
-#code, #semester, #year,#timeOfDay {
+#code {
     width: 30%;
     margin-left: 35%;
     margin-top: 1%;
@@ -80,9 +80,9 @@ input {
 
 #editions {
     width: 50%;
-    margin-left: 23%;
+    margin-left: 22%;
     overflow-y: scroll;
-    height: 30%;
+    height: 60%;
     list-style: none;
 }
 
@@ -90,7 +90,7 @@ input {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 40px;
-    background: #4F4F4F;
+    background: #6E6E6E;
     font-size: 18px;
     transition: 0.2s;
     
@@ -101,12 +101,30 @@ input {
 }
 
 #editions li:nth-child(odd) {
-    background: #242424;
+    background: #888;
 }
 
 #editions li:hover {
-    background: #6E6E6E;
+    background: #4F4F4F;
 }
+
+#editions li.checked {
+    background: #242424;
+}
+
+#editions li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #fff;
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 12px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+
 /* end courseForm styles */
 
 /* intetrestForm styles */ 

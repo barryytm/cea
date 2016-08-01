@@ -25,25 +25,33 @@ server.listen(port, () => {
 	console.log('listen on port ' + port);
 });
 
+// start routers
 app.get('/', (req, res) => {
     res.render('index');
 });
 
 app.post('/login', (req, res) => {
-    var username = req.body.username;
-    db.checkUsername(username, result => {
+    db.checkUsername(req.body.username, result => {
         res.send(result);
     });
 });
 
 app.post('/info', (req, res) => {
-    var username = req.body.username;
-    var country = req.body.country;
-    var age = req.body.age;
-    var gender = req.body.gender;
+    var body = req.body;
 
-    db.addInfo(username, country, age, gender);
+    db.addInfo(body.username, body.country, body.age, body.gender);
     res.end();
+});
+
+app.get('/courses', (req, res) => {
+    db.getCourses(result => {
+        var data = {courses: []};
+        for (var i = 0; i < result.length; i++) {
+            data.courses.push(result[i].dept_code + result[i].course_number);
+        }
+        data.courses.sort();
+        res.send(data);
+    });
 });
 
 app.post('/data', (req, res) => {
@@ -53,6 +61,8 @@ app.post('/data', (req, res) => {
     editions.forEach((edition) => {
         db.addExperience(username, edition);
     });
+
+    res.end();
 });
 
 app.get('/deptTopics', (req, res) => {
