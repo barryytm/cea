@@ -34,13 +34,31 @@ module.exports = {
             [username, age, gender, country]);
     },
 
-
     getDeptTopics: (result) => {
         pool.query('select distinct dept_name, topic from departments ' +
             'natural join courses natural join course_topics natural join topics',
             (err, res) => {
             result(res.rows);
         });
-    }
+    },
 
+    getUserCoursesEdition: (username, result) => {
+        pool.query('select topic_id, course_id from enrollments where username=$1',
+            [username], (err, res) => {
+            result(res.rows);
+        });
+    },
+
+
+    addTopicRating: (courseId, editionId, username, topic, interestBefore, interestAfter) => {
+        var topicId;
+
+        pool.query('select topic_id from topics where topic=$1', [topic],
+            (err, res) => {
+                topic_id = res.rows[0];
+        });
+
+        pool.query('insert into topic_interests values($1, $2, $3, $4, $5, $6)',
+            [courseId, editionId, username, topicId, interestBefore, interestAfter]);
+    }
 };
