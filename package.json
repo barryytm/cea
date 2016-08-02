@@ -4,7 +4,7 @@
   "description": "a course recommendation site",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/jshint/bin/jshint app.js controllers/router.js models/db.js public/js/index.js"
   },
   "repository": {
     "type": "git",
@@ -39,5 +39,8 @@
   "engines": {
     "npm": "~3.10.x",
     "node": "~6.2.x"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.2"
   }
 }
