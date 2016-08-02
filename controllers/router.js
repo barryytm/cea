@@ -33,7 +33,7 @@ router.get('/courses', (req, res) => {
         results.forEach(result => {
             data.courses.push(result.dept_code + result.course_number);
         });
-            
+
         data.courses.sort();
         res.send(data);
     });
@@ -48,7 +48,7 @@ router.get('/deptTopics', (req, res) => {
 				data[result.dept_name] = [];
 			}
 			data[result.dept_name].push(result.topic);
-        }); 
+        });
 
 		res.send(data);
 	});
@@ -63,7 +63,7 @@ router.get('/deptSkills', (req, res) => {
 				data[result.dept_name] = [];
 			}
 			data[result.dept_name].push(result.skill);
-        }); 
+        });
 		res.send(data);
     });
 });
@@ -167,6 +167,22 @@ router.post('/newSkills', (req, res) => {
         db.addSkill(skill);
     });
     res.end();
+});
+
+router.post('courseTopics', (req, res) => {
+    var courseId = req.body.courseId;
+
+    db.getCourseTopics(courseId, result => {
+        res.send(result);
+    });
+});
+
+router.post('courseSkills', (req, res) => {
+    var courseId = req.body.courseId;
+
+    db.getCourseSkills(courseId, result => {
+        res.send(result);
+    });
 });
 
 module.exports = router;

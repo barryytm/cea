@@ -110,6 +110,15 @@ class Helper {
                     max: 5
                 });
 
+            var $courseTopicLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Topic');
+            var $courseTopics = $('<select/>');
+            // $.post('/courseTopics',{} result => {
+            //
+            // });
+
+            var $courseSkillLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Skill');
+            var $courseSkills = $('<select/>');
+
             var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
 
             // add semester
@@ -155,6 +164,20 @@ class Helper {
             .append($('<section/>').addClass('col-md-6')
                 .append($instructorRank))
             .appendTo($content);
+
+            // add topic
+            $('<section/>').addClass('form-group row')
+            .append($courseTopicLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($courseTopics))
+            .appendTo($content);
+
+            $('<section/>').addClass('form-group row')
+            .append($courseSkillLabel)
+            .append($('<section/>').addClass('col-md-6')
+                .append($courseSkills))
+            .appendTo($content);
+
 
             $first
             .append($second
@@ -475,7 +498,7 @@ $(document).ready(() => {
         helper.snack('Removed ' + id);
     });
 
-    $('#doneNewSkill').click(() => {  
+    $('#doneNewSkill').click(() => {
         helper.snack('Saved');
         $('#newSkillForm').hide();
 
