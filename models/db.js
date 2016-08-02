@@ -120,5 +120,22 @@ module.exports = {
 
     addSkill: (skill) => {
         pool.query('insert into skills values ((select max(skill_id) from skills) + 1, $1)', [skill]);
+    },
+
+    getCourseTopics: (courseId, callback) => {
+        pool.query('select topic from topics natural join course_topics where course_id=$1',
+            [courseId], (err, res) => {
+                callback(res.rows);
+            });
+
+    },
+
+    getCourseSkills: (courseId, callback) => {
+        pool.query('select skill from skills natural join course_skills where course_id=$1',
+            [courseId], (err, res) => {
+                callback(res.rows);
+            });
     }
+
+
 };
