@@ -23,11 +23,11 @@
 }
 
 /* loginForm styles */
-#loginForm {
+.centreForm{
     text-align: center;
 }
 
-#username {
+.centreInput {
     width: 30%;
     margin: 0 auto;
 }
@@ -60,11 +60,7 @@ input {
 /* end infoForm stlyes */
 
 /* courseForm styles */
-#courseForm {
-    text-align: center;
-}
-
-#addCourse, #startInterest {
+.twoButton {
     width: 14%;
     margin-left: 5px;
     margin-right: 5px;
@@ -78,7 +74,7 @@ input {
     margin-bottom: 1%;
 }
 
-#editions {
+.newList {
     width: 50%;
     margin-left: 22%;
     overflow-y: scroll;
@@ -86,7 +82,7 @@ input {
     list-style: none;
 }
 
-#editions li {
+.newList li {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 40px;
@@ -100,11 +96,11 @@ input {
     -ms-user-select: none;
 }
 
-#editions li:nth-child(odd) {
+.newList li:nth-child(odd) {
     background: #888;
 }
 
-#editions li:hover {
+.newList li:hover {
     background: #4F4F4F;
 }
 

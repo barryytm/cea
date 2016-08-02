@@ -15,10 +15,10 @@ html(lang="en")
 
     body.overlay
         main.overlay-content
-            form#loginForm
+            form#loginForm.centreForm
                 .form-group
                     label Please enter your username
-                    input#username.form-control.input-lg(type="text",
+                    input#username.centreInput.form-control.input-lg(type="text",
                         placeholder="Username", pattern="^[a-zA-Z0-9-_\.]{2,20}$",
                         title="2-20 alphanumeric characters", required, autofocus)
                 input#login.btn.btn-success.btn-lg(type="submit", value="Login")
@@ -51,15 +51,12 @@ html(lang="en")
                 .form-group.row
                     .col-md-7.col-md-offset-2
                         input.btn.btn-lg.btn-primary(type="submit", value="Submit")
-            form#courseForm
+            form#courseForm.centreForm
                 .header
                     .form-group
                         label Choose courses you have taken
-                        //- input#code.form-control.input-lg(type="text", placeholder="CSC108",
-                            pattern="[A-Z]{3,3}[0-9]{3,3}", title="format ABC210", required, autofocus)
-                    //- input#addCourse.btn.btn-lg.btn-info(type="submit", value="Add")
-                    input#startInterest.btn.btn-lg.btn-success(type="submit", value="Submit")
-                ul#editions
+                    input#startInterest.twoButton.btn.btn-lg.btn-success(type="submit", value="Submit")
+                ul#editions.newlist
             form#interestForm.dataCollection
                 .form-group.row
                     label.col-md-2.col-form-label Departments
@@ -100,8 +97,22 @@ html(lang="en")
                 label.center Enter your course inforamtion
                 input#skipData.bu.btn.btn-lg.btn-info(value="Skip")
                 input.bu.btn.btn-lg.btn-success(type="submit", value="Submit")
-            form#topicSkillForm.new
-                label.center Enter new topics and interests
-                input#skipTS.bu.btn.btn-lg.btn-info(value="Skip")
-                input.bu.btn.btn-lg.btn-success(type="submit", value="Submit")
+            form#newTopicForm.centreForm
+                .header
+                    .form-group
+                        label Enter new topics
+                        input#topic.centreInput.form-control.input-lg(type="text", placeholder="new topic", 
+                            pattern="^[a-zA-Z][a-zA-Z ]{1,20}$", title="2 to 20 alphabetic characters", required, autofocus)
+                    input#addTopic.twoButton.btn.btn-lg.btn-info(type="submit", value="Add")
+                    input#doneNewTopic.twoButton.btn.btn-lg.btn-success(value="Next")
+                ul#newTopics.newList
+            form#newSkillForm.centreForm
+                .header
+                    .form-group
+                        label Enter new skills
+                        input#skill.centreInput.form-control.input-lg(type="text", placeholder="new skills", 
+                            pattern="^[a-zA-Z][a-zA-Z ]{1,20}$", title="2 to 20 alphabetic characters", required, autofocus)
+                    input#addSkill.twoButton.btn.btn-lg.btn-info(type="submit", value="Add")
+                    input#doneNewSkill.twoButton.btn.btn-lg.btn-success(value="Next")
+                ul#newSkills.newList
             #snackbar

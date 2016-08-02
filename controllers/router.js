@@ -37,28 +37,6 @@ router.get('/courses', (req, res) => {
     });
 });
 
-router.post('/data', (req, res) => {
-    var username = req.body.username;
-    var editions = req.body.editions;
-
-    editions.forEach((edition) => {
-        db.addExperience(username, edition);
-    });
-
-    res.end();
-});
-
-router.post('/topicSkill', (req, res) => {
-    var username = req.body.username;
-    var topicSkills = req.body.ts;
-
-    topicSkills.forEach((topicSkill) => {
-        db.addTopicSkill(username, topicSkill);
-    });
-
-    res.end();
-});
-
 router.get('/deptTopics', (req, res) => {
 	db.getDeptTopics(result => {
 		var data = {};
@@ -136,5 +114,37 @@ router.post('/skills', (req, res) => {
 
     res.end();
 });
+
+router.post('/data', (req, res) => {
+    var username = req.body.username;
+    var editions = req.body.editions;
+
+    editions.forEach((edition) => {
+        db.addExperience(username, edition);
+    });
+
+    res.end();
+});
+
+router.get('/allTopics', (req, res) => {
+    db.getAllTopics(results => {
+        var data = {topics: []};
+        results.forEach((val) => {
+            data.topics.push(val.topic);
+        });
+        res.send(data);
+    });
+});
+
+router.post('/newTopics', (req, res) => {
+    var topics = req.body.topics;
+
+    topics.forEach((topic) => {
+        db.addTopic(topic);
+    });
+    res.end();
+});
+
+
 
 module.exports = router;

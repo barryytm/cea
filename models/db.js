@@ -102,7 +102,13 @@ module.exports = {
             [editionId, username, letterGrade, edition.courseRank, edition.instructorRank]);
     },
 
-    addTopicSkill: (username, topicSkill) => {
+    getAllTopics: (callback) => {
+        pool.query('select topic from topics', (err, res) => {
+            callback(res.rows);
+        });
+    },
 
+    addTopic: (topic) => {
+        pool.query('insert into topics values ((select max(topic_id) from topics) + 1, $1)', [topic]);
     }
 };

@@ -164,80 +164,16 @@ class Helper {
             .appendTo($('#dataForm'));
         });
     }
-
-    populateTopicSkill(courses) {
-        $.each(courses, (idx, code) => {
-            var id = 'collapseTS' + code;
-            var $first = $('<section/>').addClass('panel panel-default');
-            var $second = $('<section/>').addClass('panel-heading');
-            var $third = $('<section/>').addClass('panel-title');
-            var $title = $('<a/>')
-                .addClass('collapsed')
-                .text(code)
-                .attr({
-                    'data-toggle': 'collapse',
-                    'data-parent': '#dataForm',
-                    'href': '#' + id
-                });
-
-            var $topicLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Topic');
-            var $topic = $('<input/>')
-                .addClass('form-control')
-                .prop('required', true)
-                .attr({
-                    id: 'topic' + code,
-                    type: 'text',
-                    placeholder: 'new topic',
-                    pattern: '^[a-zA-Z][a-zA-Z ]{1,20}$',
-                    title: '2 to 20 alphabetic characters'
-                });
-
-            var $skillLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Skill');
-            var $skill = $('<input/>')
-                .addClass('form-control')
-                .prop('required', true)
-                .attr({
-                    id: 'skill' + code,
-                    type: 'text',
-                    placeholder: 'new skill',
-                    pattern: '^[a-zA-Z][a-zA-Z ]{1,20}$',
-                    title: '2 to 20 alphabetic characters'
-                });
-
-            var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
-
-            // add topic
-            $('<section/>').addClass('form-group row')
-            .append($topicLabel)
-            .append($('<section/>').addClass('col-md-6')
-                .append($topic))
-            .appendTo($content);
-
-            // add skill
-            $('<section/>').addClass('form-group row')
-            .append($skillLabel)
-            .append($('<section/>').addClass('col-md-6')
-                .append($skill))
-            .appendTo($content);
-
-            $first
-            .append($second
-                .append($third
-                    .append($title)))
-            .append($content)
-            .appendTo($('#topicSkillForm'));
-
-        });
-    }
 }
 
 $(document).ready(() => {
     var helper = new Helper();
-    var courses = [];
+    var courses = [], oldTopics = [];
     var collected = {
         username: '',
         editions: [],
-        topicSkills: []
+        topics: [],
+        skills: []
     };
 
     $('form').submit((event) => {
@@ -249,7 +185,8 @@ $(document).ready(() => {
     $('#interestForm').hide();
     $('#skillForm').hide();
     $('#dataForm').hide();
-    $('#topicSkillForm').hide();
+    $('#newTopicForm').hide();
+    $('#newSkillForm').hide();
 
     $('#loginForm').submit(() => {
         collected.username = $('#username').val();
@@ -321,7 +258,6 @@ $(document).ready(() => {
         $('#interestForm').show();
 
         helper.populateEditions(courses);
-        helper.populateTopicSkill(courses);
 
         // get all the depts and topics
         $.get('/deptTopics', result => {
@@ -430,14 +366,20 @@ $(document).ready(() => {
 
     $('#skipData').click(() => {
         $('#dataForm').hide();
-        $('#topicSkillForm').show();
+        $('#newTopicForm').show();
+        $.get('/allTopics', data => {
+            console.log(data.topics);
+            $.each(data.topics, (idx, $topic) => {
+                oldTopics.push($topic);
+            });
+        });
     });
 
     $('#dataForm').submit(() => {
         helper.snack('Information Submitted');
 
         $('#dataForm').hide();
-        $('#topicSkillForm').show();
+        $('#newTopicForm').show();
 
         $.each(courses, (idx, code) => {
             collected.editions.push({
@@ -452,25 +394,75 @@ $(document).ready(() => {
         });
 
         $.post('/data', collected);
-    });
 
-    $('#skipTS').click(() => {
-        $('#topicSkillForm').hide();
-    });
-
-    $('#topicSkillForm').submit(() => {
-        helper.snack('New topics, skills submitted');
-
-        $('#topicSkillForm').hide();
-
-        $.each(courses, (idx, code) => {
-            collected.topicSkills.push({
-                code: code,
-                skill: $('#skill' + code).val(),
-                topic: $('#topic' + code).val()
+        $.get('/allTopics', data => {
+            console.log(data.topics);
+            $.each(data.topics, (idx, $topic) => {
+                oldTopics.push($topic);
             });
         });
-
-        $.post('/topicSkill', collected);
     });
+
+    $('#newTopicForm').submit(() => {
+        var $topic = $('#topic').val();
+        if (oldTopics.includes($topic)) {
+            helper.snack($topic + 'already in the database');
+        } else {
+            $('<li/>').text($topic).attr('id', $topic).appendTo('#newTopics');
+            oldTopics.push($topic);
+            collected.topics.push($topic);
+            helper.snack('Added ' + $topic);
+        }
+    });
+
+    $('#newTopics').click((event) => {
+        var id = event.target.id;
+        $('#' + id).hide();
+
+        var idx = oldTopics.indexOf(event.target.id);
+        oldTopics.splice(idx, 1);
+
+        var idxN = collected.topics.indexOf(event.target.id);
+        collected.topics.splice(idxN, 1);
+
+        helper.snack('Removed ' + id);
+    });
+
+    $('#doneNewTopic').click(() => {
+        helper.snack('Submitted new topics');
+        $('#newTopicForm').hide();
+        $('#newSkillForm').show();
+
+        $.post('/newTopics', collected);
+    });
+
+    $('#newSkillForm').submit(() => {
+        var $skill = $('#skill').val();
+        if (collected.skills.includes($skill)) {
+            helper.snack($skill + 'already in the database');
+        } else {
+            $('<li/>').text($skill).attr('id', $skill).appendTo('#newSkills');
+            collected.skills.push($skill);
+            helper.snack('Added ' + $skill);
+        }
+    });
+
+    $('#newSkills').click((event) => {
+        var id = event.target.id;
+        $('#' + id).hide();
+
+        var idx = collected.skills.indexOf(event.target.id);
+        collected.skills.splice(idx, 1);
+
+        helper.snack('Removed ' + id);
+    });
+
+    $('#doneNewSkill').click(() => {  
+        helper.snack('Submitted new skills');
+        $('#newSkillForm').hide();
+
+        $.post('/newSkills', collected);
+    });
+
+
 });
