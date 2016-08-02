@@ -168,7 +168,7 @@ class Helper {
 
 $(document).ready(() => {
     var helper = new Helper();
-    var courses = [], oldTopics = [];
+    var courses = [], oldTopics = [], oldSkills = [];
     var collected = {
         username: '',
         editions: [],
@@ -368,9 +368,15 @@ $(document).ready(() => {
         $('#dataForm').hide();
         $('#newTopicForm').show();
         $.get('/allTopics', data => {
-            console.log(data.topics);
-            $.each(data.topics, (idx, $topic) => {
-                oldTopics.push($topic);
+            $.each(data.topics, (idx, topic) => {
+                oldTopics.push(topic);
+            });
+        });
+
+        $.get('/allSkills', data => {
+            console.log(data.skills);
+            $.each(data.skills, (idx, skill) => {
+                oldSkills.push(skill);
             });
         });
     });
@@ -396,17 +402,24 @@ $(document).ready(() => {
         $.post('/data', collected);
 
         $.get('/allTopics', data => {
-            console.log(data.topics);
-            $.each(data.topics, (idx, $topic) => {
-                oldTopics.push($topic);
+            $.each(data.topics, (idx, topic) => {
+                oldTopics.push(topic);
+            });
+        });
+
+        $.get('/allSkills', data => {
+            console.log(data.skills);
+            $.each(data.skills, (idx, skill) => {
+                oldSkills.push(skill);
             });
         });
     });
 
+    // new topic form
     $('#newTopicForm').submit(() => {
         var $topic = $('#topic').val();
         if (oldTopics.includes($topic)) {
-            helper.snack($topic + 'already in the database');
+            helper.snack($topic + ' already in the database');
         } else {
             $('<li/>').text($topic).attr('id', $topic).appendTo('#newTopics');
             oldTopics.push($topic);
@@ -429,19 +442,21 @@ $(document).ready(() => {
     });
 
     $('#doneNewTopic').click(() => {
-        helper.snack('Submitted new topics');
+        helper.snack('Saved');
         $('#newTopicForm').hide();
         $('#newSkillForm').show();
 
         $.post('/newTopics', collected);
     });
 
+    // new skill form
     $('#newSkillForm').submit(() => {
         var $skill = $('#skill').val();
-        if (collected.skills.includes($skill)) {
-            helper.snack($skill + 'already in the database');
+        if (oldSkills.includes($skill)) {
+            helper.snack($skill + ' already in the database');
         } else {
             $('<li/>').text($skill).attr('id', $skill).appendTo('#newSkills');
+            oldSkills.push($skill);
             collected.skills.push($skill);
             helper.snack('Added ' + $skill);
         }
@@ -451,18 +466,19 @@ $(document).ready(() => {
         var id = event.target.id;
         $('#' + id).hide();
 
-        var idx = collected.skills.indexOf(event.target.id);
-        collected.skills.splice(idx, 1);
+        var idx = oldSkills.indexOf(event.target.id);
+        oldSkills.splice(idx, 1);
+
+        var idxN = collected.skills.indexOf(event.target.id);
+        collected.skills.splice(idxN, 1);
 
         helper.snack('Removed ' + id);
     });
 
     $('#doneNewSkill').click(() => {  
-        helper.snack('Submitted new skills');
+        helper.snack('Saved');
         $('#newSkillForm').hide();
 
         $.post('/newSkills', collected);
     });
-
-
 });

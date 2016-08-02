@@ -110,5 +110,15 @@ module.exports = {
 
     addTopic: (topic) => {
         pool.query('insert into topics values ((select max(topic_id) from topics) + 1, $1)', [topic]);
+    },
+
+    getAllSkills: (callback) => {
+        pool.query('select skill from skills', (err, res) => {
+            callback(res.rows);
+        });
+    },
+
+    addSkill: (skill) => {
+        pool.query('insert into skills values ((select max(skill_id) from skills) + 1, $1)', [skill]);
     }
 };
