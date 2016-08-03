@@ -4,10 +4,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
 
-// global variables
-var userInterests = {};
-var userSkills = {};
-
 // start routers
 router.get('/', (req, res) => {
     res.render('index');
@@ -66,58 +62,6 @@ router.get('/deptSkills', (req, res) => {
         });
 		res.send(data);
     });
-});
-
-router.post('/topicInterest', (req, res) => {
-	var data = req.body;
-    var currUsername = data.username;
-    var currTopic = data.topic;
-    var currInterestRating = data.interestRating;
-
-    if (! userInterests.hasOwnProperty(currUsername)) {
-        userInterests[currUsername] = [];
-        userInterests[currUsername].push(data);
-    } else {
-        var change = false;
-        for (var i = 0; i < userInterests[currUsername].length; i ++) {
-            if (userInterests[currUsername][i].topic === currTopic) {
-                userInterests[currUsername][i].interestRating = currInterestRating;
-                change = true;
-            }
-        }
-        if (! change) {
-            userInterests[currUsername].push(data);
-        }
-    }
-
-    res.end();
-});
-
-router.post('/skills', (req, res) => {
-	var data = req.body;
-    var currUsername = data.username;
-    var currSkill = data.skill;
-    var currSkillRating = data.skillRating;
-
-    if (! userSkills.hasOwnProperty(currUsername)) {
-        userSkills[currUsername] = [];
-        userSkills[currUsername].push(data);
-    } else {
-        var change = false;
-        for (var i = 0; i < userSkills[currUsername].length; i ++) {
-            if (userSkills[currUsername][i].skill === currSkill) {
-                userSkills[currUsername][i].skillRating = currSkillRating;
-                change = true;
-            }
-        }
-        if (! change) {
-            userSkills[currUsername].push(data);
-        }
-    }
-
-    console.log(userSkills);
-
-    res.end();
 });
 
 router.post('/data', (req, res) => {

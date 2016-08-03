@@ -72,8 +72,8 @@ html(lang="en")
                             pattern="\d+", min="1" max="5", required)
                 .form-group.row
                     .col-md-7.col-md-offset-2
-                        input#addTopicInt.btn.btn-lg.btn-primary(type="submit", value="Submit")
-                        input#startSkill.btn.btn-lg.btn-success.next(value="Next")
+                        input#addTopicInt.btn.btn-lg.btn-primary(type="submit", value="Save")
+                        input#startSkill.btn.btn-lg.btn-success.next(value="next")
             form#skillForm.dataCollection
                 .form-group.row
                     label.col-md-2.col-form-label Departments
@@ -90,7 +90,7 @@ html(lang="en")
                             pattern="\d+", min="1" max="5", required)
                 .form-group.row
                     .col-md-7.col-md-offset-2
-                        input#addSkill.btn.btn-lg.btn-primary(type="submit", value="Submit")
+                        input#addSkill.btn.btn-lg.btn-primary(type="submit", value="Save")
                         input#startdata.btn.btn-lg.btn-success.next(value="Next")
             form#dataForm.new
                 label.center Enter your course inforamtion
@@ -100,7 +100,7 @@ html(lang="en")
                 .header
                     .form-group
                         label Enter new topics
-                        input#topic.centreInput.form-control.input-lg(type="text", placeholder="new topic", 
+                        input#topic.centreInput.form-control.input-lg(type="text", placeholder="new topic",
                             pattern="^[a-zA-Z][a-zA-Z ]{1,20}$", title="2 to 20 alphabetic characters", required, autofocus)
                     input#addTopic.twoButton.btn.btn-lg.btn-info(type="submit", value="Add")
                     input#doneNewTopic.twoButton.btn.btn-lg.btn-success(value="Next")
@@ -109,7 +109,7 @@ html(lang="en")
                 .header
                     .form-group
                         label Enter new skills
-                        input#skill.centreInput.form-control.input-lg(type="text", placeholder="new skills", 
+                        input#skill.centreInput.form-control.input-lg(type="text", placeholder="new skills",
                             pattern="^[a-zA-Z][a-zA-Z ]{1,20}$", title="2 to 20 alphabetic characters", required, autofocus)
                     input#addSkill.twoButton.btn.btn-lg.btn-info(type="submit", value="Add")
                     input#doneNewSkill.twoButton.btn.btn-lg.btn-success(value="Next")
