@@ -147,14 +147,15 @@ class Helper {
                 });
 
 			var $courseTopicButton = $('<input/>').attr({
+				id: 'courseTopicButton' + code,
 				type: 'submit',
-				value: 'submit'
+				value: 'add'
 			});
 
-			$courseTopicButton.addClass('.btn.btn-lg.btn-primary sameLine');
+			$courseTopicButton.addClass('btn.btn-lg.btn-primary sameLine');
 			$courseTopicButton.attr({
-				id: 'topicSummit' + code,
-				type: 'button'
+				id: 'topicAdd' + code,
+				type: 'submit'
 			});
 
 			var $courseTopicConatiner = $('<form/>');
@@ -175,18 +176,6 @@ class Helper {
 	                $courseSkills.append($skill);
 				}
 	        });
-
-			var $courseSkillsRank = $('<input/>')
-				.addClass('form-control sameLine')
-				.prop('required', true)
-				.attr({
-					id: 'courseTopicsRank' + code,
-					type: 'number',
-					placeholder: '1-5',
-					pattern: '\d+',
-					min: 1,
-					max: 5
-				});
 
 			var $courseSkillRankBefore = $('<input/>')
                 .addClass('form-control sameLine')
@@ -213,14 +202,15 @@ class Helper {
                 });
 
 			var $courseSkillButton = $('<input/>').attr({
+				id: 'courseSkillButton' + code,
 				type: 'submit',
-				value: 'submit'
+				value: 'add'
 			});
 
 			$courseSkillButton.addClass('sameLine');
 			$courseSkillButton.attr({
-				id: 'skillSummit' + code,
-				type: 'button'
+				id: 'skillAdd' + code,
+				type: 'submit'
 			});
 
 			var $courseSkillConatiner = $('<form/>');
@@ -473,9 +463,24 @@ $(document).ready(() => {
 		collected.deptListSkills[skill] = skillRating;
     });
 
-    $('#startdata').click(() => {
+    $('#startData').click(() => {
         $('#skillForm').hide();
         $('#dataForm').show();
+
+		var courseTopics = {};
+		var courseSkills = {};
+
+		$.each(courses, (idx, code) => {
+			console.log('#topicAdd' + code);
+			$('#topicAdd' + code).submit(() => {
+				// var courseTopic;
+				// var before = $('#courseTopicsRankBefore' + code).val();
+				// console.log(Before);
+			});
+			$('#courseSkillButton' + code).submit(
+
+			);
+		});
     });
 
     $('#skipData').click(() => {
@@ -494,7 +499,6 @@ $(document).ready(() => {
         });
     });
 
-
     $('#dataForm').submit(() => {
         helper.snack('Information Submitted');
 
@@ -502,6 +506,7 @@ $(document).ready(() => {
         $('#newTopicForm').show();
 
         $.each(courses, (idx, code) => {
+
             collected.editions.push({
                 code: code,
                 semester: $('#semester' + code).val(),
