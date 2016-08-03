@@ -169,16 +169,16 @@ router.post('/newSkills', (req, res) => {
     res.end();
 });
 
-router.post('courseTopics', (req, res) => {
-    var courseId = req.body.courseId;
+router.post('/courseTopics', (req, res) => {
+    var courseCode = req.body.code;
 
     db.getCourseTopics(courseCode, result => {
         res.send(result);
     });
 });
 
-router.post('courseSkills', (req, res) => {
-    var courseId = req.body.courseId;
+router.post('/courseSkills', (req, res) => {
+    var courseCode = req.body.code;
 
     db.getCourseSkills(courseCode, result => {
         res.send(result);

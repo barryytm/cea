@@ -114,6 +114,14 @@ class Helper {
             var $courseTopicLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Topic');
             var $courseTopics = $('<select/>').addClass('sameLine');
 
+			$.post('/courseTopics', {code: code}, result => {
+	            for (var i = 0; i < result.length; i++) {
+					var $topic = $('<option/>').attr('value', result[i].topic);
+	                $topic.text(result[i].topic);
+	                $courseTopics.append($topic);
+				}
+	        });
+
 			var $courseTopicsRankBefore = $('<input/>')
                 .addClass('form-control sameLine')
                 .prop('required', true)
@@ -154,8 +162,15 @@ class Helper {
 			$courseTopicConatiner.append($courseTopicButton);
 
             var $courseSkillLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Skill');
-            var $courseSkills = $('<select/>');
-			$courseSkills.addClass('sameLine');
+            var $courseSkills = $('<select/>').addClass('sameLine');
+			$.post('/courseSkills', {code: code}, result => {
+	            for (var i = 0; i < result.length; i++) {
+					var $skill = $('<option/>').attr('value', result[i].skill);
+	                $skill.text(result[i].skill);
+	                $courseSkills.append($skill);
+				}
+	        });
+
 			var $courseSkillsRank = $('<input/>')
 				.addClass('form-control sameLine')
 				.prop('required', true)
@@ -588,13 +603,6 @@ $(document).ready(() => {
 
         $.post('/newSkills', collected);
 
-		$('#topicSummit' + code).click(() => {
-			var topicBef = ('#courseSkillRankBefore' + code);
-			var topicAft = ('#courseSkillRankAfter' + code);
-			console.log(topicBef);
-			console.log(topicAft);
-
-		});
     });
 
 	var courseTopicsRankList = [];

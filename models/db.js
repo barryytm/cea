@@ -62,8 +62,8 @@ module.exports = {
     },
 
     addExperience: (username, edition) => {
-        var deptCode = edition.code.substr(0, 3);
-        var courseNumber = edition.code.substr(3);
+        var deptCode = edition.code.slice(0, 3);
+        var courseNumber = edition.code.slice(3);
 
         // search for the course
         var foundCourse = client.querySync('select count(1) from courses where dept_code=$1 and course_number=$2',
@@ -122,17 +122,23 @@ module.exports = {
         pool.query('insert into skills values ((select max(skill_id) from skills) + 1, $1)', [skill]);
     },
 
-    getCourseTopics: (courseId, callback) => {
-        pool.query('select topic from topics natural join course_topics where course_id=$1',
-            [courseId], (err, res) => {
+    getCourseTopics: (courseCode, callback) => {
+        var deptCode = courseCode.slice(0, 3);
+        var courseNumber = courseCode.slice(3);
+
+        pool.query('select topic from topics natural join course_topics natural join courses where dept_code=$1 and course_number=$2',
+            [deptCode, courseNumber], (err, res) => {
                 callback(res.rows);
             });
 
     },
 
-    getCourseSkills: (courseId, callback) => {
-        pool.query('select skill from skills natural join course_skills where course_id=$1',
-            [courseId], (err, res) => {
+    getCourseSkills: (courseCode, callback) => {
+        var deptCode = courseCode.slice(0, 3);
+        var courseNumber = courseCode.slice(3);
+
+        pool.query('select skill from skills natural join course_skills natural join courses where dept_code=$1 and course_number=$2',
+            [deptCode, courseNumber], (err, res) => {
                 callback(res.rows);
             });
     },
