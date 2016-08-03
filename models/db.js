@@ -135,7 +135,12 @@ module.exports = {
             [courseId], (err, res) => {
                 callback(res.rows);
             });
+    },
+
+    getCourseId: (deptCode, courseNum, callback) => {
+        pool.query('select course_id from courses where dept_code=$1 and course_number=$2',
+            [deptCode, courseNum], (err, res) => {
+                callback(res.rows[0]);
+            });
     }
-
-
 };

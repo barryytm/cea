@@ -172,7 +172,7 @@ router.post('/newSkills', (req, res) => {
 router.post('courseTopics', (req, res) => {
     var courseId = req.body.courseId;
 
-    db.getCourseTopics(courseId, result => {
+    db.getCourseTopics(courseCode, result => {
         res.send(result);
     });
 });
@@ -180,7 +180,7 @@ router.post('courseTopics', (req, res) => {
 router.post('courseSkills', (req, res) => {
     var courseId = req.body.courseId;
 
-    db.getCourseSkills(courseId, result => {
+    db.getCourseSkills(courseCode, result => {
         res.send(result);
     });
 });

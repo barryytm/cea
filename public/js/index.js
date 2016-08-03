@@ -23,7 +23,7 @@ class Helper {
     populateEditions(courses) {
         $.each(courses, (idx, code) => {
             var id = 'collapse' + code;
-            var $first = $('<section/>').addClass('panel panel-default');
+            var $first = $('<section/>').addClass('panel panel-default longer');
             var $second = $('<section/>').addClass('panel-heading');
             var $third = $('<section/>').addClass('panel-title');
             var $title = $('<a/>')
@@ -110,17 +110,104 @@ class Helper {
                     max: 5
                 });
 
+			//topics
             var $courseTopicLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Topic');
-            var $courseTopics = $('<select/>');
-            // $.post('/courseTopics',{} result => {
-            //
-            // });
+            var $courseTopics = $('<select/>').addClass('sameLine');
+
+			var $courseTopicsRankBefore = $('<input/>')
+                .addClass('form-control sameLine')
+                .prop('required', true)
+                .attr({
+                    id: 'courseTopicsRankBefore' + code,
+                    type: 'number',
+                    placeholder: '1-5',
+                    pattern: '\d+',
+                    min: 1,
+                    max: 5
+                });
+
+			var $courseTopicsRankAfter = $('<input/>')
+                .addClass('form-control sameLine')
+                .prop('required', true)
+                .attr({
+                    id: 'courseTopicsRankAfter' + code,
+                    type: 'number',
+                    placeholder: '1-5',
+                    pattern: '\d+',
+                    min: 1,
+                    max: 5
+                });
+
+			var $courseTopicButton = $('<button/>');
+			$courseTopicButton.addClass('.btn.btn-lg.btn-primary sameLine');
+			$courseTopicButton.attr({
+				id: 'topicSummit' + code,
+				type: 'button'
+			});
+
+			var $courseTopicConatiner = $('<div/>');
+			$courseTopicConatiner.addClass('sameLineContainer');
+			$courseTopicConatiner.append($courseTopicLabel);
+			$courseTopicConatiner.append($courseTopics);
+			$courseTopicConatiner.append($courseTopicsRankBefore);
+			$courseTopicConatiner.append($courseTopicsRankAfter);
+			$courseTopicConatiner.append($courseTopicButton);
 
             var $courseSkillLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Skill');
             var $courseSkills = $('<select/>');
+			$courseSkills.addClass('sameLine');
+			var $courseSkillsRank = $('<input/>')
+				.addClass('form-control sameLine')
+				.prop('required', true)
+				.attr({
+					id: 'courseTopicsRank' + code,
+					type: 'number',
+					placeholder: '1-5',
+					pattern: '\d+',
+					min: 1,
+					max: 5
+				});
+			//skills
+			var $courseSkillRankBefore = $('<input/>')
+                .addClass('form-control sameLine')
+                .prop('required', true)
+                .attr({
+                    id: 'courseSkillRankBefore' + code,
+                    type: 'number',
+                    placeholder: '1-5',
+                    pattern: '\d+',
+                    min: 1,
+                    max: 5
+                });
 
-            var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
+			var $courseSkillRankAfter = $('<input/>')
+                .addClass('form-control sameLine')
+                .prop('required', true)
+                .attr({
+                    id: 'courseSkillRankAfter' + code,
+                    type: 'number',
+                    placeholder: '1-5',
+                    pattern: '\d+',
+                    min: 1,
+                    max: 5
+                });
 
+			var $courseSkillButton = $('<button/>');
+			$courseSkillButton.addClass('sameLine');
+			$courseSkillButton.attr({
+				id: 'skillSummit' + code,
+				type: 'button'
+			});
+
+			var $courseSkillConatiner = $('<div/>');
+			$courseSkillConatiner.addClass('sameLineContainer');
+			$courseSkillConatiner.append($courseSkillLabel);
+			$courseSkillConatiner.append($courseSkills);
+			$courseSkillConatiner.append($courseSkillRankBefore);
+			$courseSkillConatiner.append($courseSkillRankAfter);
+			$courseSkillConatiner.append($courseSkillButton);
+
+			var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
             // add semester
             $('<section/>').addClass('form-group row')
             .append($semesterLabel)
@@ -167,15 +254,13 @@ class Helper {
 
             // add topic
             $('<section/>').addClass('form-group row')
-            .append($courseTopicLabel)
-            .append($('<section/>').addClass('col-md-6')
-                .append($courseTopics))
+            .append($courseTopicConatiner)
+            .append($('<section/>').addClass('col-md-6'))
             .appendTo($content);
 
             $('<section/>').addClass('form-group row')
-            .append($courseSkillLabel)
-            .append($('<section/>').addClass('col-md-6')
-                .append($courseSkills))
+            .append($courseSkillConatiner)
+            .append($('<section/>').addClass('col-md-6'))
             .appendTo($content);
 
 
@@ -397,12 +482,12 @@ $(document).ready(() => {
         });
 
         $.get('/allSkills', data => {
-            console.log(data.skills);
             $.each(data.skills, (idx, skill) => {
                 oldSkills.push(skill);
             });
         });
     });
+
 
     $('#dataForm').submit(() => {
         helper.snack('Information Submitted');
@@ -431,7 +516,6 @@ $(document).ready(() => {
         });
 
         $.get('/allSkills', data => {
-            console.log(data.skills);
             $.each(data.skills, (idx, skill) => {
                 oldSkills.push(skill);
             });
@@ -503,5 +587,17 @@ $(document).ready(() => {
         $('#newSkillForm').hide();
 
         $.post('/newSkills', collected);
+
+		$('#topicSummit' + code).click(() => {
+			var topicBef = ('#courseSkillRankBefore' + code);
+			var topicAft = ('#courseSkillRankAfter' + code);
+			console.log(topicBef);
+			console.log(topicAft);
+
+		});
     });
+
+	var courseTopicsRankList = [];
+	var courseSkillsRankList = [];
+
 });
