@@ -61,6 +61,16 @@ module.exports = {
         });
     },
 
+    computeTable: (username, callback) => {
+        pool.query('select distinct username, age, gender, native_country, skill,' +
+        'rank_before, topic, interest_before from students natural join topics ' +
+        'natural join skills natural join skill_rankings natural join topic_interests ' +
+        'where username<>$1', [username], (req, res) => {
+            console.log(res.rows);
+            callback(res.rows);
+        });
+    },
+
     addExperience: (username, edition) => {
         var deptCode = edition.code.slice(0, 3);
         var courseNumber = edition.code.slice(3);

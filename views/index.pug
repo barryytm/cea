@@ -55,7 +55,7 @@ html(lang="en")
                     .form-group
                         label Choose courses you have taken
                     input#startInterest.twoButton.btn.btn-lg.btn-success(type="submit", value="Submit")
-                ul#editions.newlist
+                ul#courses.newlist
             form#interestForm.dataCollection
                 .form-group.row
                     label.col-md-2.col-form-label Departments
@@ -90,8 +90,14 @@ html(lang="en")
                             pattern="\d+", min="1" max="5", required)
                 .form-group.row
                     .col-md-7.col-md-offset-2
-                        input#addSkill.btn.btn-lg.btn-primary(type="submit", value="Save")
-                        input#startData.btn.btn-lg.btn-success.next(value="Next")
+                        input#addSkill.btn.btn-lg.btn-primary(type="submit", value="Submit")
+                        input#startRecommend.btn.btn-lg.btn-success.next(value="Next")
+            form#recommendForm.centreForm
+                .header
+                    .form-group
+                        label These are the courses we recommend to you
+                    input#startData.twoButton.btn.btn-lg.btn-success(type="submit", value="Next")
+                ul#recommendations.newlist
             form#dataForm.new
                 label.center Enter your course inforamtion
                 input#skipData.bu.btn.btn-lg.btn-info(value="Skip")

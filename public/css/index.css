@@ -104,11 +104,11 @@ input {
     background: #4F4F4F;
 }
 
-#editions li.checked {
+#courses li.checked {
     background: #242424;
 }
 
-#editions li.checked::before {
+#courses li.checked::before {
     content: '';
     position: absolute;
     border-color: #fff;
