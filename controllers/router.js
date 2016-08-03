@@ -120,6 +120,56 @@ router.post('/skills', (req, res) => {
     res.end();
 });
 
+router.post('/recommendations', (req, res) => {
+    var username = req.body.username;
+
+    db.computeTable(username, results => {
+        var filtered = {};
+        results.forEach(result => {
+            // identify user
+            var currUsername = result.username;
+
+            if (!filtered.hasOwnProperty(currUsername)) {
+                filtered[currUsername] = {};
+            }
+
+            // push age, gender and country
+            var user = filtered[currUsername];
+            user.age = result.age;
+            user.gender = result.gender === 'm' ? 1 : 0;
+            user.country = result.native_country;
+        
+            // push topic and interest
+            if (!user.hasOwnProperty('topics')) {
+                user.topics = {};
+            }
+            var topics = user.topics;
+            var topic = result.topic;
+            var interest = result.interest_before;
+
+            if (!topics.hasOwnProperty(topic)) {
+                topics[topic] = [];
+            }
+            topics[topic].push(interest);
+
+            // push skill and rank
+            if (!user.hasOwnProperty('skills')) {
+                user.skills = {};
+            }
+            var skills = user.skills;
+            var skill = result.skill;
+            var rank = result.rank_before;
+
+            if (!skills.hasOwnProperty(skill)) {
+                skills[skill] = [];
+            }
+            skills[skill].push(rank);
+        });
+
+    });
+    res.end();
+});
+
 router.post('/data', (req, res) => {
     var username = req.body.username;
     var editions = req.body.editions;

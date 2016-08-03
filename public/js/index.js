@@ -316,6 +316,7 @@ $(document).ready(() => {
     $('#courseForm').hide();
     $('#interestForm').hide();
     $('#skillForm').hide();
+    $('#recommendForm').hide();
     $('#dataForm').hide();
     $('#newTopicForm').hide();
     $('#newSkillForm').hide();
@@ -353,18 +354,20 @@ $(document).ready(() => {
         $.post('/info', info);
     });
 
+
+    // course form
     $('#courseForm').on('show', () => {
         $.get('/courses', data => {
             $.each(data.courses, (idx, code) => {
                 $('<li/>')
                 .text(code)
                 .attr('id', code)
-                .appendTo('#editions');
+                .appendTo('#courses');
             });
         });
     });
 
-    $('#editions').click((event) => {
+    $('#courses').click((event) => {
         var id = event.target.id;
 
         if ($('#' + id).hasClass('checked')) {
@@ -383,8 +386,6 @@ $(document).ready(() => {
 
     $('#courseForm').submit(() => {
         helper.snack('Submitted');
-
-        // $.post('/takenCourses');
 
         $('#courseForm').hide();
         $('#interestForm').show();
@@ -491,11 +492,23 @@ $(document).ready(() => {
 
     });
 
-    $('#startdata').click(() => {
+    $('#startRecommend').click(() => {
         $('#skillForm').hide();
+        $('#recommendForm').show();
+    });
+
+    // recommend form
+    $('#startdata').click(() => {
+        $('#recommendForm').hide();
         $('#dataForm').show();
     });
 
+    $('#recommendForm').on('show', () => {
+        alert(collected.username);
+        $.post('/recommendations', collected);
+    });
+
+    // data form
     $('#skipData').click(() => {
         $('#dataForm').hide();
         $('#newTopicForm').show();
