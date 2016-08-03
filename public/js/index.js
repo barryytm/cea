@@ -146,14 +146,18 @@ class Helper {
                     max: 5
                 });
 
-			var $courseTopicButton = $('<button/>');
+			var $courseTopicButton = $('<input/>').attr({
+				type: 'submit',
+				value: 'submit'
+			});
+			
 			$courseTopicButton.addClass('.btn.btn-lg.btn-primary sameLine');
 			$courseTopicButton.attr({
 				id: 'topicSummit' + code,
 				type: 'button'
 			});
 
-			var $courseTopicConatiner = $('<div/>');
+			var $courseTopicConatiner = $('<form/>');
 			$courseTopicConatiner.addClass('sameLineContainer');
 			$courseTopicConatiner.append($courseTopicLabel);
 			$courseTopicConatiner.append($courseTopics);
@@ -161,6 +165,7 @@ class Helper {
 			$courseTopicConatiner.append($courseTopicsRankAfter);
 			$courseTopicConatiner.append($courseTopicButton);
 
+			//skills
             var $courseSkillLabel = $('<label/>').addClass('col-md-4 col-form-label').text('Skill');
             var $courseSkills = $('<select/>').addClass('sameLine');
 			$.post('/courseSkills', {code: code}, result => {
@@ -182,7 +187,7 @@ class Helper {
 					min: 1,
 					max: 5
 				});
-			//skills
+
 			var $courseSkillRankBefore = $('<input/>')
                 .addClass('form-control sameLine')
                 .prop('required', true)
@@ -207,14 +212,18 @@ class Helper {
                     max: 5
                 });
 
-			var $courseSkillButton = $('<button/>');
+			var $courseSkillButton = $('<input/>').attr({
+				type: 'submit',
+				value: 'submit'
+			});
+
 			$courseSkillButton.addClass('sameLine');
 			$courseSkillButton.attr({
 				id: 'skillSummit' + code,
 				type: 'button'
 			});
 
-			var $courseSkillConatiner = $('<div/>');
+			var $courseSkillConatiner = $('<form/>');
 			$courseSkillConatiner.addClass('sameLineContainer');
 			$courseSkillConatiner.append($courseSkillLabel);
 			$courseSkillConatiner.append($courseSkills);

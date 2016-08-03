@@ -176,6 +176,7 @@ input {
 .sameLine {
     width: 15%;
     display: inline-block;
+    margin: 5px;
 }
 
 .sameLineContainer {
