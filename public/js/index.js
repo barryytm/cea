@@ -150,7 +150,7 @@ class Helper {
 				type: 'submit',
 				value: 'submit'
 			});
-			
+
 			$courseTopicButton.addClass('.btn.btn-lg.btn-primary sameLine');
 			$courseTopicButton.attr({
 				id: 'topicSummit' + code,
@@ -305,7 +305,9 @@ $(document).ready(() => {
         username: '',
         editions: [],
         topics: [],
-        skills: []
+        skills: [],
+		deptListTopics: {},
+		deptListSkills: {}
     };
 
     $('form').submit((event) => {
@@ -424,20 +426,10 @@ $(document).ready(() => {
     });
 
     $('#interestForm').submit(() => {
-        var username = $('#username').val();
-        var dept = $('#departments').find(':selected').text();
         var topic = $('#topics').find(':selected').text();
         var interestRating = $('#interestRating').val();
 
-        var data = {
-            username: username,
-            dept: dept,
-            topic: topic,
-            interestRating: interestRating
-        };
-
-        $.post('/topicInterest', data);
-
+    	collected.deptListTopics[topic] = interestRating;
     });
 
     $('#startSkill').click(() => {
@@ -476,20 +468,10 @@ $(document).ready(() => {
     });
 
     $('#skillForm').submit(() => {
-        var username = $('#username').val();
-        var dept = $('#departmentsSkill').find(':selected').text();
         var skill = $('#skills').find(':selected').text();
         var skillRating = $('#skillRating').val();
 
-        var data = {
-            username: username,
-            dept: dept,
-            skill: skill,
-            skillRating: skillRating
-        };
-
-        $.post('/skills', data);
-
+		collected.deptListSkills[skill] = skillRating;
     });
 
     $('#startRecommend').click(() => {
