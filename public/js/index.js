@@ -383,7 +383,12 @@ $(document).ready(() => {
 
         // get all the depts and topics
         $.get('/deptTopics', result => {
-            for (var key in result) {
+            const ordered = {};
+                Object.keys(result).sort().forEach(key => {
+                ordered[key] = result[key];
+            });
+
+            for (var key in ordered) {
                 var $dept = $('<option/>').attr('value', key);
                 $dept.text(key);
                 $('#departments').append($dept);
@@ -392,21 +397,21 @@ $(document).ready(() => {
 
             // first time
             var dept = $('#departments').find('option:first').val();
-			result[dept].sort();
-            for (var value in result[dept]) {
-                var $topic = $('<option/>').attr('value', result[dept][value]);
-                $topic.text(result[dept][value]);
+			ordered[dept].sort();
+            for (var value in ordered[dept]) {
+                var $topic = $('<option/>').attr('value', ordered[dept][value]);
+                $topic.text(ordered[dept][value]);
                 $('#topics').append($topic);
             }
 
             // otherwise
-            $('#departments').change(function() {
+            $('#departments').change(() => {
                 var dept = $('#departments').find(":selected").text();
                 $('#topics').empty();
-				result[dept].sort();
-                for (var value in result[dept]) {
-                    var $topic = $('<option/>').attr('value', result[dept][value]);
-                    $topic.text(result[dept][value]);
+				ordered[dept].sort();
+                for (var value in ordered[dept]) {
+                    var $topic = $('<option/>').attr('value', ordered[dept][value]);
+                    $topic.text(ordered[dept][value]);
                     $('#topics').append($topic);
                 }
             });
@@ -436,8 +441,12 @@ $(document).ready(() => {
     $('#startSkill').click(() => {
         // get all the depts and topics
         $.get('/deptSkills', result => {
+            const ordered = {};
+                Object.keys(result).sort().forEach(key => {
+                ordered[key] = result[key];
+            });
 
-            for (var key in result) {
+            for (var key in ordered) {
                 var $dept = $('<option/>').attr('value', key);
                 $dept.text(key);
                 $('#departmentsSkill').append($dept);
@@ -446,10 +455,10 @@ $(document).ready(() => {
 
             // first time
             var dept = $('#departmentsSkill').find('option:first').val();
-			result[dept].sort();
-            for (var value in result[dept]) {
-                var $skill = $('<option/>').attr('value', result[dept][value]);
-                $skill.text(result[dept][value]);
+			ordered[dept].sort();
+            for (var value in ordered[dept]) {
+                var $skill = $('<option/>').attr('value', ordered[dept][value]);
+                $skill.text(ordered[dept][value]);
                 $('#skills').append($skill);
             }
 
@@ -457,10 +466,10 @@ $(document).ready(() => {
             $('#departmentsSkill').change(() => {
                 var dept = $('#departmentsSkill').find(":selected").text();
                 $('#skills').empty();
-				result[dept].sort();
-                for (var value in result[dept]) {
-                    var $skill = $('<option/>').attr('value', result[dept][value]);
-                    $skill.text(result[dept][value]);
+				ordered[dept].sort();
+                for (var value in ordered[dept]) {
+                    var $skill = $('<option/>').attr('value', ordered[dept][value]);
+                    $skill.text(ordered[dept][value]);
                     $('#skills').append($skill);
                 }
             });
