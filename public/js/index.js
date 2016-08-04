@@ -127,7 +127,6 @@ class Helper {
 
 			var $courseTopicsRankBefore = $('<input/>')
                 .addClass('form-control sameLine')
-                .prop('required', true)
                 .attr({
                     id: 'courseTopicsRankBefore' + code,
                     type: 'number',
@@ -139,7 +138,6 @@ class Helper {
 
 			var $courseTopicsRankAfter = $('<input/>')
                 .addClass('form-control sameLine')
-                .prop('required', true)
                 .attr({
                     id: 'courseTopicsRankAfter' + code,
                     type: 'number',
@@ -181,7 +179,6 @@ class Helper {
 
 			var $courseSkillRankBefore = $('<input/>')
                 .addClass('form-control sameLine')
-                .prop('required', true)
                 .attr({
                     id: 'courseSkillRankBefore' + code,
                     type: 'number',
@@ -193,7 +190,6 @@ class Helper {
 
 			var $courseSkillRankAfter = $('<input/>')
                 .addClass('form-control sameLine')
-                .prop('required', true)
                 .attr({
                     id: 'courseSkillRankAfter' + code,
                     type: 'number',
@@ -484,13 +480,17 @@ $(document).ready(() => {
 				var topicBefore = $('#courseTopicsRankBefore' + code).val();
 				var topicAfter = $('#courseTopicsRankAfter' + code).val();
 
-				for (var i = 0; i < collected.editions.length; i++) {
-					if (collected.editions[i].code === code) {
-						collected.editions[i].allTopicRankings = {};
-						collected.editions[i].allTopicRankings[topic] = [];
-						collected.editions[i].allTopicRankings[topic].push(topicBefore);
-						collected.editions[i].allTopicRankings[topic].push(topicAfter);
+				if (!(topicBefore === '') && !(topicAfter === '')) {
+					for (var i = 0; i < collected.editions.length; i++) {
+						if (collected.editions[i].code === code) {
+							collected.editions[i].allTopicRankings = {};
+							collected.editions[i].allTopicRankings[topic] = [];
+							collected.editions[i].allTopicRankings[topic].push(topicBefore);
+							collected.editions[i].allTopicRankings[topic].push(topicAfter);
+						}
 					}
+				} else {
+					helper.snack('topic ranking not complete');
 				}
 			});
 
@@ -499,13 +499,17 @@ $(document).ready(() => {
 				var skillBefore = $('#courseSkillRankBefore' + code).val();
 				var skillAfter = $('#courseSkillRankAfter' + code).val();
 
-				for (var i = 0; i < collected.editions.length; i++) {
-					if (collected.editions[i].code === code) {
-						collected.editions[i].allSkillRankings = {};
-						collected.editions[i].allSkillRankings[skill] = [];
-						collected.editions[i].allSkillRankings[skill].push(skillBefore);
-						collected.editions[i].allSkillRankings[skill].push(skillAfter);
+				if (!(skillBefore === '') && (!(skillAfter))) {
+					for (var i = 0; i < collected.editions.length; i++) {
+						if (collected.editions[i].code === code) {
+							collected.editions[i].allSkillRankings = {};
+							collected.editions[i].allSkillRankings[skill] = [];
+							collected.editions[i].allSkillRankings[skill].push(skillBefore);
+							collected.editions[i].allSkillRankings[skill].push(skillAfter);
+						}
 					}
+				} else {
+					helper.snack('Skill ranking not complete')
 				}
 			});
 		});
