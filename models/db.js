@@ -44,13 +44,13 @@ module.exports = {
             [username, age, gender, country]);
     },
 
-    getCourses: (callback) => {
+    getCourses: callback => {
         pool.query('select dept_code, course_number from courses', (err, res) => {
             callback(res.rows);
         });
     },
 
-    getDeptTopics: (result) => {
+    getDeptTopics: result => {
         pool.query('select distinct dept_name, topic from departments ' +
             'natural join courses natural join course_topics natural join topics',
             (err, res) => {
@@ -58,7 +58,7 @@ module.exports = {
         });
     },
 
-    getDeptSkills:(result) => {
+    getDeptSkills: result => {
         pool.query('select distinct dept_name, skill from departments ' +
             'natural join courses natural join course_skills natural join skills',
             (err, res) => {
@@ -92,6 +92,13 @@ module.exports = {
         var activeUser = client.querySync('select * from students where username=$1', [username])[0];
             
         callback(rows, avg, activeUser);
+    },
+
+    findCourses: (userStr, callback) => {
+        pool.query('select distinct course_id from enrollments natural join ' +
+        'course_editions natural join courses where username = any($1)', [userStr], (err, res) => {
+            callback(res.rows);
+        });
     },
 
     addExperience: (username, edition) => {
