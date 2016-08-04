@@ -82,7 +82,7 @@ router.post('/recommendations', (req, res) => {
             user.age = result.age;
             user.gender = result.gender === 'm' ? 1 : 0;
             user.country = result.native_country;
-        
+
             // push topic and interest
             if (!user.hasOwnProperty('topics')) {
                 user.topics = {};
