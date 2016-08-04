@@ -127,12 +127,47 @@ module.exports = {
         var already = client.querySync('select count(1) from enrollments where edition_id=$1 and username=$2',
         [editionId, username])[0].count;
 
-        already ?
+        parseInt(already, 10) ?
             client.querySync('update enrollments set letter_grade=$1, course_ranking=$2,' +
             'instr_ranking=$3 where edition_id=$4 and username=$5',
             [letterGrade, edition.courseRank, edition.instructorRank, editionId, username]) :
             client.querySync('insert into enrollments values ($1, $2, $3, $4, $5)',
             [editionId, username, letterGrade, edition.courseRank, edition.instructorRank]);
+
+        for (var key in edition.allTopicRankings) {
+            var topicId = client.querySync('select topic_id from topics where topic=$1', [key])[0]['topic_id'];
+            var topicBefore = edition.allTopicRankings[key][0];
+            var topicAfter = edition.allTopicRankings[key][1];
+
+            var exists = client.querySync('select count(1) from topic_interests where username=$1 ' +
+                'and edition_id=$2 and topic_id=$3', [username, editionId, topicId])[0]['count'];
+
+            if (parseInt(exists, 10)) {
+                client.querySync('update topic_interests set interest_before=$4, interest_after=$5 ' +
+                'where username=$1 and edition_id=$2 and topic_id=$3', [username, editionId, topicId, topicBefore, topicAfter]);
+            } else {
+                client.querySync('insert into topic_interests values ($1, $2, $3, $4, $5, $6)',
+                    [courseId, editionId, username, topicId, topicBefore, topicAfter]);
+            }
+         }
+
+         for (var key in edition.allSkillRankings) {
+             var skillId = client.querySync('select skill_id from skills where skill=$1', [key])[0]['skill_id'];
+             var skillBefore = edition.allSkillRankings[key][0];
+             var skillAfter = edition.allSkillRankings[key][1];
+
+             var exists = client.querySync('select count(1) from skill_rankings where username=$1 ' +
+                'and edition_id=$2 and skill_id=$3', [username, editionId, skillId])[0]['count'];
+
+            if (parseInt(exists, 10)) {
+                client.querySync('update skill_rankings set rank_before=$4, rank_after=$5 ' +
+                'where username=$1 and edition_id=$2 and skill_id=$3', [username, editionId, skillId, skillBefore, skillAfter]);
+            } else {
+                client.querySync('insert into skill_rankings values ($1, $2, $3, $4, $5, $6)',
+                    [courseId, editionId, username, skillId, skillBefore, skillAfter]);
+            }
+
+         }
     },
 
     getAllTopics: (callback) => {

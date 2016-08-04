@@ -116,9 +116,12 @@ class Helper {
 
 			$.post('/courseTopics', {code: code}, result => {
 	            for (var i = 0; i < result.length; i++) {
-					var $topic = $('<option/>').attr('value', result[i].topic);
+					var $topic = $('<option/>').attr({
+						value: result[i].topic
+					});
 	                $topic.text(result[i].topic);
 	                $courseTopics.append($topic);
+					$courseTopics.attr({id: 'courseTopic' + code})
 				}
 	        });
 
@@ -147,18 +150,13 @@ class Helper {
                 });
 
 			var $courseTopicButton = $('<input/>').attr({
-				id: 'courseTopicButton' + code,
-				type: 'submit',
+				id: 'topicAdd' + code,
 				value: 'add'
 			});
 
-			$courseTopicButton.addClass('btn.btn-lg.btn-primary sameLine');
-			$courseTopicButton.attr({
-				id: 'topicAdd' + code,
-				type: 'submit'
-			});
+			$courseTopicButton.addClass('btn btn-lg btn-success sameLine');
 
-			var $courseTopicConatiner = $('<form/>');
+			var $courseTopicConatiner = $('<section/>');
 			$courseTopicConatiner.addClass('sameLineContainer');
 			$courseTopicConatiner.append($courseTopicLabel);
 			$courseTopicConatiner.append($courseTopics);
@@ -171,9 +169,13 @@ class Helper {
             var $courseSkills = $('<select/>').addClass('sameLine');
 			$.post('/courseSkills', {code: code}, result => {
 	            for (var i = 0; i < result.length; i++) {
-					var $skill = $('<option/>').attr('value', result[i].skill);
+					var $skill = $('<option/>').attr({
+						id: 'courseSkill' + code,
+						value: result[i].skill
+					});
 	                $skill.text(result[i].skill);
 	                $courseSkills.append($skill);
+					$courseSkills.attr({id: 'courseSkill' + code})
 				}
 	        });
 
@@ -202,24 +204,19 @@ class Helper {
                 });
 
 			var $courseSkillButton = $('<input/>').attr({
-				id: 'courseSkillButton' + code,
-				type: 'submit',
+				id: 'skillAdd' + code,
 				value: 'add'
 			});
 
-			$courseSkillButton.addClass('sameLine');
-			$courseSkillButton.attr({
-				id: 'skillAdd' + code,
-				type: 'submit'
-			});
+			$courseSkillButton.addClass('btn btn-lg btn-success sameLine');
 
-			var $courseSkillConatiner = $('<form/>')
-			.addClass('sameLineContainer')
-			.append($courseSkillLabel)
-			.append($courseSkills)
-			.append($courseSkillRankBefore)
-			.append($courseSkillRankAfter)
-			.append($courseSkillButton);
+			var $courseSkillConatiner = $('<section/>');
+			$courseSkillConatiner.addClass('sameLineContainer');
+			$courseSkillConatiner.append($courseSkillLabel);
+			$courseSkillConatiner.append($courseSkills);
+			$courseSkillConatiner.append($courseSkillRankBefore);
+			$courseSkillConatiner.append($courseSkillRankAfter);
+			$courseSkillConatiner.append($courseSkillButton);
 
 			var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
             // add semester
@@ -297,7 +294,9 @@ $(document).ready(() => {
         topics: [],
         skills: [],
 		deptListTopics: {},
-		deptListSkills: {}
+		deptListSkills: {},
+		allTopicRankings: {},
+		allSkillRankings: {}
     };
 
     $('form').submit((event) => {
@@ -412,7 +411,11 @@ $(document).ready(() => {
                 }
             });
         });
-
+		$.each(courses, (idx, code) => {
+            collected.editions.push({
+                code: code,
+            });
+        });
     });
 
     $('#interestForm').submit(() => {
@@ -469,24 +472,42 @@ $(document).ready(() => {
         $('#recommendForm').show();
     });
 
+
     // recommend form
     $('#startData').click(() => {
         $('#recommendForm').hide();
         $('#dataForm').show();
 
-		var courseTopics = {};
-		var courseSkills = {};
-
 		$.each(courses, (idx, code) => {
-			console.log('#topicAdd' + code);
-			$('#topicAdd' + code).submit(() => {
-				// var courseTopic;
-				// var before = $('#courseTopicsRankBefore' + code).val();
-				// console.log(Before);
-			});
-			$('#courseSkillButton' + code).submit(
+			$('#topicAdd' + code).click(() => {
+				var topic = $('#courseTopic' + code).find(":selected").text();
+				var topicBefore = $('#courseTopicsRankBefore' + code).val();
+				var topicAfter = $('#courseTopicsRankAfter' + code).val();
 
-			);
+				for (var i = 0; i < collected.editions.length; i++) {
+					if (collected.editions[i].code === code) {
+						collected.editions[i].allTopicRankings = {};
+						collected.editions[i].allTopicRankings[topic] = [];
+						collected.editions[i].allTopicRankings[topic].push(topicBefore);
+						collected.editions[i].allTopicRankings[topic].push(topicAfter);
+					}
+				}
+			});
+
+			$('#skillAdd' + code).click(() => {
+				var skill = $('#courseSkill' + code).find(":selected").text();
+				var skillBefore = $('#courseSkillRankBefore' + code).val();
+				var skillAfter = $('#courseSkillRankAfter' + code).val();
+
+				for (var i = 0; i < collected.editions.length; i++) {
+					if (collected.editions[i].code === code) {
+						collected.editions[i].allSkillRankings = {};
+						collected.editions[i].allSkillRankings[skill] = [];
+						collected.editions[i].allSkillRankings[skill].push(skillBefore);
+						collected.editions[i].allSkillRankings[skill].push(skillAfter);
+					}
+				}
+			});
 		});
     });
 
@@ -518,16 +539,16 @@ $(document).ready(() => {
         $('#newTopicForm').show();
 
         $.each(courses, (idx, code) => {
-
-            collected.editions.push({
-                code: code,
-                semester: $('#semester' + code).val(),
-                year: $('#year' + code).val(),
-                timeOfDay: $('#timeOfDay' + code).val(),
-                grade: $('#grade' + code).val(),
-                courseRank: $('#courseRank' + code).val(),
-                instructorRank: $('#instructorRank' + code).val()
-            });
+			for (var i = 0; i < collected.editions.length; i++) {
+				if (collected.editions[i].code === code) {
+		                collected.editions[i].semester = $('#semester' + code).val();
+		                collected.editions[i].year = $('#year' + code).val();
+		                collected.editions[i].timeOfDay = $('#timeOfDay' + code).val();
+		                collected.editions[i].grade = $('#grade' + code).val();
+		                collected.editions[i].courseRank = $('#courseRank' + code).val();
+		                collected.editions[i].instructorRank = $('#instructorRank' + code).val();
+				}
+			}
         });
 
         $.post('/data', collected);

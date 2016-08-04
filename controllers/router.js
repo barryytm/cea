@@ -105,6 +105,7 @@ router.post('/recommendations', (req, res) => {
             var user = filtered[currUsername];
             
             user.age = result.age === null ? Math.trunc(avg) : result.age;
+            
             if (result.gender === null) {
                 user.gender = 0.44;
             } else if (result.gender === 'm') {
@@ -148,7 +149,7 @@ router.post('/recommendations', (req, res) => {
             for (var topic in topics) {
                 var interests = topics[topic];
                 var totalT = 0;
-                
+
                 for (var i = 0; i < interests.length; i++) {
                     totalT += interests[i];
                 }
@@ -159,7 +160,7 @@ router.post('/recommendations', (req, res) => {
             for (var skill in skills) {
                 var ranks = skills[skill];
                 var totalS = 0;
-                
+
                 for (var j = 0; j < ranks.length; j++) {
                     totalS += ranks[j];
                 }
