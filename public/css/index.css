@@ -217,3 +217,9 @@ input {
     to {bottom: 0; opacity: 0;}
 }
 /* end snackbar styles */
+
+/* recommandatioin styles*/
+#rankBy label{
+    margin: 20px;
+}
+/* end recommandatioin */
