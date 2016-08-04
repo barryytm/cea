@@ -69,18 +69,18 @@ module.exports = {
     computeTable: (username, topicStr, skillStr, callback) => {
         var str, arr;
 
-        // check number of variables
-        if (topicStr.length === 0 && skillStr.length === 0) {
+        // check number of variables, 1 is for the '}'
+        if (topicStr.length === 1 && skillStr.length === 1) {
             str = 'where username<>$1';
             arr = [username];
-        } else if (topicStr.length === 0) {
-            str = 'where username<>$1 and skill in ($2)';
+        } else if (topicStr.length === 1) {
+            str = 'where username<>$1 and skill = any($2)';
             arr = [username, skillStr];
-        } else if (skillStr.length === 0) {
-            str = 'where username<>$1 and topic in ($2)';
+        } else if (skillStr.length === 1) {
+            str = 'where username<>$1 and topic = any($2)';
             arr = [username, topicStr];
         } else {
-            str = 'where username<>$1 and (topic in ($2) or skill in ($3))';
+            str = 'where username<>$1 and (topic = any($2) or skill = any($3))';
             arr = [username, topicStr, skillStr];
         }
         

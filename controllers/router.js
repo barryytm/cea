@@ -68,19 +68,19 @@ router.post('/recommendations', (req, res) => {
     var username = req.body.username;
     var topicTotal = req.body.deptListTopics;
     var skillTotal = req.body.deptListSkills;
-    var topicStr = '', skillStr = '';
+    var topicStr = '{', skillStr = '{';
 
     // concatenate topics
     for (var keyT in topicTotal) {
         topicStr += keyT + ', ';
     }
-    topicStr = topicStr.slice(0, -2);
+    topicStr = topicStr.slice(0, -2) + '}';
 
     // concatenate skills
     for (var keyS in skillTotal) {
         skillStr += keyS + ', ';
     }
-    skillStr = skillStr.slice(0, -2);
+    skillStr = skillStr.slice(0, -2) + '}';
 
     db.computeTable(username, topicStr, skillStr, results => {
         var filtered = {};
@@ -125,6 +125,30 @@ router.post('/recommendations', (req, res) => {
             skills[skill].push(rank);
         });
 
+        // compute average and clean up data
+        for(var user in filtered) {
+            var topics = filtered[user].topics;
+            for (var topic in topics) {
+                var interests = topics[topic];
+                var totalT = 0;
+                
+                for (var i = 0; i < interests.length; i++) {
+                    totalT += interests[i];
+                }
+                topics[topic] = totalT / interests.length;
+            }
+
+            var skills = filtered[user].skills;
+            for (var skill in skills) {
+                var ranks = skills[skill];
+                var totalS = 0;
+                
+                for (var j = 0; j < ranks.length; j++) {
+                    totalS += ranks[j];
+                }
+                skills[skill] = totalS / ranks.length;
+            }
+        }
     });
     res.end();
 });
