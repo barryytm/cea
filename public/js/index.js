@@ -422,7 +422,7 @@ $(document).ready(() => {
 
     	collected.deptListTopics[topic] = interestRating;
 
-		helper.snack('Saved')
+		helper.snack('Saved');
     });
 
     $('#startSkill').click(() => {
@@ -466,16 +466,23 @@ $(document).ready(() => {
 
 		collected.deptListSkills[skill] = skillRating;
 
-		helper.snack('Saved')
+		helper.snack('Saved');
     });
 
     $('#startRecommend').click(() => {
         $('#skillForm').hide();
         $('#recommendForm').show();
 
-		$.each(courses, (idx, code) => {
+		var criteria = $('#userCriteria').find(":selected").text();
 			$('<li/>')
-			.text('hey')
+			.text(criteria)
+			.appendTo('#recommendations');
+
+		$('#userCriteria').change(function() {
+			criteria = $('#userCriteria').find(":selected").text();
+			$('#recommendations').empty();
+			$('<li/>')
+			.text(criteria)
 			.appendTo('#recommendations');
 		});
     });
