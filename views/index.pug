@@ -96,6 +96,14 @@ html(lang="en")
                 .header
                     .form-group
                         label These are the courses we recommend to you
+                    section#rankBy
+                        label Rank by
+                        select#userCriteria
+                            option#rankByGrade(value='best predicted grade') Best predicted grade
+                            option#rankByInterest(value='interests') Interests
+                            option#rankByImprovement(value='skills improvement') Skills improvement
+                            option#rankByHappiness(value='happiness') Happiness
+                    ul#recommendations.newlist
                     input#startData.twoButton.btn.btn-lg.btn-success(type="submit", value="Next")
                 ul#recommendations.newlist
             form#dataForm.new

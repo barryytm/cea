@@ -427,6 +427,8 @@ $(document).ready(() => {
         var interestRating = $('#interestRating').val();
 
     	collected.deptListTopics[topic] = interestRating;
+
+		helper.snack('Saved');
     });
 
     $('#startSkill').click(() => {
@@ -469,11 +471,26 @@ $(document).ready(() => {
         var skillRating = $('#skillRating').val();
 
 		collected.deptListSkills[skill] = skillRating;
+
+		helper.snack('Saved');
     });
 
     $('#startRecommend').click(() => {
         $('#skillForm').hide();
         $('#recommendForm').show();
+
+		var criteria = $('#userCriteria').find(":selected").text();
+			$('<li/>')
+			.text(criteria)
+			.appendTo('#recommendations');
+
+		$('#userCriteria').change(function() {
+			criteria = $('#userCriteria').find(":selected").text();
+			$('#recommendations').empty();
+			$('<li/>')
+			.text(criteria)
+			.appendTo('#recommendations');
+		});
     });
 
 
