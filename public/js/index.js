@@ -294,10 +294,10 @@ $(document).ready(() => {
         topics: [],
         skills: [],
 		deptListTopics: {},
-		deptListSkills: {}
+		deptListSkills: {},
+		allTopicRankings: {},
+		allSkillRankings: {}
     };
-	var allTopicRankings = {};
-	var allSkillRankings = {};
 
     $('form').submit((event) => {
         event.preventDefault();
@@ -411,7 +411,11 @@ $(document).ready(() => {
                 }
             });
         });
-
+		$.each(courses, (idx, code) => {
+            collected.editions.push({
+                code: code,
+            });
+        });
     });
 
     $('#interestForm').submit(() => {
@@ -480,9 +484,14 @@ $(document).ready(() => {
 				var topicBefore = $('#courseTopicsRankBefore' + code).val();
 				var topicAfter = $('#courseTopicsRankAfter' + code).val();
 
-				allTopicRankings[topic] = [];
-				allTopicRankings[topic].push(topicBefore);
-				allTopicRankings[topic].push(topicAfter);
+				for (var i = 0; i < collected.editions.length; i++) {
+					if (collected.editions[i].code === code) {
+						collected.editions[i].allTopicRankings = {};
+						collected.editions[i].allTopicRankings[topic] = [];
+						collected.editions[i].allTopicRankings[topic].push(topicBefore);
+						collected.editions[i].allTopicRankings[topic].push(topicAfter);
+					}
+				}
 			});
 
 			$('#skillAdd' + code).click(() => {
@@ -490,9 +499,14 @@ $(document).ready(() => {
 				var skillBefore = $('#courseSkillRankBefore' + code).val();
 				var skillAfter = $('#courseSkillRankAfter' + code).val();
 
-				allSkillRankings[skill] = [];
-				allSkillRankings[skill].push(skillBefore);
-				allSkillRankings[skill].push(skillAfter);
+				for (var i = 0; i < collected.editions.length; i++) {
+					if (collected.editions[i].code === code) {
+						collected.editions[i].allSkillRankings = {};
+						collected.editions[i].allSkillRankings[skill] = [];
+						collected.editions[i].allSkillRankings[skill].push(skillBefore);
+						collected.editions[i].allSkillRankings[skill].push(skillAfter);
+					}
+				}
 			});
 		});
     });
@@ -525,17 +539,16 @@ $(document).ready(() => {
         $('#newTopicForm').show();
 
         $.each(courses, (idx, code) => {
-            collected.editions.push({
-                code: code,
-                semester: $('#semester' + code).val(),
-                year: $('#year' + code).val(),
-                timeOfDay: $('#timeOfDay' + code).val(),
-                grade: $('#grade' + code).val(),
-                courseRank: $('#courseRank' + code).val(),
-                instructorRank: $('#instructorRank' + code).val(),
-				allTopicRankings: allTopicRankings,
-				allSkillRankings: allSkillRankings
-            });
+			for (var i = 0; i < collected.editions.length; i++) {
+				if (collected.editions[i].code === code) {
+		                collected.editions[i].semester = $('#semester' + code).val();
+		                collected.editions[i].year = $('#year' + code).val();
+		                collected.editions[i].timeOfDay = $('#timeOfDay' + code).val();
+		                collected.editions[i].grade = $('#grade' + code).val();
+		                collected.editions[i].courseRank = $('#courseRank' + code).val();
+		                collected.editions[i].instructorRank = $('#instructorRank' + code).val();
+				}
+			}
         });
 
         $.post('/data', collected);
