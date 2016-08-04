@@ -392,6 +392,7 @@ $(document).ready(() => {
 
             // first time
             var dept = $('#departments').find('option:first').val();
+			result[dept].sort();
             for (var value in result[dept]) {
                 var $topic = $('<option/>').attr('value', result[dept][value]);
                 $topic.text(result[dept][value]);
@@ -402,6 +403,7 @@ $(document).ready(() => {
             $('#departments').change(function() {
                 var dept = $('#departments').find(":selected").text();
                 $('#topics').empty();
+				result[dept].sort();
                 for (var value in result[dept]) {
                     var $topic = $('<option/>').attr('value', result[dept][value]);
                     $topic.text(result[dept][value]);
@@ -414,7 +416,7 @@ $(document).ready(() => {
                 code: code,
             });
         });
-        
+
         if (!courses.length) {
             collected.courses = null;
         } else {
@@ -444,6 +446,7 @@ $(document).ready(() => {
 
             // first time
             var dept = $('#departmentsSkill').find('option:first').val();
+			result[dept].sort();
             for (var value in result[dept]) {
                 var $skill = $('<option/>').attr('value', result[dept][value]);
                 $skill.text(result[dept][value]);
@@ -454,6 +457,7 @@ $(document).ready(() => {
             $('#departmentsSkill').change(() => {
                 var dept = $('#departmentsSkill').find(":selected").text();
                 $('#skills').empty();
+				result[dept].sort();
                 for (var value in result[dept]) {
                     var $skill = $('<option/>').attr('value', result[dept][value]);
                     $skill.text(result[dept][value]);
