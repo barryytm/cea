@@ -96,6 +96,7 @@ html(lang="en")
                 .header
                     .form-group
                         label These are the courses we recommend to you
+                        input#startData.twoButton.btn.btn-lg.btn-success(type="submit", value="Next")
                     section#rankBy
                         label Rank by
                         select#userCriteria
@@ -104,8 +105,7 @@ html(lang="en")
                             option#rankByImprovement(value='skills improvement') Skills improvement
                             option#rankByHappiness(value='happiness') Happiness
                     ul#recommendations.newlist
-                    input#startData.twoButton.btn.btn-lg.btn-success(type="submit", value="Next")
-                ul#recommendations.newlist
+                    
             form#dataForm.new
                 label.center Enter your course inforamtion
                 input#skipData.bu.btn.btn-lg.btn-info(value="Skip")

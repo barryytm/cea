@@ -85,7 +85,6 @@ router.post('/recommendations', (req, res) => {
     }
     skillStr = skillStr.slice(0, -2) + '}';
 
-    console.log(req.body);
     if (courses === '') {
         courses = [];
     }
@@ -106,7 +105,6 @@ router.post('/recommendations', (req, res) => {
             activeUser.gender = 0;
         }
         
-        console.log(4);
         results.forEach(result => {
             // identify user
             var currUsername = result.username;
@@ -219,7 +217,6 @@ router.post('/recommendations', (req, res) => {
             disArray.splice(15);
         }
 
-        console.log(3);
         disArray.forEach(val => {
             userStr += val[0] + ', ';
         });
@@ -229,14 +226,12 @@ router.post('/recommendations', (req, res) => {
         // exclude courses chosen by active user
         db.findCourses(userStr, results => {
             var exc = [], newResults =[], ids = '{';
-            console.log(1);
             courseArray.forEach(val => {
                 db.findExc(val, re => {
                     exc.push(re.course_id);
                 });
             });
 
-            console.log(2);
             results.forEach(result => {
                 if (!exc.includes(result.course_id)) {
                     newResults.push(result.course_id);
@@ -255,8 +250,30 @@ router.post('/recommendations', (req, res) => {
                     byGrade.push(result.dept_code + result.course_number);
                 });
                 fourCriteria.byGrade = byGrade;
+            });
 
-                console.log(fourCriteria.byGrade);
+            db.byTopic(ids, userStr, results => {
+                var byTopic = [];
+                results.forEach(result => {
+                    byTopic.push(result.dept_code + result.course_number);
+                });
+                fourCriteria.byTopic = byTopic;
+            });
+
+            db.bySkill(ids, userStr, results => {
+                var bySkill = [];
+                results.forEach(result => {
+                    bySkill.push(result.dept_code + result.course_number);
+                });
+                fourCriteria.bySkill = bySkill;
+            });
+
+            db.byHappiness(ids, userStr, results => {
+                var byHappiness = [];
+                results.forEach(result => {
+                    byHappiness.push(result.dept_code + result.course_number);
+                });
+                fourCriteria.byHappiness = byHappiness;
             });
 
             res.send(fourCriteria);

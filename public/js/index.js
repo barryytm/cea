@@ -480,38 +480,46 @@ $(document).ready(() => {
         $('#recommendForm').show();
 
         $.post('/recommendations', collected, four => {
-            var criteria = $('#userCriteria').find(":selected").text();
+            var criteria = $('#userCriteria').find(":selected").val();
             var gradeArray = four.byGrade;
             var topicArray = four.byTopic;
             var skillArray = four.bySkill;
             var evaluationArray = four.byHappiness;
-            var array = gradeArray;
 
-            $.each(array, (idx, val) => {
+            for (var i = 0; i < gradeArray.length; i++) {
                 $('<li/>')
-                .text(val)
+                .text(gradeArray[i])
                 .appendTo('#recommendations');
-            });
+            }
 
             $('#userCriteria').change(() => {
-                criteria = $('#userCriteria').find(":selected").text();
+                criteria = $('#userCriteria').find(":selected").val();
                 $('#recommendations').empty();
-
                 if (criteria === 'best predicted grade') {
-                    array = gradeArray;
+                    for (var i = 0; i < gradeArray.length; i++) {
+                        $('<li/>')
+                        .text(gradeArray[i])
+                        .appendTo('#recommendations');
+                    }
                 } else if (criteria === 'interests') {
-                    array = topicArray;
+                    for (var j = 0; j < topicArray.length; j++) {
+                        $('<li/>')
+                        .text(topicArray[j])
+                        .appendTo('#recommendations');
+                    }
                 } else if (criteria === 'skills improvement') {
-                    array = skillArray;
+                    for (var k = 0; k < skillArray.length; k++) {
+                        $('<li/>')
+                        .text(skillArray[k])
+                        .appendTo('#recommendations');
+                    }
                 } else {
-                    array = evaluationArray;
+                    for (var m = 0; m < evaluationArray.length; m++) {
+                        $('<li/>')
+                        .text(evaluationArray[m])
+                        .appendTo('#recommendations');
+                    }
                 }
-
-                $.each(array, (idx, val) => {
-                    $('<li/>')
-                    .text(val)
-                    .appendTo('#recommendations');
-                });
             });
         });
     });

@@ -116,6 +116,40 @@ module.exports = {
         callback(result);
     },
 
+    byTopic: (ids, userStr, callback) => {
+        var result = client.querySync('select dept_code, course_number from ' +
+        '(select distinct course_id, avg(interest_after - interest_before) as a ' +
+        'from courses natural join topic_interests ' +
+        'where course_id = any($1) and username = any($2) ' +
+        'group by course_id) ' +
+        'as results natural join courses order by a desc limit 5', [ids, userStr]);
+
+        callback(result);
+    },
+
+
+    bySkill: (ids, userStr, callback) => {
+        var result = client.querySync('select dept_code, course_number from ' +
+        '(select distinct course_id, avg(rank_after - rank_before) as a ' +
+        'from courses natural join skill_rankings ' +
+        'where course_id = any($1) and username = any($2) ' +
+        'group by course_id) ' +
+        'as results natural join courses order by a desc limit 5', [ids, userStr]);
+
+        callback(result);
+    },
+
+    byHappiness: (ids, userStr, callback) => {
+        var result = client.querySync('select dept_code, course_number from ' +
+        '(select distinct course_id, avg(course_ranking) as a ' +
+        'from courses natural join enrollments ' +
+        'where course_id = any($1) and username = any($2) ' +
+        'group by course_id) ' +
+        'as results natural join courses order by a desc limit 5', [ids, userStr]);
+
+        callback(result);
+    },
+
     addExperience: (username, edition) => {
         var deptCode = edition.code.slice(0, 3);
         var courseNumber = edition.code.slice(3);
