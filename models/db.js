@@ -21,6 +21,11 @@ const config = {
 // connect to heroku pg
 const pool = new pg.Pool(config);
 
+// log error from idle clients (rare)
+pool.on('error',  (err) => {
+    console.error('idle client error', err.message, err.stack);
+});
+
 // connect to pg-native to use sync
 const Client = require('pg-native');
 const client = new Client();
@@ -61,12 +66,31 @@ module.exports = {
         });
     },
 
-    computeTable: (username, callback) => {
+    computeTable: (username, topicStr, skillStr, callback) => {
+        var str, arr;
+
+        // check number of variables, 1 is for the '}'
+        if (topicStr.length === 1 && skillStr.length === 1) {
+            str = 'where username<>$1';
+            arr = [username];
+        } else if (topicStr.length === 1) {
+            str = 'where username<>$1 and skill = any($2)';
+            arr = [username, skillStr];
+        } else if (skillStr.length === 1) {
+            str = 'where username<>$1 and topic = any($2)';
+            arr = [username, topicStr];
+        } else {
+            str = 'where username<>$1 and (topic = any($2) or skill = any($3))';
+            arr = [username, topicStr, skillStr];
+        }
+
         pool.query('select distinct username, age, gender, native_country, skill,' +
         'rank_before, topic, interest_before from students natural join topics ' +
-        'natural join skills natural join skill_rankings natural join topic_interests ' +
-        'where username<>$1', [username], (req, res) => {
-            // console.log(res.rows);
+        'natural join skills natural join skill_rankings natural join topic_interests ' + str,
+        arr, (err, res) => {
+            if (err) {
+                return console.error('error running query', err);
+            }
             callback(res.rows);
         });
     },
