@@ -121,7 +121,7 @@ class Helper {
 					});
 	                $topic.text(result[i].topic);
 	                $courseTopics.append($topic);
-					$courseTopics.attr({id: 'courseTopic' + code})
+					$courseTopics.attr({id: 'courseTopic' + code});
 				}
 	        });
 
@@ -175,7 +175,7 @@ class Helper {
 					});
 	                $skill.text(result[i].skill);
 	                $courseSkills.append($skill);
-					$courseSkills.attr({id: 'courseSkill' + code})
+					$courseSkills.attr({id: 'courseSkill' + code});
 				}
 	        });
 
@@ -633,8 +633,4 @@ $(document).ready(() => {
         $.post('/newSkills', collected);
 
     });
-
-	var courseTopicsRankList = [];
-	var courseSkillsRankList = [];
-
 });

@@ -135,12 +135,12 @@ module.exports = {
             [editionId, username, letterGrade, edition.courseRank, edition.instructorRank]);
 
         for (var key in edition.allTopicRankings) {
-            var topicId = client.querySync('select topic_id from topics where topic=$1', [key])[0]['topic_id'];
+            var topicId = client.querySync('select topic_id from topics where topic=$1', [key])[0].topic_id;
             var topicBefore = edition.allTopicRankings[key][0];
             var topicAfter = edition.allTopicRankings[key][1];
 
             var exists = client.querySync('select count(1) from topic_interests where username=$1 ' +
-                'and edition_id=$2 and topic_id=$3', [username, editionId, topicId])[0]['count'];
+                'and edition_id=$2 and topic_id=$3', [username, editionId, topicId])[0].count;
 
             if (parseInt(exists, 10)) {
                 client.querySync('update topic_interests set interest_before=$4, interest_after=$5 ' +
@@ -151,15 +151,15 @@ module.exports = {
             }
          }
 
-         for (var key in edition.allSkillRankings) {
-             var skillId = client.querySync('select skill_id from skills where skill=$1', [key])[0]['skill_id'];
-             var skillBefore = edition.allSkillRankings[key][0];
-             var skillAfter = edition.allSkillRankings[key][1];
+         for (var keyS in edition.allSkillRankings) {
+             var skillId = client.querySync('select skill_id from skills where skill=$1', [key])[0].skill_id;
+             var skillBefore = edition.allSkillRankings[keyS][0];
+             var skillAfter = edition.allSkillRankings[keyS][1];
 
-             var exists = client.querySync('select count(1) from skill_rankings where username=$1 ' +
-                'and edition_id=$2 and skill_id=$3', [username, editionId, skillId])[0]['count'];
+             var exist = client.querySync('select count(1) from skill_rankings where username=$1 ' +
+                'and edition_id=$2 and skill_id=$3', [username, editionId, skillId])[0].count;
 
-            if (parseInt(exists, 10)) {
+            if (parseInt(exist, 10)) {
                 client.querySync('update skill_rankings set rank_before=$4, rank_after=$5 ' +
                 'where username=$1 and edition_id=$2 and skill_id=$3', [username, editionId, skillId, skillBefore, skillAfter]);
             } else {
