@@ -82,8 +82,17 @@ router.post('/recommendations', (req, res) => {
     }
     skillStr = skillStr.slice(0, -2) + '}';
 
-    db.computeTable(username, topicStr, skillStr, results => {
+    db.computeTable(username, topicStr, skillStr, (results, avg, activeUser) => {
         var filtered = {};
+
+        if (activeUser.gender === null) {
+            activeUser.gender = 0.44;
+        } else if (activeUser.gender === 'm') {
+            activeUser.gender = 1;
+        } else {
+            activeUser.gender = 0;
+        }
+        
         results.forEach(result => {
             // identify user
             var currUsername = result.username;
@@ -94,9 +103,17 @@ router.post('/recommendations', (req, res) => {
 
             // push age, gender and country
             var user = filtered[currUsername];
-            user.age = result.age;
-            user.gender = result.gender === 'm' ? 1 : 0;
-            user.country = result.native_country;
+            
+            user.age = result.age === null ? Math.trunc(avg) : result.age;
+            if (result.gender === null) {
+                user.gender = 0.44;
+            } else if (result.gender === 'm') {
+                user.gender = 1;
+            } else {
+                user.gender = 0;
+            }
+
+            user.country = result.native_country === null ? 'na' : result.native_country;
         
             // push topic and interest
             if (!user.hasOwnProperty('topics')) {
@@ -148,7 +165,21 @@ router.post('/recommendations', (req, res) => {
                 }
                 skills[skill] = totalS / ranks.length;
             }
+
+            // compute distance
+            var distance = 0;
+            distance += Math.pow(filtered[user].age - activeUser.age, 2);
+            distance += Math.pow(filtered[user].gender - activeUser.gender, 2);
+            distance += (filtered[user].country === activeUser.native_country ? 0 : 1);
+            
+
+            
         }
+        console.log(filtered);
+        console.log(activeUser);
+
+
+        // compute distance
     });
     res.end();
 });
