@@ -69,6 +69,7 @@ router.post('/recommendations', (req, res) => {
     var topicTotal = req.body.deptListTopics;
     var skillTotal = req.body.deptListSkills;
     var topicStr = '{', skillStr = '{';
+    var disArray = [], userStr = '{';
 
     // concatenate topics
     for (var keyT in topicTotal) {
@@ -104,8 +105,8 @@ router.post('/recommendations', (req, res) => {
             // push age, gender and country
             var user = filtered[currUsername];
             
-            user.age = result.age === null ? Math.trunc(avg) : result.age;
-            
+            user.age = result.age === null ? avg : result.age;
+
             if (result.gender === null) {
                 user.gender = 0.44;
             } else if (result.gender === 'm') {
@@ -172,16 +173,51 @@ router.post('/recommendations', (req, res) => {
             distance += Math.pow(filtered[user].age - activeUser.age, 2);
             distance += Math.pow(filtered[user].gender - activeUser.gender, 2);
             distance += (filtered[user].country === activeUser.native_country ? 0 : 1);
-            
 
-            
+            for (var keyT in topicTotal) {
+                if (!topics.hasOwnProperty(keyT)) {
+                    distance += 25;
+                } else {
+                    distance += Math.pow(topics[keyT] - topicTotal[keyT], 2);
+                }
+            }
+
+            for (var keyS in skillTotal) {
+                if (!skills.hasOwnProperty(keyS)) {
+                    distance += 25;
+                } else {
+                    distance += Math.pow(skills[keyS] - skillTotal[keyS], 2);
+                }
+            }
+            disArray.push([filtered[user], distance]);
         }
-        console.log(filtered);
-        console.log(activeUser);
+        // console.log(filtered);
+        disArray.sort((a, b) => {
+            if (a[1] === b[1]) {
+                return 0;
+            }
+            else {
+                return (a[1] < b[1]) ? -1 : 1;
+            }
+        });
 
+        // limit to at most 14 suers
+        if (disArray.length >= 14) {
+            disArray.splice(14);
+        }
+        // disArray.forEach((val) => {
+        //     console.log(val[1]);
+        // });
+        disArray.forEach(val => {
+            userStr += val[0] + ', ';
+        });
 
-        // compute distance
+        userStr = userStr.slice(0, -2) + '}';
+        db.findCourses(userStr, results => {
+
+        });
     });
+
     res.end();
 });
 
