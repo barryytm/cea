@@ -468,6 +468,12 @@ $(document).ready(() => {
     $('#startRecommend').click(() => {
         $('#skillForm').hide();
         $('#recommendForm').show();
+
+		$.each(courses, (idx, code) => {
+			$('<li/>')
+			.text('hey')
+			.appendTo('#recommendations');
+		});
     });
 
 
