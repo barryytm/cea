@@ -149,6 +149,7 @@ class Helper {
 
 			var $courseTopicButton = $('<input/>').attr({
 				id: 'topicAdd' + code,
+				type: 'button',
 				value: 'add'
 			});
 
@@ -201,6 +202,7 @@ class Helper {
 
 			var $courseSkillButton = $('<input/>').attr({
 				id: 'skillAdd' + code,
+				type: 'button',
 				value: 'add'
 			});
 
