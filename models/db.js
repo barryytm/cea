@@ -94,11 +94,26 @@ module.exports = {
         callback(rows, avg, activeUser);
     },
 
+    findExc: (course, callback) => {
+        var exclusion = client.querySync('select course_id from courses where dept_code=$1 and course_number=$2', [course[0], course[1]])[0];
+        callback(exclusion);
+    },
+
     findCourses: (userStr, callback) => {
-        pool.query('select distinct course_id from enrollments natural join ' +
-        'course_editions natural join courses where username = any($1)', [userStr], (err, res) => {
-            callback(res.rows);
-        });
+        var courses = client.querySync('select distinct course_id from enrollments natural join ' +
+        'course_editions natural join courses where username = any($1)', [userStr]);
+        callback(courses);
+    },
+
+    byGrade: (ids, userStr, callback) => {
+        var result = client.querySync('select dept_code, course_number from courses where course_id in ' +
+        '(select course_id from ' +
+        '(select distinct course_id, avg(max_grade) from enrollments ' +
+        'natural join course_editions natural join letter_grades ' +
+        'where course_id = any($1) and username = any($2) ' +
+        'group by course_id order by avg(max_grade) desc limit 5) as a)', [ids, userStr]);
+
+        callback(result);
     },
 
     addExperience: (username, edition) => {

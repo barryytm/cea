@@ -414,6 +414,12 @@ $(document).ready(() => {
                 code: code,
             });
         });
+        
+        if (!courses.length) {
+            collected.courses = null;
+        } else {
+            collected.courses = courses;
+        }
     });
 
     $('#interestForm').submit(() => {
@@ -518,6 +524,7 @@ $(document).ready(() => {
     });
 
     $('#recommendForm').on('show', () => {
+        console.log(courses);
         $.post('/recommendations', collected);
     });
 
@@ -544,18 +551,22 @@ $(document).ready(() => {
         $('#dataForm').hide();
         $('#newTopicForm').show();
 
-        $.each(courses, (idx, code) => {
-			for (var i = 0; i < collected.editions.length; i++) {
-				if (collected.editions[i].code === code) {
-		                collected.editions[i].semester = $('#semester' + code).val();
-		                collected.editions[i].year = $('#year' + code).val();
-		                collected.editions[i].timeOfDay = $('#timeOfDay' + code).val();
-		                collected.editions[i].grade = $('#grade' + code).val();
-		                collected.editions[i].courseRank = $('#courseRank' + code).val();
-		                collected.editions[i].instructorRank = $('#instructorRank' + code).val();
-				}
-			}
-        });
+        if (courses.length) {
+            $.each(courses, (idx, code) => {
+                for (var i = 0; i < collected.editions.length; i++) {
+                    if (collected.editions[i].code === code) {
+                            collected.editions[i].semester = $('#semester' + code).val();
+                            collected.editions[i].year = $('#year' + code).val();
+                            collected.editions[i].timeOfDay = $('#timeOfDay' + code).val();
+                            collected.editions[i].grade = $('#grade' + code).val();
+                            collected.editions[i].courseRank = $('#courseRank' + code).val();
+                            collected.editions[i].instructorRank = $('#instructorRank' + code).val();
+                    }
+                }
+            });
+        } else {
+            collected.editions = null;
+        }
 
         $.post('/data', collected);
 

@@ -66,10 +66,12 @@ router.get('/deptSkills', (req, res) => {
 
 router.post('/recommendations', (req, res) => {
     var username = req.body.username;
+    var courses = req.body.courses;
     var topicTotal = req.body.deptListTopics;
     var skillTotal = req.body.deptListSkills;
     var topicStr = '{', skillStr = '{';
     var disArray = [], userStr = '{';
+    var courseArray = [];
 
     // concatenate topics
     for (var keyT in topicTotal) {
@@ -83,8 +85,18 @@ router.post('/recommendations', (req, res) => {
     }
     skillStr = skillStr.slice(0, -2) + '}';
 
+    console.log(req.body);
+    if (courses === '') {
+        courses = [];
+    }
+    // concatenate courses
+    courses.forEach(val => {
+        courseArray.push([val.slice(0, 3), val.slice(3)]); 
+    });
+
+
     db.computeTable(username, topicStr, skillStr, (results, avg, activeUser) => {
-        var filtered = {};
+        var filtered = {}, fourCriteria = {};
 
         if (activeUser.gender === null) {
             activeUser.gender = 0.44;
@@ -94,6 +106,7 @@ router.post('/recommendations', (req, res) => {
             activeUser.gender = 0;
         }
         
+        console.log(4);
         results.forEach(result => {
             // identify user
             var currUsername = result.username;
@@ -189,9 +202,9 @@ router.post('/recommendations', (req, res) => {
                     distance += Math.pow(skills[keyS] - skillTotal[keyS], 2);
                 }
             }
-            disArray.push([filtered[user], distance]);
+            disArray.push([user, distance]);
         }
-        // console.log(filtered);
+
         disArray.sort((a, b) => {
             if (a[1] === b[1]) {
                 return 0;
@@ -201,21 +214,52 @@ router.post('/recommendations', (req, res) => {
             }
         });
 
-        // limit to at most 14 suers
-        if (disArray.length >= 14) {
-            disArray.splice(14);
+        // limit to at most 15 suers
+        if (disArray.length >= 15) {
+            disArray.splice(15);
         }
-        // disArray.forEach((val) => {
-        //     console.log(val[1]);
-        // });
+
+        console.log(3);
         disArray.forEach(val => {
             userStr += val[0] + ', ';
         });
 
         userStr = userStr.slice(0, -2) + '}';
-        db.findCourses(userStr, results => {
 
+        // exclude courses chosen by active user
+        db.findCourses(userStr, results => {
+            var exc = [], newResults =[], ids = '{';
+            console.log(1);
+            courseArray.forEach(val => {
+                db.findExc(val, re => {
+                    exc.push(re.course_id);
+                });
+            });
+
+            console.log(2);
+            results.forEach(result => {
+                if (!exc.includes(result.course_id)) {
+                    newResults.push(result.course_id);
+                }
+            });
+
+            // concatenate ids
+            for (var id in newResults) {
+                ids += id + ', ';
+            }
+            ids = ids.slice(0, -2) + '}';
+
+            db.byGrade(ids, userStr, results => {
+                var byGrade = [];
+                results.forEach(result => {
+                    byGrade.push(result.dept_code + result.course_number);
+                });
+                fourCriteria.byGrade = byGrade;
+
+                console.log(fourCriteria.byGrade);
+            });
         });
+       
     });
 
     res.end();
@@ -224,6 +268,10 @@ router.post('/recommendations', (req, res) => {
 router.post('/data', (req, res) => {
     var username = req.body.username;
     var editions = req.body.editions;
+    
+    if (editions === '') {
+        editions = [];
+    }
 
     editions.forEach(edition => {
         db.addExperience(username, edition);
