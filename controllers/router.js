@@ -66,8 +66,23 @@ router.get('/deptSkills', (req, res) => {
 
 router.post('/recommendations', (req, res) => {
     var username = req.body.username;
+    var topicTotal = req.body.deptListTopics;
+    var skillTotal = req.body.deptListSkills;
+    var topicStr = '', skillStr = '';
 
-    db.computeTable(username, results => {
+    // concatenate topics
+    for (var keyT in topicTotal) {
+        topicStr += keyT + ', ';
+    }
+    topicStr = topicStr.slice(0, -2);
+
+    // concatenate skills
+    for (var keyS in skillTotal) {
+        skillStr += keyS + ', ';
+    }
+    skillStr = skillStr.slice(0, -2);
+
+    db.computeTable(username, topicStr, skillStr, results => {
         var filtered = {};
         results.forEach(result => {
             // identify user

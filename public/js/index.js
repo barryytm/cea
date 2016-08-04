@@ -223,13 +223,13 @@ class Helper {
 				type: 'button'
 			});
 
-			var $courseSkillConatiner = $('<form/>');
-			$courseSkillConatiner.addClass('sameLineContainer');
-			$courseSkillConatiner.append($courseSkillLabel);
-			$courseSkillConatiner.append($courseSkills);
-			$courseSkillConatiner.append($courseSkillRankBefore);
-			$courseSkillConatiner.append($courseSkillRankAfter);
-			$courseSkillConatiner.append($courseSkillButton);
+			var $courseSkillConatiner = $('<form/>')
+			.addClass('sameLineContainer')
+			.append($courseSkillLabel)
+			.append($courseSkills)
+			.append($courseSkillRankBefore)
+			.append($courseSkillRankAfter)
+			.append($courseSkillButton);
 
 			var $content = $('<section/>').attr('id', id).addClass('panel-collapse collapse content');
             // add semester
@@ -486,7 +486,6 @@ $(document).ready(() => {
     });
 
     $('#recommendForm').on('show', () => {
-        alert(collected.username);
         $.post('/recommendations', collected);
     });
 
