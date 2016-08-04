@@ -64,7 +64,7 @@ input {
     width: 14%;
     margin-left: 5px;
     margin-right: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 #code {
@@ -140,6 +140,7 @@ input {
 .select {
     width: 300px;
     line-height: 300px;
+    overflow-y: scroll;
 }
 
 /* end dataCollection styles */
@@ -156,7 +157,7 @@ input {
 }
 
 .center {
-    margin-left: 30%;
+    margin-left: 35%;
     margin-bottom: 2%;
 }
 
