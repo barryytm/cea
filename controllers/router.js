@@ -258,11 +258,10 @@ router.post('/recommendations', (req, res) => {
 
                 console.log(fourCriteria.byGrade);
             });
-        });
-       
-    });
 
-    res.end();
+            res.send(fourCriteria);
+        });
+    });
 });
 
 router.post('/data', (req, res) => {

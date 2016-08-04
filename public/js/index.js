@@ -451,7 +451,7 @@ $(document).ready(() => {
             }
 
             // otherwise
-            $('#departmentsSkill').change(function() {
+            $('#departmentsSkill').change(() => {
                 var dept = $('#departmentsSkill').find(":selected").text();
                 $('#skills').empty();
                 for (var value in result[dept]) {
@@ -479,20 +479,42 @@ $(document).ready(() => {
         $('#skillForm').hide();
         $('#recommendForm').show();
 
-		var criteria = $('#userCriteria').find(":selected").text();
-			$('<li/>')
-			.text(criteria)
-			.appendTo('#recommendations');
+        $.post('/recommendations', collected, four => {
+            var criteria = $('#userCriteria').find(":selected").text();
+            var gradeArray = four.byGrade;
+            var topicArray = four.byTopic;
+            var skillArray = four.bySkill;
+            var evaluationArray = four.byHappiness;
+            var array = gradeArray;
 
-		$('#userCriteria').change(function() {
-			criteria = $('#userCriteria').find(":selected").text();
-			$('#recommendations').empty();
-			$('<li/>')
-			.text(criteria)
-			.appendTo('#recommendations');
-		});
+            $.each(array, (idx, val) => {
+                $('<li/>')
+                .text(val)
+                .appendTo('#recommendations');
+            });
+
+            $('#userCriteria').change(() => {
+                criteria = $('#userCriteria').find(":selected").text();
+                $('#recommendations').empty();
+
+                if (criteria === 'best predicted grade') {
+                    array = gradeArray;
+                } else if (criteria === 'interests') {
+                    array = topicArray;
+                } else if (criteria === 'skills improvement') {
+                    array = skillArray;
+                } else {
+                    array = evaluationArray;
+                }
+
+                $.each(array, (idx, val) => {
+                    $('<li/>')
+                    .text(val)
+                    .appendTo('#recommendations');
+                });
+            });
+        });
     });
-
 
     // recommend form
     $('#startData').click(() => {
@@ -538,11 +560,6 @@ $(document).ready(() => {
 				}
 			});
 		});
-    });
-
-    $('#recommendForm').on('show', () => {
-        console.log(courses);
-        $.post('/recommendations', collected);
     });
 
     // data form
