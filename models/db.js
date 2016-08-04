@@ -83,14 +83,14 @@ module.exports = {
             str = 'where username<>$1 and (topic = any($2) or skill = any($3))';
             arr = [username, topicStr, skillStr];
         }
-        
+
         var rows = client.querySync('select distinct username, age, gender, native_country, skill,' +
         'rank_before, topic, interest_before from students natural join topics ' +
         'natural join skills natural join skill_rankings natural join topic_interests ' + str, arr);
 
         var avg = client.querySync('select avg(age) from students')[0].avg;
         var activeUser = client.querySync('select * from students where username=$1', [username])[0];
-            
+
         callback(rows, avg, activeUser);
     },
 
