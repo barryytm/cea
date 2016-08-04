@@ -421,6 +421,8 @@ $(document).ready(() => {
         var interestRating = $('#interestRating').val();
 
     	collected.deptListTopics[topic] = interestRating;
+
+		helper.snack('Saved')
     });
 
     $('#startSkill').click(() => {
@@ -463,6 +465,8 @@ $(document).ready(() => {
         var skillRating = $('#skillRating').val();
 
 		collected.deptListSkills[skill] = skillRating;
+
+		helper.snack('Saved')
     });
 
     $('#startRecommend').click(() => {
