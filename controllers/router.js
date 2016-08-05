@@ -309,6 +309,10 @@ router.get('/allTopics', (req, res) => {
 router.post('/newTopics', (req, res) => {
     var topics = req.body.topics;
 
+    if (topics === '') {
+        topics = [];
+    }
+
     topics.forEach(topic => {
         db.addTopic(topic);
     });
@@ -327,6 +331,10 @@ router.get('/allSkills', (req, res) => {
 
 router.post('/newSkills', (req, res) => {
     var skills = req.body.skills;
+
+    if (skills === '') {
+        skills = [];
+    }
 
     skills.forEach(skill => {
         db.addSkill(skill);
