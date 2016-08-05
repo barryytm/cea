@@ -713,7 +713,7 @@ $(document).ready(() => {
     $('#doneNewSkill').click(() => {
         helper.snack('Saved');
         $('#newSkillForm').hide();
-        $('<h1/>').text('Thanks for using out app!').addClass('center').appendTo('main');
+        $('<h1/>').text('Thanks for using our app!').addClass('center').appendTo('main');
 
         if (!collected.skills.length) {
             collected.skills = null;
