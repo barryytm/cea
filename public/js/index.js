@@ -548,7 +548,13 @@ $(document).ready(() => {
 				var topicBefore = $('#courseTopicsRankBefore' + code).val();
 				var topicAfter = $('#courseTopicsRankAfter' + code).val();
 
-				if (topicBefore && topicAfter) {
+
+
+				if (! topicBefore || ! topicAfter) {
+					helper.snack('Topic ranking is not completed');
+				} else if (topicBefore > 5 || topicBefore < 1 || topicAfter > 5 || topicAfter < 1) {
+					helper.snack('Topic ranking has to be fewer than 5 and greate than 1');
+				} else {
 					for (var i = 0; i < collected.editions.length; i++) {
 						if (collected.editions[i].code === code) {
 							collected.editions[i].allTopicRankings = {};
@@ -557,8 +563,7 @@ $(document).ready(() => {
 							collected.editions[i].allTopicRankings[topic].push(topicAfter);
 						}
 					}
-				} else {
-					helper.snack('topic ranking not complete');
+					helper.snack('Added topic ranking');
 				}
 			});
 
@@ -567,7 +572,11 @@ $(document).ready(() => {
 				var skillBefore = $('#courseSkillRankBefore' + code).val();
 				var skillAfter = $('#courseSkillRankAfter' + code).val();
 
-				if (skillBefore && skillAfter) {
+				if (! skillBefore || ! skillAfter) {
+					helper.snack('Skill ranking is not completed');
+				} else if (skillBefore > 5 || skillBefore < 1 || skillAfter > 5 || skillAfter < 1) {
+					helper.snack('Skill ranking has to be fewer than 5 and greate than 1');
+				} else {
 					for (var i = 0; i < collected.editions.length; i++) {
 						if (collected.editions[i].code === code) {
 							collected.editions[i].allSkillRankings = {};
@@ -576,8 +585,7 @@ $(document).ready(() => {
 							collected.editions[i].allSkillRankings[skill].push(skillAfter);
 						}
 					}
-				} else {
-					helper.snack('Skill ranking not complete');
+					helper.snack('Added skill ranking');
 				}
 			});
 		});
