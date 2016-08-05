@@ -700,9 +700,7 @@ $(document).ready(() => {
 
     $('#doneNewSkill').click(() => {
         helper.snack('Saved');
-        $('#newSkillForm').hide();
 
         $.post('/newSkills', collected);
-
     });
 });
