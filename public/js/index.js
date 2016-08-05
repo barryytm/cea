@@ -669,6 +669,10 @@ $(document).ready(() => {
         $('#newTopicForm').hide();
         $('#newSkillForm').show();
 
+        if (!collected.topics.length) {
+            collected.topics = null;
+        }
+
         $.post('/newTopics', collected);
     });
 
@@ -700,6 +704,10 @@ $(document).ready(() => {
 
     $('#doneNewSkill').click(() => {
         helper.snack('Saved');
+
+        if (!collected.skills.length) {
+            collected.skills = null;
+        }
 
         $.post('/newSkills', collected);
     });
