@@ -539,7 +539,7 @@ $(document).ready(() => {
 				var topicBefore = $('#courseTopicsRankBefore' + code).val();
 				var topicAfter = $('#courseTopicsRankAfter' + code).val();
 
-				if (!topicBefore && !topicAfter) {
+				if (topicBefore && topicAfter) {
 					for (var i = 0; i < collected.editions.length; i++) {
 						if (collected.editions[i].code === code) {
 							collected.editions[i].allTopicRankings = {};
@@ -558,7 +558,7 @@ $(document).ready(() => {
 				var skillBefore = $('#courseSkillRankBefore' + code).val();
 				var skillAfter = $('#courseSkillRankAfter' + code).val();
 
-				if (!skillBefore && !skillAfter) {
+				if (skillBefore && skillAfter) {
 					for (var i = 0; i < collected.editions.length; i++) {
 						if (collected.editions[i].code === code) {
 							collected.editions[i].allSkillRankings = {};
